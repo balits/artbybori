@@ -33,40 +33,7 @@ export async function loader({request, context: {storefront}}: LoaderArgs) {
       language: storefront.i18n.language,
     },
   });
-
-  invariant(dataPromise, 'No data returned from Shopify API');
-  /*
-  const seoCollection = {
-    id: 'all-products',
-    title: 'All Products',
-    handle: 'products',
-    descriptionHtml: 'All the store products',
-    description: 'All the store products',
-    seo: {
-      title: 'All Products',
-      description: 'All the store products',
-    },
-    metafields: [],
-    products: data.products,
-    updatedAt: '',
-  } satisfies Collection;
-
-  const seo = seoPayload.collection({
-    collection: seoCollection,
-    url: request.url,
-  });
-*/
-  /* return json(
-    {
-      products: data.products,
-      seo,
-    },
-    {
-      headers: {
-        'Cache-Control': CACHE_LONG,
-      },
-    },
-  ); */
+  invariant(dataPromise, 'No products returned from Shopify API');
 
   return defer({
     productsPromise: dataPromise,
@@ -88,7 +55,6 @@ export default function AllProducts() {
               if (!data.products) return <p>no products</p>;
               if (!data.products.nodes) return <p>no nodes</p>; */
               if (!data || !data.products || !data.products.nodes) return <></>;
-
               return <ProductGrid data={data.products.nodes} />;
             }}
           </Await>

@@ -1,19 +1,23 @@
 import {type ReactNode, useRef, Suspense, useMemo} from 'react';
 import {Disclosure, Listbox} from '@headlessui/react';
-import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+import {
+  defer,
+  type LoaderArgs,
+  type AppLoadContext,
+} from '@shopify/remix-oxygen';
 import {
   useLoaderData,
   Await,
   useSearchParams,
   useLocation,
   useTransition,
+  useMatches,
 } from '@remix-run/react';
 
 import {
   AnalyticsPageType,
   Money,
   ShopifyAnalyticsProduct,
-  ShopPayButton,
 } from '@shopify/hydrogen';
 import {
   Heading,
@@ -47,6 +51,7 @@ import {routeHeaders, CACHE_SHORT} from '~/data/cache';
 import Container from '~/components/global/Container';
 import Slider, {Fallback as SliderFallback} from '~/components/global/Slider';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
+import {cartCreate} from '~/routes/cart';
 
 export const headers = routeHeaders;
 
@@ -138,7 +143,7 @@ export default function Product() {
             />
           </div>
         </div>
-        <section className="px-6 py-3 lg:p-0 lg:mt-12">
+        <section className="px-6 py-4 lg:p-0 lg:mt-12">
           <ProductForm />
         </section>
       </Container>
@@ -279,13 +284,14 @@ export function ProductForm() {
   return (
     <div className="grid gap-8">
       <div className="grid gap-2">
-        <h1 className="tracking-tight font-bold text-xl">{product.title}</h1>
-        <p className="text-autoscale-big font-semibold tracking-tight flex gap-2">
+        <h1 className="tracking-tight font-cantata font-bold text-2xl">
+          {product.title}
+        </h1>
+        <p className="font-semibold tracking-tight flex gap-2">
           {isOnSale && (
             <Money
               withoutTrailingZeros
               data={selectedVariant?.compareAtPrice!}
-              withoutCurrency
               as="span"
               className="opacity-50 strike"
             />
@@ -294,12 +300,9 @@ export function ProductForm() {
             withoutTrailingZeros
             data={selectedVariant?.price!}
             as="span"
-            withoutCurrency
           />
         </p>
-        <p className="text-autoscale flex flex-col gap-3 my-3">
-          {product.description}
-        </p>
+        <p className=" flex flex-col gap-4 ">{product.description}</p>
 
         <ProductOptions
           options={product.options}
@@ -332,18 +335,17 @@ export function ProductForm() {
               </AddToCartButton>
             )}
 
-            {!isOutOfStock && (
-              <ShopPayButton
-                width="100%"
-                variantIds={[selectedVariant?.id!]}
-                storeDomain={storeDomain}
-              />
-            )}
+            {!isOutOfStock && <CheckoutButton />}
           </div>
         )}
       </div>
     </div>
   );
+}
+
+function CheckoutButton() {
+  console.log(root.data?.cart);
+  return <></>;
 }
 
 function ProductOptions({
@@ -355,7 +357,7 @@ function ProductOptions({
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   return (
-    <div className="grid grid-cols-1 gap-y-6">
+    <div className="grid grid-cols-1 gap-y-4">
       {options
         .filter((option) => option.values.length > 1)
         .map((option) => (
@@ -363,9 +365,7 @@ function ProductOptions({
             key={option.name}
             className="grid grid-cols-1 gap-y-3 last:mb-0"
           >
-            <legend className="text-autoscale font-semibold">
-              {option.name}
-            </legend>
+            <legend className="">{option.name}:</legend>
             <div className="flex flex gap-4">
               {/**
                * First, we render a bunch of <Link> elements for each option value.

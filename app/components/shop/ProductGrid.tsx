@@ -80,12 +80,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       )}
       <div className="text-custom-white transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
-        <p className="grid grid-cols-1 text-sm md:text-md lg:text-lg p-4  ">
-          <span className=" font-semibold text-autoscale">{title}</span>
-          <span className=" text-autoscale-small">
-            <Money withoutTrailingZeros data={money} />
-          </span>
-        </p>
+        <div className="grid grid-cols-1 text-sm md:text-md lg:text-lg p-4  ">
+          <p className=" font-semibold text-autoscale">{title}</p>
+          <Money
+            className="text-autoscale-small"
+            withoutTrailingZeros
+            data={money}
+          />
+        </div>
       </div>
     </div>
   );

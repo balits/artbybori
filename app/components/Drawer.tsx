@@ -1,7 +1,14 @@
-import {Fragment, useState} from 'react';
+import {Component, Fragment, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
+import {HiX} from 'react-icons/hi';
 
-import {Heading, IconClose} from '~/components';
+export type DrawerProps = {
+  heading: string | Component;
+  open: boolean;
+  onClose: () => void;
+  openFrom: 'right' | 'left';
+  children?: React.ReactNode;
+};
 
 /**
  * Drawer component that opens on user click.
@@ -12,18 +19,12 @@ import {Heading, IconClose} from '~/components';
  * @param children - react children node.
  */
 export function Drawer({
-  heading = 'Art by Bori',
+  heading,
   open,
   onClose,
   openFrom = 'right',
   children,
-}: {
-  heading?: string;
-  open: boolean;
-  onClose: () => void;
-  openFrom: 'right' | 'left';
-  children: React.ReactNode;
-}) {
+}: DrawerProps) {
   const offScreen = {
     right: 'translate-x-full',
     left: '-translate-x-full',
@@ -60,27 +61,28 @@ export function Drawer({
                 leaveFrom="translate-x-0"
                 leaveTo={offScreen[openFrom]}
               >
-                <Dialog.Panel className="w-screen max-w-lg text-left align-middle transition-all transform shadow-xl h-screen-dynamic bg-contrast">
+                <Dialog.Panel className="w-screen max-w-lg text-left align-middle transition-all transform shadow-md h-screen-dynamic bg-custom-white">
                   <header
-                    className={`sticky top-0 flex items-center px-6 h-nav sm:px-8 md:px-12 ${
-                      heading ? 'justify-between' : 'justify-end'
-                    }`}
+                    className={`mb-4 w-full header-height flex ${
+                      openFrom === 'left' ? 'flex-row-reverse' : 'flex-row'
+                    } items-center justify-between sticky top-0 justify-between`}
                   >
-                    {heading !== null && (
-                      <Dialog.Title>
-                        <Heading as="span" size="lead" id="cart-contents">
-                          {heading}
-                        </Heading>
-                      </Dialog.Title>
-                    )}
                     <button
                       type="button"
-                      className="p-4 -m-4 transition text-primary hover:text-primary/50"
+                      className="p-4 transition"
                       onClick={onClose}
                       data-test="close-cart"
                     >
-                      <IconClose aria-label="Close panel" />
+                      <HiX aria-label="Close panel" className="w-5 h-5" />
                     </button>
+                    <Dialog.Title>
+                      <div
+                        className="p-4 text-2xl font-medium"
+                        id="cart-contents"
+                      >
+                        {heading}
+                      </div>
+                    </Dialog.Title>
                   </header>
                   {children}
                 </Dialog.Panel>

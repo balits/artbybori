@@ -5,6 +5,9 @@ import invariant from 'tiny-invariant';
 import {PageHeader, Section, Heading, Link} from '~/components';
 import {routeHeaders, CACHE_LONG} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
+import Container from '~/components/global/Container';
+import {useEffect, useState} from 'react';
+import clsx from 'clsx';
 
 export const headers = routeHeaders;
 
@@ -38,20 +41,40 @@ export async function loader({request, context: {storefront}}: LoaderArgs) {
 export default function Policies() {
   const {policies} = useLoaderData<typeof loader>();
 
+  const [selectedPolicy, setSelectedPolicy] =
+    useState<Partial<ShopPolicy> | null>(null);
+
   return (
     <>
-      <PageHeader heading="Policies" />
-      <Section padding="x" className="mb-24">
-        {policies.map((policy) => {
-          return (
-            policy && (
-              <Heading className="font-normal text-heading" key={policy.id}>
-                <Link to={`/policies/${policy.handle}`}>{policy.title}</Link>
-              </Heading>
-            )
-          );
-        })}
-      </Section>
+      <Container className="scaling-mt-header grid grid-cols-1 md:grid-cols-2 min-h-minus-header  py-8">
+        <section className="w-full h-fit flex items-center justify-start mt-16">
+          <ul className="flex flex-col gap-y-4 md:gap-y-8 lg:gap-y-16 ">
+            {policies.map(
+              (policy) =>
+                policy && (
+                  <li key={policy.id}>
+                    <button
+                      className={clsx(
+                        'font-semibold text-2xl hover:opacity-80 active:opacity-100',
+                        policy.id === selectedPolicy?.id &&
+                          ' underline decoration-3 decoration-offset-3',
+                      )}
+                      onClick={() => setSelectedPolicy(policy)}
+                    >
+                      {policy.title}
+                    </button>
+                  </li>
+                ),
+            )}
+          </ul>
+        </section>
+        <section className="w-full h-full">
+          <p
+            className="prose"
+            dangerouslySetInnerHTML={{__html: selectedPolicy?.body ?? ''}}
+          ></p>
+        </section>
+      </Container>
     </>
   );
 }
@@ -61,6 +84,7 @@ const POLICIES_QUERY = `#graphql
     id
     title
     handle
+    body
   }
 
   query PoliciesQuery {

@@ -63,7 +63,7 @@ shop-pay-button {
   }
 
   body {
-    @apply border-primary/10 bg-contrast text-primary/90 antialiased;
+    @apply text-custom-black bg-custom-white antialiased;
   }
 
   html {
@@ -149,7 +149,14 @@ shop-pay-button {
   }
 
   .h-minus-header {
-    @apply lg:h-[calc(100vh-96px)];
+    @apply h-[calc(100vh-64px)] md:h-[calc(100vh-76px)] lg:h-[calc(100vh-96px)];
+  }
+  .min-h-minus-header {
+    @apply min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-76px)] lg:min-h-[calc(100vh-96px)];
+  }
+
+  .header-height {
+    @apply h-header-base md:h-header-md lg:h-header-lg;
   }
 
   .scaling-mt-header {

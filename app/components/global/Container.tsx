@@ -1,16 +1,18 @@
 import clsx from 'clsx';
 
-export default function Container({
-  children,
-  className = '',
-  as = 'div',
-  padding = true,
-}: {
+type Props = {
   children: React.ReactNode;
   className?: string;
   as?: React.ElementType;
   padding?: boolean;
-}) {
+};
+
+const Container: React.FC<Props> = ({
+  children,
+  className = '',
+  as = 'div',
+  padding = true,
+}) => {
   const style = clsx(
     `w-full  max-w-wrapper mx-auto `,
     padding && 'px-6',
@@ -18,4 +20,5 @@ export default function Container({
   );
 
   return <div className={style}>{children}</div>;
-}
+};
+export default Container;

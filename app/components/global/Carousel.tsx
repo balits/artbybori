@@ -1,8 +1,15 @@
-import {useState} from 'react';
+import React from 'react';
 import {Collection} from '@shopify/hydrogen/storefront-api-types';
 import {SerializeFrom} from '@shopify/remix-oxygen';
+import Container from './Container';
 
-import Carousel, {ResponsiveType} from 'react-multi-carousel';
+// Import Swiper React components
+import {Swiper, SwiperSlide} from 'swiper/react';
+
+// Import Swiper styles
+
+// import required modules
+import {Pagination} from 'swiper';
 
 type MultiCarouselProps = {
   array: SerializeFrom<Collection>[];
@@ -11,67 +18,36 @@ const MultiCarousel: React.FC<MultiCarouselProps> = ({array}) => {
   const collections = array.filter(
     (e) => e.handle !== 'featured-products',
   ) as Collection[];
-  const [current, setCurrent] = useState(0);
 
-  console.log(collections);
-
-  const resp: ResponsiveType = {
-    bigDesktop: {
-      breakpoint: {
-        max: 5000,
-        min: 1280,
-      },
-      items: 4,
-      slidesToSlide: 4,
-    },
-    desktop: {
-      breakpoint: {
-        max: 1280,
-        min: 1024,
-      },
-      items: 3,
-      slidesToSlide: 3,
-    },
-    tablet: {
-      breakpoint: {
-        max: 1024,
-        min: 768,
-      },
-      items: 2,
-      slidesToSlide: 2,
-    },
-    mobile: {
-      breakpoint: {
-        max: 768,
-        min: 0,
-      },
-      items: 1,
-      slidesToSlide: 1,
-    },
-  };
   return (
     <section className="bg-custom-signature-green w-full h-fit p-12 my-12">
-      <h2 className="mb-12 text-4xl text-custom-white font-cantata font-semibold ">
-        Shop by categories.
-      </h2>
-      <Carousel responsive={resp}>
-        {collections.map((coll, idx) => (
-          <div
-            key={coll.id ?? idx}
-            className="relative aspect-square w-[250px] md:w-[350px] lg:w-[400px] xl:w-[450px]"
-          >
-            <img
-              src={coll.image?.url}
-              alt={coll.image?.altText ?? coll.title}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </div>
-        ))}
-      </Carousel>
+      <Container className="">
+        <h2 className="mb-12 text-4xl text-custom-white font-cantata font-semibold ">
+          Shop by categories.
+        </h2>
+        <Swiper
+          slidesPerView={1}
+          pagination={{clickable: true}}
+          modules={[Pagination]}
+          className="w-full h-full "
+        >
+          <SwiperSlide>a</SwiperSlide>
+          <SwiperSlide>c</SwiperSlide>
+          <SwiperSlide>b</SwiperSlide>
+        </Swiper>
+      </Container>
     </section>
   );
 };
 export default MultiCarousel;
+/* {collections.map((c) => (
+            <SwiperSlide
+              className="bg-custom-placeholder-green h-[300px] aspect-square grid place-items-center"
+              key={c.id}
+            >
+              {c.title}
+            </SwiperSlide>
+          ))} */
 
 export const Skeleton: React.FC = () => {
   return <section></section>;

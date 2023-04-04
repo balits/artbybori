@@ -1,13 +1,15 @@
 import {Form, useParams} from '@remix-run/react';
-import {useEffect, useState} from 'react';
+import {Fragment, ReactNode, useEffect, useState} from 'react';
 import Container from '~/components/global/Container';
 import Logo from '~/components/global/Logo';
 import Nav from '~/components/global/Nav';
 import {BiShoppingBag} from 'react-icons/bi';
 import {HiBars2} from 'react-icons/hi2';
 import clsx from 'clsx';
-import {Drawer, useDrawer} from '../Drawer';
+import {useDrawer} from '../Drawer';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
+import CartDrawer from '~/components/drawer/CartDrawer';
+import NavDrawer from '~/components/drawer/NavDrawer';
 
 export default function Header() {
   const {
@@ -15,12 +17,12 @@ export default function Header() {
     openDrawer: openCart,
     closeDrawer: closeCart,
   } = useDrawer();
-  /*
+
   const {
-    isOpen: isMenuOpen,
-    openDrawer: openMenu,
-    closeDrawer: closeMenu,
-  } = useDrawer(); */
+    isOpen: isNavOpen,
+    openDrawer: openNav,
+    closeDrawer: closeNav,
+  } = useDrawer();
 
   const addToCartFetchers = useCartFetchers('ADD_TO_CART');
 
@@ -36,7 +38,7 @@ export default function Header() {
     <>
       <header
         className={clsx(
-          `transition-all transform-gpu  duration-500 ease-in-out fixed z-30 bg-custom-white w-full h-header-base md:h-header-md lg:h-header-lg`,
+          `transition-all transform-gpu  duration-500 ease-in-out fixed z-30 bg-custom-white w-full header-height`,
           scrollDirection === 'down'
             ? '-top-header-base md:-top-header-md lg:-top-header-lg'
             : 'top-0',
@@ -44,7 +46,7 @@ export default function Header() {
       >
         <Container className="flex items-center justify-between h-full">
           <button
-            onClick={() => {}}
+            onClick={openNav}
             className="lg:hidden p-2 md:p-3 lg:p-4 pl-0"
             aria-label="Open navigation panel from the left side."
           >
@@ -56,12 +58,27 @@ export default function Header() {
           {/*  
           <CartCount openCart={cartDrawer.openDrawer} /> 
         */}
-          <BiShoppingBag
-            className="h-4 w-4 md:w-5 md:h-5 lg:w-6 lg:h-6 cursor-pointer"
+          <button
             onClick={openCart}
-          />
+            className="p-2 md:p-3 lg:p-4 pr-0"
+            aria-label="Open cart panel from the right side."
+          >
+            <BiShoppingBag className="h-4 w-4 md:w-5 md:h-5 lg:w-6 lg:h-6 cursor-pointer" />
+          </button>
         </Container>
       </header>
+      <NavDrawer
+        heading={<Logo />}
+        open={isNavOpen}
+        onClose={closeNav}
+        openFrom="left"
+      />
+      <CartDrawer
+        heading="Cart"
+        open={isCartOpen}
+        onClose={closeCart}
+        openFrom="right"
+      />
     </>
   );
 }

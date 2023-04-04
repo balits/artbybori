@@ -1,5 +1,6 @@
 import {
   defer,
+  HeadersFunction,
   LinksFunction,
   SerializeFrom,
   type LoaderArgs,
@@ -14,12 +15,13 @@ import Banner from '~/components/homepage/Banner';
 import FeaturedProducts, {
   Skeleton as FeaturedSkeleton,
 } from '~/components/homepage/FeaturedProducts';
-import invariant from 'tiny-invariant';
 import SplitView from '~/components/homepage/SplitView';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import MultiCarousel, {
   Skeleton as MultiCarouselSkeleton,
 } from '~/components/global/Carousel';
+import invariant from 'tiny-invariant';
+import {CacheLong} from '@shopify/hydrogen';
 
 export const links: LinksFunction = () => [
   {
@@ -28,7 +30,7 @@ export const links: LinksFunction = () => [
     as: 'image',
     type: 'image/jpg',
   },
-  {
+  /* {
     rel: 'preload',
     href: '/split-1.jpg',
     as: 'image',
@@ -39,7 +41,7 @@ export const links: LinksFunction = () => [
     href: '/split-2.jpg',
     as: 'image',
     type: 'image/jpg',
-  },
+  }, */
 ];
 
 export async function loader({params, context}: LoaderArgs) {
@@ -112,10 +114,19 @@ query AllCollectionsQuery {
     collections: CollectionConnection;
   }>(all_collections_query);
 
-  return defer({
-    featuredProductsPromise,
-    collectionsPromise,
-  });
+  invariant(featuredProductsPromise, 'No data returned from Storefont API\n');
+
+  return defer(
+    {
+      featuredProductsPromise,
+      collectionsPromise,
+    },
+    {
+      headers: {
+        'Cache-Control': CACHE_LONG,
+      },
+    },
+  );
 }
 
 export default function Homepage() {
@@ -139,7 +150,7 @@ export default function Homepage() {
         </Await>
       </Suspense>
       <SplitView />
-      {/*
+
       <Suspense fallback={<MultiCarouselSkeleton />}>
         <Await resolve={collectionsPromise}>
           {(data) => {
@@ -147,7 +158,6 @@ export default function Homepage() {
           }}
         </Await>
       </Suspense>
-*/}
 
       <InstagramGallery />
     </>

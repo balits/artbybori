@@ -16,7 +16,7 @@ import {useCartFetchers} from '~/hooks/useCartFetchers';
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
     <>
-      <div className="bg-custom-white flex flex-col min-h-screen overflow-hidden">
+      <div className="flex flex-col min-h-screen overflow-hidden">
         <div className="">
           <a href="#mainContent" className="sr-only">
             Skip to content

@@ -19,6 +19,11 @@ import type {
 import {isLocalPath} from '~/lib/utils';
 import {CartAction, type CartActions} from '~/lib/type';
 
+import CartView, {
+  Skeleton as CartViewSkeleton,
+} from '~/components/cart/CartView';
+import Container from '~/components/global/Container';
+
 export async function action({request, context}: ActionArgs) {
   const {session, storefront} = context;
   const headers = new Headers();
@@ -177,13 +182,18 @@ export default function CartRoute() {
   const [root] = useMatches();
   // @todo: finish on a separate PR
   return (
-    <div className="grid w-full gap-8 p-6 py-8 md:p-8 lg:p-12 justify-items-start">
+    <Container className="scaling-mt-header min-h-minus-header">
+      <Suspense fallback={<CartViewSkeleton />}>
+        <Await resolve={root.data?.cart}>
+          {(cart) => <CartView cart={cart} />}
+        </Await>
+      </Suspense>
       <Suspense fallback={<CartLoading />}>
         <Await resolve={root.data?.cart}>
           {(cart) => <Cart layout="page" cart={cart} />}
         </Await>
       </Suspense>
-    </div>
+    </Container>
   );
 }
 
