@@ -10,6 +10,9 @@ dependencies:
   '@remix-run/react':
     specifier: 1.14.0
     version: 1.14.0(react-dom@18.2.0)(react@18.2.0)
+  '@remix-run/server-runtime':
+    specifier: ^1.15.0
+    version: 1.15.0
   '@remix-run/vercel':
     specifier: ^1.15.0
     version: 1.15.0
@@ -21,7 +24,7 @@ dependencies:
     version: registry.npmjs.org/@shopify/cli-hydrogen@4.0.9(@remix-run/react@1.14.0)(@shopify/remix-oxygen@1.0.4)(@types/react@18.0.29)
   '@shopify/hydrogen':
     specifier: ^2023.1.6
-    version: registry.npmjs.org/@shopify/hydrogen@2023.1.6(@remix-run/react@1.14.0)(@types/react@18.0.29)(react-dom@18.2.0)
+    version: registry.npmjs.org/@shopify/hydrogen@2023.1.6(@remix-run/react@1.14.0)(@remix-run/server-runtime@1.15.0)(@types/react@18.0.29)(react-dom@18.2.0)
   '@shopify/remix-oxygen':
     specifier: ^1.0.4
     version: registry.npmjs.org/@shopify/remix-oxygen@1.0.4(@shopify/oxygen-workers-types@3.17.2)
@@ -11314,7 +11317,7 @@ packages:
       - xstate
     dev: false
 
-  registry.npmjs.org/@shopify/hydrogen@2023.1.6(@remix-run/react@1.14.0)(@types/react@18.0.29)(react-dom@18.2.0):
+  registry.npmjs.org/@shopify/hydrogen@2023.1.6(@remix-run/react@1.14.0)(@remix-run/server-runtime@1.15.0)(@types/react@18.0.29)(react-dom@18.2.0):
     resolution: {integrity: sha512-+yXsHueBEOB8CEtPGZtEvdzqeF5dhB5e+Iz9IoVh0oyQTR9i4j+sU1MCIjx2IAluhwv/+f3HiJScfHmpMLGlFA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@shopify/hydrogen/-/hydrogen-2023.1.6.tgz}
     id: registry.npmjs.org/@shopify/hydrogen/2023.1.6
     name: '@shopify/hydrogen'
@@ -11324,6 +11327,7 @@ packages:
       '@remix-run/server-runtime': 1.14.0
     dependencies:
       '@remix-run/react': 1.14.0(react-dom@18.2.0)(react@18.2.0)
+      '@remix-run/server-runtime': 1.15.0
       '@shopify/hydrogen-react': registry.npmjs.org/@shopify/hydrogen-react@2023.1.7(@types/react@18.0.29)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     transitivePeerDependencies:
