@@ -30,18 +30,6 @@ export const links: LinksFunction = () => [
     as: 'image',
     type: 'image/jpg',
   },
-  /* {
-    rel: 'preload',
-    href: '/split-1.jpg',
-    as: 'image',
-    type: 'image/jpg',
-  },
-  {
-    rel: 'preload',
-    href: '/split-2.jpg',
-    as: 'image',
-    type: 'image/jpg',
-  }, */
 ];
 
 export async function loader({params, context}: LoaderArgs) {
