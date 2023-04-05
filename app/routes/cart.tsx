@@ -20,7 +20,7 @@ import {isLocalPath} from '~/lib/utils';
 import {CartAction, type CartActions} from '~/lib/type';
 
 import CartView, {
-  Skeleton as CartViewSkeleton,
+  Fallback as CartViewSkeleton,
 } from '~/components/cart/CartView';
 import Container from '~/components/global/Container';
 
@@ -186,11 +186,6 @@ export default function CartRoute() {
       <Suspense fallback={<CartViewSkeleton />}>
         <Await resolve={root.data?.cart}>
           {(cart) => <CartView cart={cart} />}
-        </Await>
-      </Suspense>
-      <Suspense fallback={<CartLoading />}>
-        <Await resolve={root.data?.cart}>
-          {(cart) => <Cart layout="page" cart={cart} />}
         </Await>
       </Suspense>
     </Container>

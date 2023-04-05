@@ -344,7 +344,6 @@ export function ProductForm() {
 }
 
 function CheckoutButton() {
-  console.log(root.data?.cart);
   return <></>;
 }
 

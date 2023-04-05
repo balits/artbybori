@@ -6,10 +6,10 @@ import {HiX} from 'react-icons/hi';
 import {CartAction} from '~/lib/type';
 import {HiPlus, HiMinus} from 'react-icons/hi';
 
-export function Skeleton() {
+export function Fallback() {
   return (
     <section aria-labelledby="cart-contents">
-      <h1 className="text-9xl font-cantata mb-8">Your cart.</h1>
+      <h1 className="text-8xl font-cantata mb-8">Your cart.</h1>
     </section>
   );
 }
@@ -23,7 +23,7 @@ export default function CartView({cart}: CartViewProps) {
   return isEmpty ? (
     <>
       <section aria-labelledby="cart-contents">
-        <h1 className="text-9xl font-cantata mb-8">Your cart.</h1>
+        <h1 className="text-8xl font-cantata mb-8">Your cart.</h1>
         <ul className="border-t-2 border-t-custom-black py-8 grid grid-cols-1 gap-y-12">
           {lines.map(
             (l) =>
@@ -38,7 +38,7 @@ export default function CartView({cart}: CartViewProps) {
       {cart && <CartSummary cart={cart} />}
     </>
   ) : (
-    <h1 className="text-9xl font-cantata mb-4">Your cart is empty.</h1>
+    <h1 className="text-8xl font-cantata mb-4">Your cart is empty.</h1>
   );
 }
 
@@ -125,7 +125,7 @@ function CartSummary({cart}: CartSummaryProps) {
   const btn =
     'hover:opacity-80 active:opacity-60 text-center cursor-pointer uppercase text-xl py-3 w-72 font-semibold tracking-tight';
   return (
-    <section className="flex flex-col items-end gap-y-16">
+    <section className="flex flex-col items-end gap-y-16 mb-16">
       <h2 id="cart-summary-heading" className="sr-only">
         Order summary
       </h2>
@@ -200,7 +200,7 @@ function DecrementQuantity({id, quantity}: QuantityProps) {
         aria-label="Decrease quantity"
         value={quantity}
         disabled={quantity < 1}
-        className="disabled:opacity-40"
+        className="disabled:opacity-40 disabled:cursor-not-allowed"
       >
         <HiMinus className="w-8 h-8 p-2" />
       </button>

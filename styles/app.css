@@ -179,7 +179,7 @@ shop-pay-button {
   }
 
   .contact-details {
-    @apply py-2 open:border-b-2 open:border-b-custom-grey;
+    @apply py-2 open:border-b-2 open:border-b-custom-grey cursor-pointer;
   }
 
   .fadeIn {
