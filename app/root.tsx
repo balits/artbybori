@@ -79,6 +79,7 @@ export default function App() {
   return (
     <html lang={locale.language}>
       <head>
+        <meta charSet="utf-8" />
         <Seo />
         <Meta />
         <Links />

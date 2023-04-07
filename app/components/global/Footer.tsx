@@ -7,7 +7,7 @@ import {CountrySelector} from '../CountrySelector';
 
 const Strong = ({text}: {text: string}) => {
   return (
-    <p className="font-bold capitalize text-autoscale-big md:text-xl mb-1 md:mb-4 mb-6">
+    <p className="font-bold capitalize text-autoscale-big md:text-xl md:mb-4 mb-6">
       {text}
     </p>
   );
@@ -41,7 +41,7 @@ export default function Footer() {
     <footer className="h-fit w-full bg-custom-signature-green text-custom-white flex items-center justify-center">
       <Container className="mt-[10vw] lg:mt-16 ">
         <div className=" w-full h-fit flex flex-col gap-y-4  md:gap-y-8 lg:gap-y-12">
-          <div className="flex flex-col md:grid md:grid-cols-2 md:grid-rows-1  gap-8 ">
+          <div className="flex flex-col md:grid md:grid-cols-2 md:grid-rows-1 gap-8 ">
             <div className="h-fit">
               <Strong text="Quick links" />
               <ul className="grid grid-cols-1 gap-y-3">

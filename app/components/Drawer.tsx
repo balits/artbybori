@@ -1,9 +1,9 @@
-import {Component, Fragment, useState} from 'react';
+import {Fragment, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import {HiX} from 'react-icons/hi';
 
 export type DrawerProps = {
-  heading: string | Component;
+  heading: string | JSX.Element;
   open: boolean;
   onClose: () => void;
   openFrom: 'right' | 'left';
