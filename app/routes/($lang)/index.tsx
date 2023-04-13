@@ -29,7 +29,7 @@ import {CacheLong, flattenConnection} from '@shopify/hydrogen';
 import Container from '~/components/global/Container';
 
 export const links: LinksFunction = () => [
-  {
+  /* {
     rel: 'preload',
     as: 'image',
     href: '/split-1.jpg',
@@ -38,7 +38,7 @@ export const links: LinksFunction = () => [
     rel: 'preload',
     as: 'image',
     href: '/split-2.jpg',
-  },
+  }, */
 ];
 
 export async function loader({params, context}: LoaderArgs) {
