@@ -3,7 +3,7 @@ import Container from '../global/Container';
 
 export default function SplitView() {
   return (
-    <section className="shadow-sm my-24 w-full flex flex-col justify-center items-center">
+    <section className="lg:shadow-sm my-24 w-full flex flex-col justify-center items-center">
       <div className="overflow-y-hidden  w-full grid grid-cols-2">
         <Link
           to="/shop"

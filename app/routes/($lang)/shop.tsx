@@ -16,6 +16,8 @@ import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders, CACHE_LONG} from '~/data/cache';
 import ProductGrid, {Fallback} from '~/components/shop/ProductGrid';
 import {Suspense} from 'react';
+import {flattenConnection} from '@shopify/hydrogen';
+import InstagramGallery from '~/components/homepage/InstagramGallery';
 
 const PAGE_BY = 8;
 
@@ -24,7 +26,7 @@ export const headers = routeHeaders;
 export async function loader({request, context: {storefront}}: LoaderArgs) {
   const variables = getPaginationVariables(request, PAGE_BY);
 
-  const dataPromise = storefront.query<{
+  const {products} = await storefront.query<{
     products: ProductConnection;
   }>(ALL_PRODUCTS_QUERY, {
     variables: {
@@ -33,38 +35,24 @@ export async function loader({request, context: {storefront}}: LoaderArgs) {
       language: storefront.i18n.language,
     },
   });
-  invariant(dataPromise, 'No products returned from Shopify API');
-
+  invariant(products, 'No products returned from Shopify API');
   return defer({
-    productsPromise: dataPromise,
+    products,
   });
 }
 
 export default function AllProducts() {
-  const {productsPromise} = useLoaderData<typeof loader>();
+  const {products} = useLoaderData<typeof loader>();
 
   return (
     <>
-      {productsPromise && (
-        <Suspense fallback={<Fallback />}>
-          <Await resolve={productsPromise}>
-            {(data) => {
-              /* if (!data) {
-                return <p>No data????</p>;
-              }
-              if (!data.products) return <p>no products</p>;
-              if (!data.products.nodes) return <p>no nodes</p>; */
-              if (!data || !data.products || !data.products.nodes) return <></>;
-              return <ProductGrid data={data.products.nodes} />;
-            }}
-          </Await>
-        </Suspense>
-      )}
+      {products && <ProductGrid data={flattenConnection(products)} />}
+      <InstagramGallery className="mt-20" />
     </>
   );
 }
 
-/* 
+/*
         <Pagination connection={products}>
           {({
             endCursor,

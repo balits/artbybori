@@ -8,13 +8,13 @@ module.exports = {
         contrast: '#222222',
 
         custom: {
-          white: '#fffcf9',
-          black: '#273120',
+          white: 'var(--custom-white)',
+          black: 'var(--custom-black)',
           orange: '#fe670c',
           grey: '#d9d9d9',
           'darker-green': '#828770',
-          'signature-green': '#acaea4',
-          'placeholder-green': '#d9d9d9',
+          'signature-green': 'var(--custom-signature)',
+          'placeholder-green': 'var(--custom-placeholder)',
         },
       },
       fontFamily: {
@@ -22,11 +22,11 @@ module.exports = {
           'Inter',
           'ui-sans-serif',
           'BlinkMacSystemFont',
+          'Helvetica Neue',
           'system-ui',
           'sans-serif',
         ],
-        serif: ['Cantata One', '"IBMPlexSerif"', 'Palatino', 'ui-serif'],
-        cantata: ['Cantata One'],
+        cantata: ['Cantata One', '"IBMPlexSerif"', 'Palatino', 'ui-serif'],
       },
       fontSize: {
         md: ['16px', '24px'],
@@ -42,13 +42,18 @@ module.exports = {
         wrapper: '1300px',
       },
       spacing: {
-        'header-base': '64px',
-        'header-md': '76px',
-        'header-lg': '96px',
+        'header-base': '4rem',
+        'header-md': '5rem',
+        'header-lg': '6rem',
 
         'sidebar-phone': '70vw',
         'sidebar-tablet': '50vw',
         'sidebar-desktop': '35vw',
+
+        'carousel-item': '18rem',
+        'carousel-item-md': '21rem',
+        'carousel-item-lg': '25rem',
+        'carousel-item-xl': '28rem',
       },
       boxShadow: {
         border: 'inset 0px 0px 0px 1px rgb(var(--color-primary) / 0.08)',

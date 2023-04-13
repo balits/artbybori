@@ -45,7 +45,7 @@ export function Drawer({
           <div className="fixed inset-0 bg-black bg-opacity-25" />
         </Transition.Child>
 
-        <div className="fixed inset-0">
+        <aside aria-roledescription="sidebar" className="fixed inset-0">
           <div className="absolute inset-0 overflow-hidden">
             <div
               className={`fixed inset-y-0 flex max-w-full ${
@@ -61,9 +61,9 @@ export function Drawer({
                 leaveFrom="translate-x-0"
                 leaveTo={offScreen[openFrom]}
               >
-                <Dialog.Panel className="w-screen max-w-lg text-left align-middle transition-all transform shadow-md h-screen-dynamic bg-custom-white">
+                <Dialog.Panel className="overflow-auto w-screen max-w-lg text-left align-middle transition-all transform shadow-md h-screen-dynamic bg-custom-white">
                   <header
-                    className={`mb-4 w-full header-height flex ${
+                    className={`bg-custom-white  mb-4 w-full header-height flex ${
                       openFrom === 'left' ? 'flex-row-reverse' : 'flex-row'
                     } items-center justify-between sticky top-0 justify-between`}
                   >
@@ -89,7 +89,7 @@ export function Drawer({
               </Transition.Child>
             </div>
           </div>
-        </div>
+        </aside>
       </Dialog>
     </Transition>
   );

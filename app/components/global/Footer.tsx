@@ -1,20 +1,11 @@
-import React from 'react';
 import {Link} from '@remix-run/react';
 import Container from '~/components/global/Container';
 import {SiFacebook, SiGmail, SiInstagram, SiTiktok} from 'react-icons/si';
 
 import {CountrySelector} from '../CountrySelector';
 
-const Strong = ({text}: {text: string}) => {
-  return (
-    <p className="font-bold capitalize text-autoscale-big md:text-xl md:mb-4 mb-6">
-      {text}
-    </p>
-  );
-};
-
 export default function Footer() {
-  const links = [
+  const routeLinks = [
     {
       url: 'shop',
       text: 'Shop',
@@ -40,12 +31,12 @@ export default function Footer() {
   return (
     <footer className="h-fit w-full bg-custom-signature-green text-custom-white flex items-center justify-center">
       <Container className="mt-[10vw] lg:mt-16 ">
-        <div className=" w-full h-fit flex flex-col gap-y-4  md:gap-y-8 lg:gap-y-12">
+        <div className=" w-full h-fit flex flex-col gap-y-6  md:gap-y-8 lg:gap-y-12">
           <div className="flex flex-col md:grid md:grid-cols-2 md:grid-rows-1 gap-8 ">
             <div className="h-fit">
               <Strong text="Quick links" />
               <ul className="grid grid-cols-1 gap-y-3">
-                {links.map((link) => (
+                {routeLinks.map((link) => (
                   <li key={link.text}>
                     <Link
                       to={`/${link.url}`}
@@ -76,31 +67,39 @@ export default function Footer() {
             <Strong text="Social media" />
             <ul>
               <li className="flex gap-x-3 md:gap-x-6 lg:gap-x-8">
-                <SiFacebook className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
-                <SiInstagram className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
-                <SiTiktok className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
-                <SiGmail className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
+                <Link to="https://facebook.com/artbybori" prefetch="none">
+                  <SiFacebook className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
+                </Link>
+                <Link to="https://instagram.com/artbybori" prefetch="none">
+                  <SiInstagram className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
+                </Link>
+                <Link to="https://tiktok.com" prefetch="none">
+                  <SiTiktok className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
+                </Link>
+                <Link to="" prefetch="none">
+                  <SiGmail className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t-2 border-t-custom-grey/40 py-6 my-12 text-custom-white/60 text-sm w-full flex items-start justify-between">
-          <div className="w-1/3">
+          <div className="w-1/2">
             <CountrySelector />
           </div>
           <div className="flex flex-col gap-y-2">
             <div>Ezzel lehet fizetni: </div>
-            <div className="flex gap-x-4">
+            <div className="flex flex-col md:flex-row gap-x-4 text-autoscale-small">
               <Link to="/" className="hover:underline">
-                &#169; 2023, ART BY BORI
+                &#169; 2023 ART BY BORI,
               </Link>
               <Link
                 target={'_blank'}
                 to="https://www.shopify.com"
                 className="hover:underline"
               >
-                Powered by Shopify
+                Powered&nbsp;by&nbsp;Shopify
               </Link>
             </div>
           </div>
@@ -109,3 +108,11 @@ export default function Footer() {
     </footer>
   );
 }
+
+const Strong = ({text}: {text: string}) => {
+  return (
+    <p className="font-bold capitalize text-autoscale-big md:text-xl md:mb-4 mb-6">
+      {text}
+    </p>
+  );
+};

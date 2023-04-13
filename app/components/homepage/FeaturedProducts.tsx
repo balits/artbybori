@@ -4,7 +4,7 @@ import {SerializeFrom} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import Container from '../global/Container';
 import {CgSpinner} from 'react-icons/cg';
-import {Money} from '@shopify/hydrogen';
+import {Image, Money} from '@shopify/hydrogen';
 
 interface Props {
   data: SerializeFrom<Product>[];
@@ -32,15 +32,25 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
               key={prod.id}
               className={clsx(
                 i === 0 && 'block row-span-2 col-span-2 ',
-                'relative  group rounded-sm min-w-full w-[20%] min-h-full aspect-square relative cursor-pointer basic-animation hover:opacity-90',
+                'relative  group rounded-sm min-w-full w-[20%] min-h-full aspect-square relative cursor-pointer basic-animation delay-0 hover:opacity-90',
               )}
             >
-              <Link to={`/products/${prod.handle}`}>
-                <img
-                  className="absolute inset-0 w-full h-full object-cover"
-                  src={image!.url}
-                  alt={image.altText ?? prod.title}
-                />
+              <Link to={`/products/${prod.handle}`} prefetch="intent">
+                <div className="aspect-square bg-custom-placeholder-green">
+                  {image && (
+                    <Image
+                      className="aspect-square w-full object-cover fadeIn"
+                      widths={[300, 350, 400]}
+                      loaderOptions={{
+                        crop: 'center',
+                        scale: 2,
+                      }}
+                      data={image}
+                      alt={image.altText ?? prod.title}
+                      loading={'lazy'}
+                    />
+                  )}
+                </div>
                 <div
                   className={clsx([
                     'absolute left-0 bottom-0  text-custom-white lg:basic-animation lg:opacity-0 lg:group-hover:opacity-100',
@@ -69,8 +79,8 @@ export default FeaturedProducts;
 
 export const Skeleton: React.FC = () => (
   <Container className="mt-[10vh]">
-    <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-4 lg:mb-8">
-      Featured Products
+    <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-4 ">
+      Featured products.
     </h2>
 
     <ul className="grid w-full h-fit overflow-hidden grid-cols-2 grid-rows-4 gap-2 md:grid-cols-4 md:grid-rows-2 md:gap-3 ">
@@ -82,9 +92,7 @@ export const Skeleton: React.FC = () => (
               num === 0 && 'block row-span-2 col-span-2 ',
               'grid bg-custom-placeholder-green bg-custom-placeholder-green place-items-center relative rounded-sm min-w-full w-[20%] min-h-full aspect-square cursor-not-allowed transition-all ease-in-out delay-75 duration-150 hover:opacity-90',
             )}
-          >
-            <CgSpinner className="text-custom-white font-bold w-12 h-12 animate-spin" />
-          </li>
+          ></li>
         );
       })}
     </ul>

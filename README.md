@@ -1,3 +1,15 @@
+# WIP
+
+- [ ] FALLBACK / SKELETON
+- [x] CAROUSEL: Kész már csak collections, és image width / height
+- [ ] Images + fadeIn
+- [ ] footer on small devices
+- [ ] productHandle page
+- [ ] Preloaded Image size / srcset
+- [ ] Product Image size / srcset
+- [ ] Meta / Seo
+- [ ] ErrorBoundary + CatchBoundary
+
 # Hydrogen template: Demo Store
 
 Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dovetail with [Remix](https://remix.run/), Shopify’s full stack web framework. This template contains a **full-featured setup** of components, queries and tooling to get started with Hydrogen.

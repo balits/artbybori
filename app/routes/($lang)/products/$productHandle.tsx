@@ -1,17 +1,12 @@
 import {type ReactNode, useRef, Suspense, useMemo} from 'react';
 import {Disclosure, Listbox} from '@headlessui/react';
-import {
-  defer,
-  type LoaderArgs,
-  type AppLoadContext,
-} from '@shopify/remix-oxygen';
+import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import {
   useLoaderData,
   Await,
   useSearchParams,
   useLocation,
   useTransition,
-  useMatches,
 } from '@remix-run/react';
 
 import {
@@ -51,7 +46,7 @@ import {routeHeaders, CACHE_SHORT} from '~/data/cache';
 import Container from '~/components/global/Container';
 import Slider, {Fallback as SliderFallback} from '~/components/global/Slider';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
-import {cartCreate} from '~/routes/cart';
+import {cartCreate} from '~/routes/($lang)/cart';
 
 export const headers = routeHeaders;
 
@@ -196,15 +191,15 @@ export default function Product() {
                 {shippingPolicy?.body && (
                   <ProductDetail
                     title="Shipping"
-                    content={getExcerpt(shippingPolicy.body)}
-                    learnMore={`/policies/${shippingPolicy.handle}`}
+                    content={getExcerpt(shippingPolicy!.body)}
+                    learnMore={`/policies/${shippingPolicy!.handle}`}
                   />
                 )}
                 {refundPolicy?.body && (
                   <ProductDetail
                     title="Returns"
-                    content={getExcerpt(refundPolicy.body)}
-                    learnMore={`/policies/${refundPolicy.handle}`}
+                    content={getExcerpt(refundPolicy!.body)}
+                    learnMore={`/policies/${refundPolicy!.handle}`}
                   />
                 )}
               </div>

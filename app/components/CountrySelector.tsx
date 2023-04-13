@@ -47,12 +47,12 @@ export function CountrySelector() {
   return (
     <section
       ref={observerRef}
-      className="grid w-full gap-4"
+      className="grid w-full gap-2 text-autoscale-small"
       onMouseLeave={closeDropdown}
     >
       <div className="relative">
         <details
-          className="absolute w-full border border-custom-white/40 rounded  open:round-b-none overflow-clip"
+          className="absolute w-full border border-custom-white/40 rounded open:round-b-none overflow-clip"
           ref={closeRef}
         >
           <summary className="flex items-center justify-between w-full px-4 py-3 cursor-pointer">

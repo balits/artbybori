@@ -52,6 +52,9 @@ function CartLineItem({cartLine, comparePrice = false}: CartLineItemProps) {
   const {id, quantity: qty, merchandise: variant} = cartLine;
   const product = variant.product;
 
+  const prevQuantity = Number(Math.max(0, qty - 1).toFixed(0));
+  const nextQuantity = Number((qty + 1).toFixed(0));
+
   return (
     <div className="flex gap-x-16 h-fit w-full ">
       {variant.image && (
@@ -82,11 +85,19 @@ function CartLineItem({cartLine, comparePrice = false}: CartLineItemProps) {
             Quantity, {qty}
           </label>
           <div className="flex items-center justify-center">
-            <DecrementQuantity id={id} quantity={qty - 1} />
+            <DecrementQuantity
+              id={id}
+              quantity={prevQuantity}
+              disabled={qty <= 1}
+            />
             <div className="p-2 w-full h-full grid  place-items-center">
               {qty}
             </div>
-            <IncrementQuantity id={id} quantity={qty + 1} />
+            <IncrementQuantity
+              id={id}
+              quantity={nextQuantity}
+              disabled={false}
+            />
           </div>
         </div>
         <span></span>
@@ -180,9 +191,12 @@ function CartSummary({cart}: CartSummaryProps) {
 type QuantityProps = {
   id: string;
   quantity: number;
+  disabled: boolean;
 };
-function DecrementQuantity({id, quantity}: QuantityProps) {
+
+function DecrementQuantity({id, quantity, disabled}: QuantityProps) {
   const fetcher = useFetcher();
+
   return (
     <fetcher.Form
       className="p-0 m-0 grid place-items-center"
@@ -199,7 +213,7 @@ function DecrementQuantity({id, quantity}: QuantityProps) {
         name="decrease-quantity"
         aria-label="Decrease quantity"
         value={quantity}
-        disabled={quantity < 1}
+        disabled={disabled}
         className="disabled:opacity-40 disabled:cursor-not-allowed"
       >
         <HiMinus className="w-8 h-8 p-2" />
@@ -207,7 +221,8 @@ function DecrementQuantity({id, quantity}: QuantityProps) {
     </fetcher.Form>
   );
 }
-function IncrementQuantity({id, quantity}: QuantityProps) {
+
+function IncrementQuantity({id, quantity, disabled}: QuantityProps) {
   const fetcher = useFetcher();
   return (
     <fetcher.Form
@@ -226,6 +241,7 @@ function IncrementQuantity({id, quantity}: QuantityProps) {
         aria-label="Decrease quantity"
         value={quantity}
         type="submit"
+        disabled={disabled}
       >
         <HiPlus className="w-8 h-8 p-2" />
       </button>
