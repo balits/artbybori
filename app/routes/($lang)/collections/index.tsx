@@ -1,5 +1,5 @@
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
-import {useLoaderData} from '@remix-run/react';
+import { json, type LoaderArgs } from '@shopify/remix-oxygen';
+import { useLoaderData } from '@remix-run/react';
 import type {
   Collection,
   CollectionConnection,
@@ -14,17 +14,17 @@ import {
   getPaginationVariables,
   Button,
 } from '~/components';
-import {getImageLoadingPriority} from '~/lib/const';
-import {seoPayload} from '~/lib/seo.server';
-import {CACHE_SHORT, routeHeaders} from '~/data/cache';
+import { getImageLoadingPriority } from '~/lib/const';
+import { seoPayload } from '~/lib/seo.server';
+import { CACHE_SHORT, routeHeaders } from '~/data/cache';
 
 const PAGINATION_SIZE = 8;
 
 export const headers = routeHeaders;
 
-export const loader = async ({request, context: {storefront}}: LoaderArgs) => {
+export const loader = async ({ request, context: { storefront } }: LoaderArgs) => {
   const variables = getPaginationVariables(request, PAGINATION_SIZE);
-  const {collections} = await storefront.query<{
+  const { collections } = await storefront.query<{
     collections: CollectionConnection;
   }>(COLLECTIONS_QUERY, {
     variables: {
@@ -39,8 +39,12 @@ export const loader = async ({request, context: {storefront}}: LoaderArgs) => {
     url: request.url,
   });
 
+  collections.nodes.filter(
+    (c) => c.handle !== 'hero' && c.handle !== 'featured-products',
+  );
+
   return json(
-    {collections, seo},
+    { collections, seo },
     {
       headers: {
         'Cache-Control': CACHE_SHORT,
@@ -50,7 +54,7 @@ export const loader = async ({request, context: {storefront}}: LoaderArgs) => {
 };
 
 export default function Collections() {
-  const {collections} = useLoaderData<typeof loader>();
+  const { collections } = useLoaderData<typeof loader>();
 
   return (
     <>
