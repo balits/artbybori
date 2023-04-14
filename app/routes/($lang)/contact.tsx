@@ -1,8 +1,8 @@
 import Container from '~/components/global/Container';
 import {json, type ActionArgs} from '@shopify/remix-oxygen';
-import {useActionData, useFetcher, Form} from '@remix-run/react';
+import {useActionData, useFetcher, Form, useNavigation} from '@remix-run/react';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useTransition} from 'react';
 
 export async function action({request, params, context}: ActionArgs) {
   const body = await request.formData();
@@ -19,6 +19,8 @@ function ContactForm() {
   const [fullName, setFullName] = useState((data?.fullName as string) ?? '');
   const [email, setEmail] = useState((data?.email as string) ?? '');
   const [message, setMessage] = useState((data?.message as string) ?? '');
+
+  const navigation = useNavigation();
 
   return (
     <Form
@@ -80,8 +82,9 @@ function ContactForm() {
         <button
           className="text-lg font-medium uppercase py-2 px-16 border border-custom-black hover:bg-zinc-100 focus:bg-zinc-200"
           type="submit"
+          disabled={navigation.state === 'submitting'}
         >
-          Send
+          {navigation.state === 'submitting' ? 'Sending...' : 'Send'}
         </button>
       </div>
     </Form>

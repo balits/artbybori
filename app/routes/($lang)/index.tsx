@@ -25,8 +25,10 @@ import {
   Skeleton as CarouselSkeleton,
 } from '~/components/global/Carousel';
 import invariant from 'tiny-invariant';
-import {CacheLong, flattenConnection} from '@shopify/hydrogen';
+import {flattenConnection} from '@shopify/hydrogen';
 import Container from '~/components/global/Container';
+
+export const headers = routeHeaders;
 
 export const links: LinksFunction = () => [
   /* {
@@ -109,6 +111,7 @@ query($handle: String!) {
 	}
 }
 `;
+
   const hero = await context.storefront.query<{
     hero: {
       image: Image;
@@ -129,10 +132,13 @@ query($handle: String!) {
 
   invariant(collectionsPromise, 'No collections returned from Storefont API\n');
 
+  const seo = seoPayload.home();
+
   return defer(
     {
       hero,
       collectionsPromise,
+      seo,
     },
     {
       headers: {

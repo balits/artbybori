@@ -1,5 +1,5 @@
-import {type SeoConfig} from '@shopify/hydrogen';
-import type {
+import type {SeoConfig} from '@shopify/hydrogen';
+import {
   Article,
   Blog,
   Collection,
@@ -9,7 +9,8 @@ import type {
   ProductVariant,
   ShopPolicy,
   Shop,
-} from '@shopify/hydrogen-react/storefront-api-types';
+} from '@shopify/hydrogen/storefront-api-types';
+
 import type {
   Article as SeoArticle,
   BreadcrumbList,
@@ -21,6 +22,8 @@ import type {
   WebPage,
 } from 'schema-dts';
 
+const DESCRIPTION_FALLBACK = 'Handmade ceramics for your Home';
+
 function root({
   shop,
   url,
@@ -30,7 +33,7 @@ function root({
 }): SeoConfig<Organization> {
   return {
     title: shop?.name,
-    titleTemplate: '%s | Hydrogen Demo Store',
+    titleTemplate: '%s | Art by Bori',
     description: truncate(shop?.description ?? ''),
     handle: '@shopify',
     url,
@@ -44,11 +47,11 @@ function root({
       name: shop.name,
       logo: shop.brand?.logo?.image?.url,
       sameAs: [
-        'https://twitter.com/shopify',
-        'https://facebook.com/shopify',
-        'https://instagram.com/shopify',
-        'https://youtube.com/shopify',
-        'https://tiktok.com/@shopify',
+        //'https://twitter.com/shopify',
+        'https://facebook.com/artbybori',
+        'https://instagram.com/artbybori',
+        //'https://youtube.com/shopify',
+        'https://tiktok.com/@artbybori',
       ],
       url,
       potentialAction: {
@@ -63,8 +66,8 @@ function root({
 function home(): SeoConfig<WebPage> {
   return {
     title: 'Home',
-    titleTemplate: '%s | Hydrogen Demo Store',
-    description: 'The best place to buy snowboarding products',
+    titleTemplate: '%s | Art by Bori',
+    description: DESCRIPTION_FALLBACK,
     robots: {
       noIndex: false,
       noFollow: false,
@@ -154,7 +157,7 @@ function product({
   url: Request['url'];
 }) {
   const description = truncate(
-    product?.seo?.description ?? product?.description ?? '',
+    product?.seo?.description ?? product?.description ?? DESCRIPTION_FALLBACK,
   );
   return {
     title: product?.seo?.title ?? product?.title,
@@ -226,7 +229,9 @@ function collection({
   return {
     title: collection?.seo?.title,
     description: truncate(
-      collection?.seo?.description ?? collection?.description ?? '',
+      collection?.seo?.description ??
+        collection?.description ??
+        DESCRIPTION_FALLBACK,
     ),
     titleTemplate: '%s | Collection',
     media: {
@@ -280,7 +285,7 @@ function listCollections({
   return {
     title: 'Collections',
     titleTemplate: '%s | Collections',
-    description: 'All hydrogen collections',
+    description: 'All Art by Bori collections',
     url,
     jsonLd: collectionsJsonLd({collections, url}),
   };
@@ -295,7 +300,7 @@ function article({
 }): SeoConfig<SeoArticle> {
   return {
     title: article?.seo?.title ?? article?.title,
-    description: truncate(article?.seo?.description ?? ''),
+    description: truncate(article?.seo?.description ?? DESCRIPTION_FALLBACK),
     titleTemplate: '%s | Journal',
     url,
     media: {
@@ -330,7 +335,7 @@ function blog({
 }): SeoConfig<SeoBlog> {
   return {
     title: blog?.seo?.title,
-    description: truncate(blog?.seo?.description || ''),
+    description: truncate(blog?.seo?.description || DESCRIPTION_FALLBACK),
     titleTemplate: '%s | Blog',
     url,
     jsonLd: {
@@ -351,7 +356,7 @@ function page({
   url: Request['url'];
 }): SeoConfig<WebPage> {
   return {
-    description: truncate(page?.seo?.description || ''),
+    description: truncate(page?.seo?.description || DESCRIPTION_FALLBACK),
     title: page?.seo?.title,
     titleTemplate: '%s | Page',
     url,
@@ -399,7 +404,7 @@ function policies({
   return {
     title: 'Policies',
     titleTemplate: '%s | Policies',
-    description: 'Hydroge store policies',
+    description: 'Art by Bori store policies',
     jsonLd: [
       {
         '@context': 'https://schema.org',
@@ -409,7 +414,7 @@ function policies({
       {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
-        description: 'Hydrogen store policies',
+        description: 'Art by Bori store policies',
         name: 'Policies',
         url,
       },

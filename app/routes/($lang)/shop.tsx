@@ -1,23 +1,15 @@
-import {
-  defer,
-  json,
-  SerializeFrom,
-  type LoaderArgs,
-} from '@shopify/remix-oxygen';
-import {Await, useLoaderData} from '@remix-run/react';
-import type {
-  ProductConnection,
-  Collection,
-} from '@shopify/hydrogen/storefront-api-types';
+import {defer, json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {useLoaderData} from '@remix-run/react';
+import type {ProductConnection} from '@shopify/hydrogen/storefront-api-types';
 import invariant from 'tiny-invariant';
 import {getPaginationVariables} from '~/components';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {seoPayload} from '~/lib/seo.server';
-import {routeHeaders, CACHE_LONG} from '~/data/cache';
+import {routeHeaders, CACHE_LONG, CACHE_SHORT} from '~/data/cache';
 import ProductGrid, {Fallback} from '~/components/shop/ProductGrid';
-import {Suspense} from 'react';
 import {flattenConnection} from '@shopify/hydrogen';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
+import {Collection} from '@shopify/hydrogen/storefront-api-types';
 
 const PAGE_BY = 8;
 
@@ -35,10 +27,40 @@ export async function loader({request, context: {storefront}}: LoaderArgs) {
       language: storefront.i18n.language,
     },
   });
+
   invariant(products, 'No products returned from Shopify API');
-  return defer({
+
+  const seoCollection = {
+    id: 'all-products',
+    title: 'All Products',
+    handle: 'products',
+    descriptionHtml: 'All the store products',
+    description: 'All the store products',
+    seo: {
+      title: 'All Products',
+      description: 'All the store products',
+    },
+    metafields: [],
     products,
+    updatedAt: '',
+  } satisfies Collection;
+
+  const seo = seoPayload.collection({
+    collection: seoCollection,
+    url: request.url,
   });
+
+  return json(
+    {
+      products,
+      seo,
+    },
+    {
+      headers: {
+        'Cache-Control': CACHE_SHORT,
+      },
+    },
+  );
 }
 
 export default function AllProducts() {
@@ -47,7 +69,7 @@ export default function AllProducts() {
   return (
     <>
       {products && <ProductGrid data={flattenConnection(products)} />}
-      <InstagramGallery className="mt-20" />
+      <InstagramGallery className="" />
     </>
   );
 }

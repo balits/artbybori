@@ -6,6 +6,7 @@ import {
   type AppLoadContext,
 } from '@shopify/remix-oxygen';
 import {
+  Link,
   Links,
   Meta,
   Outlet,
@@ -95,6 +96,27 @@ export default function App() {
   );
 }
 
+function NotFoundError({type}: {type?: string}) {
+  const description = `We couldn’t find the ${type} you’re looking for. Try checking the URL or heading back to the home page.`;
+  return (
+    <section className="w-full h-[50vh] scaling-mt-header grid place-items-center">
+      <div>
+        <h1 className="font-semibold tracking-tight text-6xl mb-8">
+          Page Not Found
+        </h1>
+        <p className="text-custom-black/60 mb-2">{description}</p>
+        <Link
+          to="/"
+          prefetch="intent"
+          className="underline decoration-offset-2 text-custom-signature-green"
+        >
+          Take me to the homepage.
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 export function CatchBoundary() {
   const [root] = useMatches();
   const caught = useCatch();
@@ -111,7 +133,7 @@ export function CatchBoundary() {
       <body>
         <Layout>
           {isNotFound ? (
-            <NotFound type={caught.data?.pageType} />
+            <NotFoundError type={caught.data?.pageType} />
           ) : (
             <GenericError
               error={{message: `${caught.status} ${caught.data}`}}

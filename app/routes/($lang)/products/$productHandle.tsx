@@ -46,7 +46,6 @@ import {routeHeaders, CACHE_SHORT} from '~/data/cache';
 import Container from '~/components/global/Container';
 import Slider, {Fallback as SliderFallback} from '~/components/global/Slider';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
-import {cartCreate} from '~/routes/($lang)/cart';
 
 export const headers = routeHeaders;
 

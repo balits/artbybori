@@ -1,14 +1,14 @@
 # WIP
 
-- [ ] FALLBACK / SKELETON
 - [x] CAROUSEL: Kész már csak collections, és image width / height
-- [ ] Images + fadeIn
+- [ ] ErrorBoundary + CatchBoundary
+
+- [ ] FALLBACK / SKELETON
+- [ ] Images
+- [ ] Preloaded Image size / srcset
 - [ ] footer on small devices
 - [ ] productHandle page
-- [ ] Preloaded Image size / srcset
-- [ ] Product Image size / srcset
 - [ ] Meta / Seo
-- [ ] ErrorBoundary + CatchBoundary
 
 # Hydrogen template: Demo Store
 
