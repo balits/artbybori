@@ -85,23 +85,23 @@ export default function Search() {
 
   return (
     <>
-      <PageHeader>
-        <Heading as="h1" size="copy">
+      <div className='scaling-mt-header px-6'>
+        <h1 className='text-3xl font-cantata font-semibold capitalize'>
           Search
-        </Heading>
-        <Form method="get" className="relative flex w-full text-heading">
-          <Input
+        </h1>
+        <Form method="get" className="relative flex w-full text-lg ">
+          <input
+            className='p-2 w-full'
             defaultValue={searchTerm}
             placeholder="Search…"
             type="search"
-            variant="search"
             name="q"
           />
-          <button className="absolute right-0 py-2" type="submit">
+          <button className="p-2" type="submit">
             Go
           </button>
         </Form>
-      </PageHeader>
+      </div>
       {!searchTerm || noResults ? (
         <>
           {noResults && (

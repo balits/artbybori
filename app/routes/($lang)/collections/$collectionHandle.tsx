@@ -12,6 +12,7 @@ import {ProductGrid} from '~/components/ProductGrid';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
+import Container from '~/components/global/Container';
 
 export const headers = routeHeaders;
 
@@ -152,17 +153,14 @@ export default function Collection() {
 
   return (
     <>
-      <PageHeader heading={collection.title}>
+      <div className='scaling-mt-header p-4 md:p-8 lg:p-12'>
+        <h1 className='text-4xl font-semibold mb-4'>{collection.title}</h1>
         {collection?.description && (
           <div className="flex items-baseline justify-between w-full">
-            <div>
-              <Text format width="narrow" as="p" className="inline-block">
-                {collection.description}
-              </Text>
-            </div>
+            <p>{collection.description}</p>
           </div>
         )}
-      </PageHeader>
+      </div>
       <Section>
         <SortFilter
           filters={collection.products.filters as Filter[]}

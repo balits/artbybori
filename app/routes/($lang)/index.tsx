@@ -5,14 +5,14 @@ import {
   SerializeFrom,
   type LoaderArgs,
 } from '@shopify/remix-oxygen';
-import {Suspense, useState} from 'react';
-import {Await, useLoaderData} from '@remix-run/react';
-import {seoPayload} from '~/lib/seo.server';
+import { Suspense } from 'react';
+import { Await, useLoaderData } from '@remix-run/react';
+import { seoPayload } from '~/lib/seo.server';
 import type {
   CollectionConnection,
   Image,
 } from '@shopify/hydrogen/storefront-api-types';
-import {routeHeaders, CACHE_LONG} from '~/data/cache';
+import { routeHeaders, CACHE_LONG } from '~/data/cache';
 
 import Banner from '~/components/homepage/Banner';
 import FeaturedProducts, {
@@ -25,8 +25,9 @@ import {
   Skeleton as CarouselSkeleton,
 } from '~/components/global/Carousel';
 import invariant from 'tiny-invariant';
-import {flattenConnection} from '@shopify/hydrogen';
+import { flattenConnection } from '@shopify/hydrogen';
 import Container from '~/components/global/Container';
+import { Collection } from '@shopify/hydrogen/storefront-api-types';
 
 export const headers = routeHeaders;
 
@@ -43,8 +44,8 @@ export const links: LinksFunction = () => [
   }, */
 ];
 
-export async function loader({params, context}: LoaderArgs) {
-  const {language, country} = context.storefront.i18n;
+export async function loader({ params, context }: LoaderArgs) {
+  const { language, country } = context.storefront.i18n;
 
   if (
     params.lang &&
@@ -52,7 +53,7 @@ export async function loader({params, context}: LoaderArgs) {
   ) {
     // If the lang URL param is defined, yet we still are on `EN-US`
     // the the lang param must be invalid, send to the 404 page
-    throw new Response(null, {status: 404});
+    throw new Response(null, { status: 404 });
   }
 
   const all_collections_query = `#graphql
@@ -149,7 +150,7 @@ query($handle: String!) {
 }
 
 export default function Homepage() {
-  const {hero: homepage, collectionsPromise} = useLoaderData<typeof loader>();
+  const { hero: homepage, collectionsPromise } = useLoaderData<typeof loader>();
 
   // TODO: skeletons vs placeholders
 
@@ -174,21 +175,23 @@ export default function Homepage() {
       )}
       <SplitView />
 
-      <section className="bg-custom-signature-green w-full h-fit my-12">
+      <section className="bg-custom-signature-green w-full h-fit my-20">
         <Container className="py-8 lg:py-16">
           <h2 className="mb-12 text-4xl text-custom-white font-cantata font-semibold ">
             Shop by categories.
           </h2>
           <Suspense fallback={<CarouselSkeleton />}>
             <Await resolve={collectionsPromise}>
-              {({collections}) => {
+              {({ collections }) => {
                 if (!collections) return <CarouselSkeleton />;
                 const items = flattenConnection(collections).filter(
                   (coll) =>
                     coll.handle !== 'hero' &&
                     coll.handle !== 'featured-products',
                 );
-                return <CollectoinCarousel collections={items} />;
+                return (
+                  <CollectoinCarousel collections={items as Collection[]} />
+                );
               }}
             </Await>
           </Suspense>

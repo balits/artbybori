@@ -24,7 +24,7 @@ export const headers = routeHeaders;
 
 export const loader = async ({ request, context: { storefront } }: LoaderArgs) => {
   const variables = getPaginationVariables(request, PAGINATION_SIZE);
-  const { collections } = await storefront.query<{
+  const { collections: collectionCollections } = await storefront.query<{
     collections: CollectionConnection;
   }>(COLLECTIONS_QUERY, {
     variables: {
@@ -35,16 +35,17 @@ export const loader = async ({ request, context: { storefront } }: LoaderArgs) =
   });
 
   const seo = seoPayload.listCollections({
-    collections,
+    collections: collectionCollections,
     url: request.url,
   });
 
-  collections.nodes.filter(
-    (c) => c.handle !== 'hero' && c.handle !== 'featured-products',
-  );
 
   return json(
-    { collections, seo },
+    {
+      collectionCollections,
+      collections: collectionCollections.nodes.filter(e => e.handle !== "hero" && e.handle !== "featured-products"),
+      seo
+    },
     {
       headers: {
         'Cache-Control': CACHE_SHORT,
@@ -54,13 +55,13 @@ export const loader = async ({ request, context: { storefront } }: LoaderArgs) =
 };
 
 export default function Collections() {
-  const { collections } = useLoaderData<typeof loader>();
+  const { collectionCollections, collections } = useLoaderData<typeof loader>();
 
   return (
     <>
       <PageHeader heading="Collections" />
       <Section>
-        <Pagination connection={collections}>
+        <Pagination connection={collectionCollections}>
           {({
             endCursor,
             hasNextPage,

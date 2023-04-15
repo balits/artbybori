@@ -36,18 +36,20 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
               )}
             >
               <Link to={`/products/${prod.handle}`} prefetch="intent">
-                <div className="aspect-square bg-custom-placeholder-green">
+                <div className="aspect-square relative flex items-center justify-center overflow-clip rounded-sm">
                   {image && (
                     <Image
                       className="aspect-square w-full object-cover fadeIn"
-                      widths={[300, 350, 400]}
+                      widths={[400]}
                       loaderOptions={{
                         crop: 'center',
                         scale: 2,
+                        width: 400,
+                        height: 400,
                       }}
                       data={image}
                       alt={image.altText ?? prod.title}
-                      loading={'lazy'}
+                      loading="lazy"
                     />
                   )}
                 </div>

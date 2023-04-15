@@ -1,1 +1,0 @@
-- [ ] aspect-square helyett aspect-[4/5]

@@ -21,9 +21,11 @@ export default function Banner({image}: Props) {
         sizes="(min-width: 80em) 1400px, (min-width: 48em) 900px, 500px"
       />
       <div className="absolute inset-0 w-full h-full grid place-items-center">
-        <h1 className="lg:p-4 z-[2] text-custom-white font-cantata text-6xl sm:text-7xl md:text-8xl lg:text-9xl grid place-items-center">
-          Ceramics <br className="lg:hidden" />
-          for your <br className="lg:hidden" />
+        <h1 className="lg:p-4 z-[2] text-custom-white font-cantata text-6xl sm:text-6xl md:text-7xl lg:text-8xl grid place-items-center">
+          Ceramics&nbsp;
+          <br className="lg:hidden" />
+          for&nbsp;your
+          <br className="lg:hidden" />
           home.
         </h1>
       </div>

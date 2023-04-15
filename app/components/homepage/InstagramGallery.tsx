@@ -2,16 +2,12 @@ import clsx from 'clsx';
 import {SiInstagram} from 'react-icons/si';
 import Container from '../global/Container';
 
-export default function InstagramGallery({
-  className = '',
-}: {
-  className?: string;
-}) {
+export default function InstagramGallery({mt = 'mt-16'}: {mt?: string}) {
   return (
     <Container
       className={clsx(
         'mt-16 mb-10 grid grid-cols-2 grid-rows-4 gap-2 md:grid-cols-4 md:grid-rows-2',
-        className,
+        mt,
       )}
     >
       {[1, 2, 3, 4, 5, 6, 7, 8].map((v) => (

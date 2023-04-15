@@ -21,6 +21,7 @@ import {
   AppliedFilter,
   SortParam,
 } from '~/routes/($lang)/collections/$collectionHandle';
+import { HiAdjustmentsHorizontal } from 'react-icons/hi2';
 
 type Props = {
   filters: Filter[];
@@ -45,7 +46,7 @@ export function SortFilter({
             'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5'
           }
         >
-          <IconFilters />
+          <HiAdjustmentsHorizontal className='w-4 h-4 md:w-5 md:h-5 cursor-pointer'/>
         </button>
         <SortMenu />
       </div>

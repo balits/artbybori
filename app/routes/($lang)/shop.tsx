@@ -1,6 +1,6 @@
 import {defer, json, type LoaderArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
-import type {ProductConnection} from '@shopify/hydrogen/storefront-api-types';
+import type {Product, ProductConnection} from '@shopify/hydrogen/storefront-api-types';
 import invariant from 'tiny-invariant';
 import {getPaginationVariables} from '~/components';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
@@ -68,8 +68,10 @@ export default function AllProducts() {
 
   return (
     <>
-      {products && <ProductGrid data={flattenConnection(products)} />}
-      <InstagramGallery className="" />
+      {products && (
+        <ProductGrid products={flattenConnection(products) as Product[]} />
+      )}
+      <InstagramGallery mt="mt-32" />
     </>
   );
 }
