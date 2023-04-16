@@ -47,19 +47,31 @@ export function CountrySelector() {
   return (
     <section
       ref={observerRef}
+<<<<<<< HEAD
       className="grid w-full gap-1 text-autoscale-small"
+=======
+      className="grid w-full gap-2 text-autoscale-small"
+>>>>>>> refs/remotes/origin/main
       onMouseLeave={closeDropdown}
     >
       <div className="relative">
         <details
           className="absolute w-full border border-custom-white/40 rounded open:round-b-none overflow-clip"
           ref={closeRef}
+<<<<<<< HEAD
           id="country-selector"
         >
           <summary className="flex items-center justify-between w-full p-2 cursor-pointer">
             {selectedLocale.label}
           </summary>
           <div className="w-full overflow-auto border-t max-h-36 flex-reverse">
+=======
+        >
+          <summary className="flex items-center justify-between w-full px-4 py-3 cursor-pointer">
+            {selectedLocale.label}
+          </summary>
+          <div className="w-full overflow-auto border-t max-h-36">
+>>>>>>> refs/remotes/origin/main
             {countries &&
               Object.keys(countries).map((countryPath) => {
                 const countryLocale = countries[countryPath];
@@ -111,7 +123,11 @@ function Country({
     >
       <button
         className={clsx([
+<<<<<<< HEAD
           ' w-full p-1 transition rounded flex justify-start',
+=======
+          ' w-full p-2 transition rounded flex justify-start',
+>>>>>>> refs/remotes/origin/main
           'items-center text-left cursor-pointer py-2 px-4',
         ])}
         type="submit"

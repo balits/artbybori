@@ -51,7 +51,11 @@ export function getExcerpt(text: string) {
   return match?.length ? match[0] : text;
 }
 
+<<<<<<< HEAD
 export function isNewArrival(date: string, daysOld = 7) {
+=======
+export function isNewArrival(date: string, daysOld = 30) {
+>>>>>>> refs/remotes/origin/main
   return (
     new Date(date).valueOf() >
     new Date().setDate(new Date().getDate() - daysOld).valueOf()

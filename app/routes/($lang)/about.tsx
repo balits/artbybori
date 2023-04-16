@@ -1,5 +1,9 @@
 import InstagramGallery from '~/components/homepage/InstagramGallery';
+<<<<<<< HEAD
 import {Container} from '~/components/global/Container';
+=======
+import Container from '~/components/global/Container';
+>>>>>>> refs/remotes/origin/main
 
 export default function About() {
   return (

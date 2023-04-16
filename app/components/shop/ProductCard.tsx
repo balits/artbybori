@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { useParams } from '@remix-run/react';
+=======
+>>>>>>> refs/remotes/origin/main
 import {Money} from '@shopify/hydrogen';
 import {
   Image as ImageType,
@@ -22,10 +25,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <div className=" bg-custom-placeholder-green rounded-sm group relative aspect-square cursor-pointer basic-animation shadow-sm  hover:opacity-90">
+<<<<<<< HEAD
       <SmartImage image={img} alt={img.altText ?? title} className="w-full" loading='eager'/>
       {extraLabel && (
         <div className="absolute top-0 right-0 p-4">
           <p className="text-custom-white w-fit text-xs lg:text-md capitalize">
+=======
+      <SmartImage image={img} alt={img.altText ?? title} />
+      {extraLabel && (
+        <div className="absolute top-0 right-0 p-4">
+          <p className="text-custom-white w-fit text-xs lg:text-md capitalize ">
+>>>>>>> refs/remotes/origin/main
             {extraLabel}
           </p>
         </div>

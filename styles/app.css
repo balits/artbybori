@@ -118,10 +118,13 @@ shop-pay-button {
 }
 
 @layer components {
+<<<<<<< HEAD
   input {
     @apply bg-custom-white
   }
 
+=======
+>>>>>>> refs/remotes/origin/main
   .article {
     h2,
     h3,
@@ -149,7 +152,10 @@ shop-pay-button {
     }
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/main
   .swimlane {
     @apply grid w-full snap-x snap-mandatory scroll-px-6 grid-flow-col justify-start gap-4 overflow-x-scroll px-6 pb-4;
   }
@@ -161,7 +167,11 @@ shop-pay-button {
   }
 
   .text-autoscale-small {
+<<<<<<< HEAD
     @apply text-sm lg:text-base;
+=======
+    @apply text-xs md:text-sm lg:text-md;
+>>>>>>> refs/remotes/origin/main
   }
   .text-autoscale-big {
     @apply text-md md:text-lg lg:text-xl;
@@ -244,6 +254,7 @@ shop-pay-button {
     }
   }
 }
+<<<<<<< HEAD
 
 #country-selector {
     position: relative;
@@ -257,3 +268,5 @@ shop-pay-button {
     right: 0;
     bottom: 0;
 }
+=======
+>>>>>>> refs/remotes/origin/main

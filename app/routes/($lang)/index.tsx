@@ -21,12 +21,20 @@ import FeaturedProducts, {
 import SplitView from '~/components/homepage/SplitView';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {
+<<<<<<< HEAD
   CollectionCarousel,
+=======
+  CollectoinCarousel,
+>>>>>>> refs/remotes/origin/main
   Skeleton as CarouselSkeleton,
 } from '~/components/global/Carousel';
 import invariant from 'tiny-invariant';
 import { flattenConnection } from '@shopify/hydrogen';
+<<<<<<< HEAD
 import {Container, NoWrapContainer} from '~/components/global/Container';
+=======
+import Container from '~/components/global/Container';
+>>>>>>> refs/remotes/origin/main
 import { Collection } from '@shopify/hydrogen/storefront-api-types';
 
 export const headers = routeHeaders;
@@ -152,6 +160,11 @@ query($handle: String!) {
 export default function Homepage() {
   const { hero: homepage, collectionsPromise } = useLoaderData<typeof loader>();
 
+<<<<<<< HEAD
+=======
+  // TODO: skeletons vs placeholders
+
+>>>>>>> refs/remotes/origin/main
   return (
     <>
       <Banner image={homepage.hero.image} />
@@ -173,9 +186,15 @@ export default function Homepage() {
       )}
       <SplitView />
 
+<<<<<<< HEAD
       <NoWrapContainer className="h-fit my-24">
         <div className="md:px-4 lg:px-8">
           <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-12 ">
+=======
+      <section className="bg-custom-signature-green w-full h-fit my-20">
+        <Container className="py-8 lg:py-16">
+          <h2 className="mb-12 text-4xl text-custom-white font-cantata font-semibold ">
+>>>>>>> refs/remotes/origin/main
             Shop by categories.
           </h2>
           <Suspense fallback={<CarouselSkeleton />}>
@@ -188,15 +207,26 @@ export default function Homepage() {
                     coll.handle !== 'featured-products',
                 );
                 return (
+<<<<<<< HEAD
                   <CollectionCarousel collections={items} />
+=======
+                  <CollectoinCarousel collections={items as Collection[]} />
+>>>>>>> refs/remotes/origin/main
                 );
               }}
             </Await>
           </Suspense>
+<<<<<<< HEAD
         </div>
       </NoWrapContainer>
 
       <InstagramGallery mt="mt-40"/>
+=======
+        </Container>
+      </section>
+
+      <InstagramGallery />
+>>>>>>> refs/remotes/origin/main
     </>
   );
 }

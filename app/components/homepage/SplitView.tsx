@@ -1,5 +1,9 @@
 import {Link} from '@remix-run/react';
+<<<<<<< HEAD
 import {Container} from '../global/Container';
+=======
+import Container from '../global/Container';
+>>>>>>> refs/remotes/origin/main
 
 export default function SplitView() {
   return (
@@ -17,7 +21,11 @@ export default function SplitView() {
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover object-bottom transition-colors ease-in-out group-hover:bg-black/10" />
 
           <div className="absolute inset-0 w-full h-full grid place-items-center font-medium text-custom-white z-[2] ">
+<<<<<<< HEAD
             <h2 className="font-cantata text-md md:text-3xl lg:text-4xl">
+=======
+            <h2 className="font-cantata text-md md:text-3xl lg:text-5xl">
+>>>>>>> refs/remotes/origin/main
               Surround yourself
               <br />
               with beautiful things.

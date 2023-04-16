@@ -73,7 +73,11 @@ export function ProductGallery({
         const style = [
           isFullWidth ? 'md:col-span-2' : 'md:col-span-1',
           isFirst || isFourth ? '' : 'md:aspect-[4/5]',
+<<<<<<< HEAD
           'aspect-square snap-center card-image bg-custom-placeholder-green fadeIn w-mobileGallery md:w-full',
+=======
+          'aspect-square snap-center card-image bg-white dark:bg-contrast/10 w-mobileGallery md:w-full',
+>>>>>>> refs/remotes/origin/main
         ].join(' ');
 
         return (

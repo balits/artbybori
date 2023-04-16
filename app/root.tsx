@@ -19,6 +19,10 @@ import {
 import {ShopifySalesChannel, Seo} from '@shopify/hydrogen';
 import Layout from './components/global/Layout';
 import {GenericError} from './components/GenericError';
+<<<<<<< HEAD
+=======
+import {NotFound} from './components/NotFound';
+>>>>>>> refs/remotes/origin/main
 import tailwind from './styles/app.css';
 import favicon from '../public/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';

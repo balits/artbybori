@@ -3,9 +3,12 @@ module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+<<<<<<< HEAD
       screens: {
         xs: "480px",
       },
+=======
+>>>>>>> refs/remotes/origin/main
       colors: {
         primary: '#222222',
         contrast: '#222222',
@@ -29,7 +32,11 @@ module.exports = {
           'system-ui',
           'sans-serif',
         ],
+<<<<<<< HEAD
         cantata: ['Cantata One', "serif"],
+=======
+        cantata: ['Cantata One', '"IBMPlexSerif"', 'Palatino', 'ui-serif'],
+>>>>>>> refs/remotes/origin/main
       },
       fontSize: {
         md: ['16px', '24px'],

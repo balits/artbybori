@@ -44,7 +44,10 @@ export const PRODUCT_CARD_FRAGMENT = `#graphql
     handle
     variants(first: 1) {
       nodes {
+<<<<<<< HEAD
         availableForSale
+=======
+>>>>>>> refs/remotes/origin/main
         id
         image {
           url

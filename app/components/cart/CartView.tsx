@@ -9,7 +9,11 @@ import {HiPlus, HiMinus} from 'react-icons/hi';
 export function Fallback() {
   return (
     <section aria-labelledby="cart-contents">
+<<<<<<< HEAD
       <h1 className="text-5xl font-cantata mb-8">Your cart.</h1>
+=======
+      <h1 className="text-8xl font-cantata mb-8">Your cart.</h1>
+>>>>>>> refs/remotes/origin/main
     </section>
   );
 }
@@ -23,7 +27,11 @@ export default function CartView({cart}: CartViewProps) {
   return isEmpty ? (
     <>
       <section aria-labelledby="cart-contents">
+<<<<<<< HEAD
         <h1 className="text-5xl font-cantata mb-8">Your cart.</h1>
+=======
+        <h1 className="text-8xl font-cantata mb-8">Your cart.</h1>
+>>>>>>> refs/remotes/origin/main
         <ul className="border-t-2 border-t-custom-black py-8 grid grid-cols-1 gap-y-12">
           {lines.map(
             (l) =>
@@ -38,7 +46,11 @@ export default function CartView({cart}: CartViewProps) {
       {cart && <CartSummary cart={cart} />}
     </>
   ) : (
+<<<<<<< HEAD
     <h1 className="text-5xl font-cantata mb-4">Your cart is empty.</h1>
+=======
+    <h1 className="text-8xl font-cantata mb-4">Your cart is empty.</h1>
+>>>>>>> refs/remotes/origin/main
   );
 }
 
