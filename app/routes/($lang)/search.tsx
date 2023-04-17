@@ -86,6 +86,9 @@ export default function Search() {
         <h1 className='text-3xl font-cantata font-semibold capitalize'>
         </h1>
         <Form method="get" className="relative flex w-full text-lg ">
+          <button className="p-2" type="submit">
+            <HiSearch className='h-4 w-4 md:w-5 md:h-5  cursor-pointer focus:ring-custom-black' />
+          </button>
           <input
             className='p-2 w-full'
             defaultValue={searchTerm}
@@ -93,9 +96,6 @@ export default function Search() {
             type="search"
             name="q"
           />
-          <button className="p-2" type="submit">
-            <HiSearch className='h-4 w-4 md:w-5 md:h-5  cursor-pointer focus:ring-custom-black' />
-          </button>
         </Form>
       </div>
       {!searchTerm || noResults ? (
