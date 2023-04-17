@@ -1,4 +1,5 @@
 import {Link} from '@remix-run/react';
+import clsx from 'clsx';
 import {Container} from '../global/Container';
 
 export default function SplitView() {
@@ -12,12 +13,12 @@ export default function SplitView() {
           <img
             src="/split-1.jpg"
             alt="Standalone Vase"
-            className="object-cover object-bottom w-full h-[300px] md:h-[60vw] lg:h-[calc(100vh-96px)]"
+            className="object-cover object-bottom w-full h-[350px] md:h-[80vw] lg:h-screen"
           />
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover object-bottom transition-colors ease-in-out group-hover:bg-black/10" />
 
           <div className="absolute inset-0 w-full h-full grid place-items-center font-medium text-custom-white z-[2] ">
-            <h2 className="font-cantata text-md md:text-3xl lg:text-4xl">
+            <h2 className="font-cantata text-lg md:text-2xl lg:text-4xl">
               Surround yourself
               <br />
               with beautiful things.
@@ -29,64 +30,52 @@ export default function SplitView() {
           <img
             src="/split-2.jpg"
             alt="Black clay"
-            className="object-cover w-full h-[300px] md:h-[60vw] lg:h-[calc(100vh-96px)]"
+            className="object-cover w-full h-[350px] md:h-[80vw] lg:h-screen"
           />
 
-          <article className="absolute w-full h-full z-[2] hidden lg:grid text-custom-white p-4 place-items-center ">
-            <div className="grid grid-cols-1 gap-y-10 w-1/3">
-              <h2 className=" font-semibold">Handmade with love.</h2>
-              <div>
-                <p className="text-sm mb-4">
-                  All of our products are arefully had-crafted by ceramic
-                  artist, Bori Borbely. They fire at high temperatures so they
-                  are microwave and dishwasher safe. All of our products are
-                  arefully had-crafted by ceramic artist,{' '}
-                </p>
-                <p className="text-sm ">
-                  All of our products are arefully had-crafted by ceramic
-                  artist, Bori Borbely. They fire at high temperatures so they
-                  are microwave and dishwasher safe. All of our products are
-                  arefully had-crafted by ceramic artist,{' '}
-                </p>
-              </div>
-              <Link
-                prefetch="intent"
-                to="/about"
-                className="transition-colors ease-in-out hover:bg-zinc-200/10 focus:bg-zinc-200/20 border border-custom-white tracking-wide  font-semibold py-2 px-14 w-fit"
-              >
-                Learn more.
-              </Link>
+          <article className="absolute w-full h-full z-[2] hidden md:grid  p-4 place-items-center ">
+            <div className=' w-2/3 lg:w-3/5 max-w-[400px]'>
+              <TextBlock color='white'/>
             </div>
           </article>
         </div>
       </div>
 
-      <Container className="lg:hidden  p-8 pb-0 grid grid-cols-1 gap-y-8">
-        <h2 className="font-semibold text-autoscale-big">
-          Handmade with love.
-        </h2>
-        <div className="">
-          <p className="text-autoscale tracking-wide mb-4">
-            All of our products are arefully had-crafted by ceramic artist, Bori
-            Borbely. They fire at high temperatures so they are microwave and
-            dishwasher safe. All of our products are arefully had-crafted by
-            ceramic artist,{' '}
-          </p>
-          <p className="text-autoscale tracking-wide">
-            All of our products are arefully had-crafted by ceramic artist, Bori
-            Borbely. They fire at high temperatures so they are microwave and
-            dishwasher safe. All of our products are arefully had-crafted by
-            ceramic artist,{' '}
-          </p>
-        </div>
-        <Link
-          prefetch="intent"
-          to="/about"
-          className="text-autoscale-big font-medium border-[1px] border-custom-black tracking-wide  py-1 px-8 w-fit"
-        >
-          Learn more.
-        </Link>
+      <Container className="md:hidden pt-6">
+        <TextBlock color="black"/>
       </Container>
     </section>
   );
+}
+
+
+function TextBlock({
+  color
+}: {
+    color: "black" | "white"
+}) {
+  return (
+    <div className={clsx('grid grid-cols-1 gap-y-4 md:gap-y-8 lg:gap-y-10', color === "black" ? "text-custom-black" : "text-custom-white")}>
+      <h2 className=" font-semibold">Handmade with love.</h2>
+        <p className="text-xs sm:text-sm md:text-md ">
+          All of our products are arefully had-crafted by ceramic
+          artist, Bori Borbely. They fire at high temperatures so they
+          are microwave and dishwasher safe. All of our products are
+          arefully had-crafted by ceramic artist,{' '}
+        </p>
+        <p className="text-xs sm:text-sm md:text-md  ">
+          All of our products are arefully had-crafted by ceramic
+          artist, Bori Borbely. They fire at high temperatures so they
+          are microwave and dishwasher safe. All of our products are
+          arefully had-crafted by ceramic artist,{' '}
+        </p>
+        <Link
+          prefetch="intent"
+          to="/about"
+          className={clsx("transition-colors ease-in-out hover:bg-zinc-200/20 focus:bg-zinc-200/30 border tracking-wide  font-semibold py-1 lg:py-2 px-8 lg:px-14 w-fit", color === "black" ? "border-custom-black" : "border-custom-white")}
+        >
+          Learn&nbsp;more.
+        </Link>
+    </div>
+  )
 }

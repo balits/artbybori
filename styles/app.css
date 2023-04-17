@@ -155,7 +155,7 @@ shop-pay-button {
 
 @layer utilities {
   .text-autoscale {
-    @apply text-sm  md:text-md lg:text-lg;
+    @apply text-sm md:text-md lg:text-lg;
   }
 
   .text-autoscale-small {
