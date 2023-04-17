@@ -95,7 +95,7 @@ function FAQ() {
   return (
     <section
       id="faq"
-      className="h-minus-header w-full bg-custom-signature-green text-custom-white flex items-center justify-center py-36 "
+      className="w-full bg-custom-signature-green text-custom-white flex items-center justify-center py-[30vh] -scroll-m-12"
     >
       <Container className="grid grid-cols-1 gap-28 lg:grid-cols-2 lg:gap-8">
         <h2 className="text-6xl md:text-7xl lg:text-8xl  font-cantata">
