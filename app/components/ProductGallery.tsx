@@ -1,6 +1,7 @@
 import type {MediaEdge} from '@shopify/hydrogen/storefront-api-types';
 import {ATTR_LOADING_EAGER} from '~/lib/const';
 import type {MediaImage} from '@shopify/hydrogen/storefront-api-types';
+import clsx from 'clsx';
 
 /**
  * A client component that defines a media gallery for hosting images, 3D models, and videos of products
@@ -70,15 +71,11 @@ export function ProductGallery({
           mediaProps.loading = ATTR_LOADING_EAGER;
         }
 
-        const style = [
+        const style = clsx(
           isFullWidth ? 'md:col-span-2' : 'md:col-span-1',
           isFirst || isFourth ? '' : 'md:aspect-[4/5]',
-<<<<<<< HEAD
           'aspect-square snap-center card-image bg-custom-placeholder-green fadeIn w-mobileGallery md:w-full',
-=======
-          'aspect-square snap-center card-image bg-white dark:bg-contrast/10 w-mobileGallery md:w-full',
->>>>>>> refs/remotes/origin/main
-        ].join(' ');
+        );
 
         return (
           <div

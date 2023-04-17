@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 import {Container} from '~/components/global/Container';
-=======
-import Container from '~/components/global/Container';
->>>>>>> refs/remotes/origin/main
 import {json, type ActionArgs} from '@shopify/remix-oxygen';
 import {useActionData, useFetcher, Form, useNavigation} from '@remix-run/react';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
-import {useEffect, useState, useTransition} from 'react';
+import {useState} from 'react';
 
 export async function action({request, params, context}: ActionArgs) {
   const body = await request.formData();
@@ -99,11 +95,7 @@ function FAQ() {
   return (
     <section
       id="faq"
-<<<<<<< HEAD
       className="h-minus-header w-full bg-custom-signature-green text-custom-white flex items-center justify-center py-36 "
-=======
-      className=" h-footer w-full bg-custom-signature-green text-custom-white flex items-center justify-center py-36 "
->>>>>>> refs/remotes/origin/main
     >
       <Container className="grid grid-cols-1 gap-28 lg:grid-cols-2 lg:gap-8">
         <h2 className="text-6xl md:text-7xl lg:text-8xl  font-cantata">

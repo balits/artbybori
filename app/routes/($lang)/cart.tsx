@@ -22,11 +22,7 @@ import {CartAction, type CartActions} from '~/lib/type';
 import CartView, {
   Fallback as CartViewSkeleton,
 } from '~/components/cart/CartView';
-<<<<<<< HEAD
 import { Container} from '~/components/global/Container';
-=======
-import Container from '~/components/global/Container';
->>>>>>> refs/remotes/origin/main
 
 export async function action({request, context}: ActionArgs) {
   const {session, storefront} = context;

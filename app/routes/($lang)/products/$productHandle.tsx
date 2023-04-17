@@ -15,27 +15,16 @@ import {
   ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen';
 import {
-<<<<<<< HEAD
-=======
   Heading,
->>>>>>> refs/remotes/origin/main
   IconCaret,
   IconCheck,
-  IconClose,
   ProductGallery,
-<<<<<<< HEAD
-  Text,
-  Link,
-  AddToCartButton,
-=======
   ProductSwimlane,
   Section,
   Skeleton,
   Text,
   Link,
   AddToCartButton,
-  Button,
->>>>>>> refs/remotes/origin/main
 } from '~/components';
 import {getExcerpt} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
@@ -52,7 +41,6 @@ import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import type {Storefront} from '~/lib/type';
 import type {Product} from 'schema-dts';
 import {routeHeaders, CACHE_SHORT} from '~/data/cache';
-<<<<<<< HEAD
 import {Container, NoWrapContainer} from '~/components/global/Container';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 
@@ -60,12 +48,6 @@ import MyButton from "~/components/global/Button"
 import { ProductCarousel, Skeleton as CarouselSkeleton } from '~/components/global/Carousel';
 import { HiChevronDown } from 'react-icons/hi';
 
-=======
-import Container from '~/components/global/Container';
-import Slider, {Fallback as SliderFallback} from '~/components/global/Slider';
-import InstagramGallery from '~/components/homepage/InstagramGallery';
-
->>>>>>> refs/remotes/origin/main
 export const headers = routeHeaders;
 
 export async function loader({params, request, context}: LoaderArgs) {
@@ -95,11 +77,7 @@ export async function loader({params, request, context}: LoaderArgs) {
     throw new Response(null, {status: 404});
   }
 
-<<<<<<< HEAD
   const recommended = await getRecommendedProducts(context.storefront, product.id);
-=======
-  const recommended = getRecommendedProducts(context.storefront, product.id);
->>>>>>> refs/remotes/origin/main
   const firstVariant = product.variants.nodes[0];
   const selectedVariant = product.selectedVariant ?? firstVariant;
 
@@ -142,17 +120,12 @@ export async function loader({params, request, context}: LoaderArgs) {
 
 export default function Product() {
   const {product, shop, recommended} = useLoaderData<typeof loader>();
-<<<<<<< HEAD
   const {media, descriptionHtml} = product;
-=======
-  const {media, title, vendor, descriptionHtml} = product;
->>>>>>> refs/remotes/origin/main
   const {shippingPolicy, refundPolicy} = shop;
 
   return (
     <>
       <Container
-<<<<<<< HEAD
         as="section"
         className="scaling-mt-header grid grid-cols-1 md:grid-cols-2 md:gap-12 lg:gap-20 lg:grid-cols-3"
       >
@@ -198,108 +171,12 @@ export default function Product() {
       </NoWrapContainer>
 
       <InstagramGallery mt="mt-8"/>
-=======
-        padding={false}
-        className="lg:px-6 scaling-mt-header grid grid-cols-1 md:grid-cols-2 md:gap-12"
-      >
-        <div className="bg-gray-100 w-full">
-          <div className="bg-grey-200 md:hidden relative w-full  h-[40vh]">
-            <img
-              className="absolute inset-0 w-full h-full object-cover"
-              src={media.nodes[0].previewImage?.url}
-              alt={title}
-            />
-          </div>
-        </div>
-        <section className="px-6 py-4 lg:p-0 lg:mt-12">
-          <ProductForm />
-        </section>
-      </Container>
-
-      <section className="mt-0 mb-8 py-6 w-full h-full grid place-items-center bg-custom-signature-green">
-        <Container>
-          <h2 className="font-cantata mt-3 mb-6 font-semibold text-xl text-custom-white">
-            You&nbsp;might&nbsp;also&nbsp;like.
-          </h2>
-          <Suspense fallback={<SliderFallback />}>
-            <Await
-              errorElement="There was a problem loading related products"
-              resolve={recommended}
-            >
-              {(products) => <Slider items={products} />}
-            </Await>
-          </Suspense>
-        </Container>
-      </section>
-      <InstagramGallery />
     </>
   );
 
-  return (
-    <>
-      <Section padding="x" className="px-0">
-        <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
-          <ProductGallery
-            media={media.nodes}
-            className="w-screen md:w-full lg:col-span-2"
-          />
-          <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
-            <section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
-              <div className="grid gap-2">
-                <Heading as="h1" className="whitespace-normal">
-                  {title}
-                </Heading>
-                {vendor && (
-                  <Text className={'opacity-50 font-medium'}>{vendor}</Text>
-                )}
-              </div>
-              <ProductForm />
-              <div className="grid gap-4 py-4">
-                {descriptionHtml && (
-                  <ProductDetail
-                    title="Product Details"
-                    content={descriptionHtml}
-                  />
-                )}
-                {shippingPolicy?.body && (
-                  <ProductDetail
-                    title="Shipping"
-                    content={getExcerpt(shippingPolicy!.body)}
-                    learnMore={`/policies/${shippingPolicy!.handle}`}
-                  />
-                )}
-                {refundPolicy?.body && (
-                  <ProductDetail
-                    title="Returns"
-                    content={getExcerpt(refundPolicy!.body)}
-                    learnMore={`/policies/${refundPolicy!.handle}`}
-                  />
-                )}
-              </div>
-            </section>
-          </div>
-        </div>
-      </Section>
-      <Suspense fallback={<Skeleton className="h-32" />}>
-        <Await
-          errorElement="There was a problem loading related products"
-          resolve={recommended}
-        >
-          {(products) => (
-            <ProductSwimlane title="Related Products" products={products} />
-          )}
-        </Await>
-      </Suspense>
->>>>>>> refs/remotes/origin/main
-    </>
-  );
 }
 
-<<<<<<< HEAD
 export function ProductDescription() {
-=======
-export function ProductForm() {
->>>>>>> refs/remotes/origin/main
   const {product, analytics, storeDomain} = useLoaderData<typeof loader>();
 
   const [currentSearchParams] = useSearchParams();
@@ -356,7 +233,6 @@ export function ProductForm() {
 
   return (
     <div className="grid gap-8">
-<<<<<<< HEAD
       <div className="grid gap-8">
         <div>
           <h1 className="tracking-tight font-cantata font-bold text-4xl">
@@ -379,28 +255,6 @@ export function ProductForm() {
           </div>
         </div>
         <div className=" flex flex-col gap-4 ">{product.description}</div>
-=======
-      <div className="grid gap-2">
-        <h1 className="tracking-tight font-cantata font-bold text-2xl">
-          {product.title}
-        </h1>
-        <p className="font-semibold tracking-tight flex gap-2">
-          {isOnSale && (
-            <Money
-              withoutTrailingZeros
-              data={selectedVariant?.compareAtPrice!}
-              as="span"
-              className="opacity-50 strike"
-            />
-          )}
-          <Money
-            withoutTrailingZeros
-            data={selectedVariant?.price!}
-            as="span"
-          />
-        </p>
-        <p className=" flex flex-col gap-4 ">{product.description}</p>
->>>>>>> refs/remotes/origin/main
 
         <ProductOptions
           options={product.options}
@@ -410,7 +264,6 @@ export function ProductForm() {
         {selectedVariant && (
           <div className="grid grid-cols-1  items-stretch gap-4 my-8">
             {isOutOfStock ? (
-<<<<<<< HEAD
               <button className='' disabled>
                 Sold&nbsp;out
               </button>
@@ -418,13 +271,6 @@ export function ProductForm() {
               <>
               <AddToCartButton
                 variant="signature"
-=======
-              <Button variant="secondary" disabled>
-                <Text>Sold out</Text>
-              </Button>
-            ) : (
-              <AddToCartButton
->>>>>>> refs/remotes/origin/main
                 className="w-full rounded-sm"
                 disabled={isOutOfStock}
                 lines={[
@@ -441,15 +287,9 @@ export function ProductForm() {
               >
                 Add&nbsp;to&nbsp;Cart
               </AddToCartButton>
-<<<<<<< HEAD
               <MyButton variant="black">Checkout</MyButton>
               </>
             )}
-=======
-            )}
-
-            {!isOutOfStock && <CheckoutButton />}
->>>>>>> refs/remotes/origin/main
           </div>
         )}
       </div>
@@ -457,13 +297,6 @@ export function ProductForm() {
   );
 }
 
-<<<<<<< HEAD
-=======
-function CheckoutButton() {
-  return <></>;
-}
-
->>>>>>> refs/remotes/origin/main
 function ProductOptions({
   options,
   searchParamsWithDefaults,
@@ -473,11 +306,7 @@ function ProductOptions({
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   return (
-<<<<<<< HEAD
     <div className="grid grid-cols-1 gap-8">
-=======
-    <div className="grid grid-cols-1 gap-y-4">
->>>>>>> refs/remotes/origin/main
       {options
         .filter((option) => option.values.length > 1)
         .map((option) => (
@@ -485,11 +314,7 @@ function ProductOptions({
             key={option.name}
             className="grid grid-cols-1 gap-y-3 last:mb-0"
           >
-<<<<<<< HEAD
             <legend className="text-lg font-semibold">{option.name}:</legend>
-=======
-            <legend className="">{option.name}:</legend>
->>>>>>> refs/remotes/origin/main
             <div className="flex flex gap-4">
               {/**
                * First, we render a bunch of <Link> elements for each option value.
@@ -499,11 +324,7 @@ function ProductOptions({
                * If there are more than 7 values, we render a dropdown.
                * Otherwise, we just render plain links.
                */}
-<<<<<<< HEAD
               {option.values.length > 4 ? (
-=======
-              {option.values.length > 7 ? (
->>>>>>> refs/remotes/origin/main
                 <div className="relative w-full">
                   <Listbox>
                     {({open}) => (
@@ -577,11 +398,7 @@ function ProductOptions({
                           optionValue={value}
                           searchParams={searchParamsWithDefaults}
                           className={clsx(
-<<<<<<< HEAD
                             'py-1 border-b-[1px] cursor-pointer transition-all duration-200',
-=======
-                            'text-autoscale py-1 border-b-[2px] cursor-pointer transition-all duration-200',
->>>>>>> refs/remotes/origin/main
                             checked
                               ? 'border-custom-black'
                               : 'border-custom-placeholder-green',
@@ -645,11 +462,7 @@ function ProductDetail({
   learnMore?: string;
 }) {
   return (
-<<<<<<< HEAD
     <Disclosure key={title} as="div" className="grid w-full gap-8">
-=======
-    <Disclosure key={title} as="div" className="grid w-full gap-2">
->>>>>>> refs/remotes/origin/main
       {({open}) => (
         <>
           <Disclosure.Button className="text-left">
@@ -657,17 +470,10 @@ function ProductDetail({
               <Text size="lead" as="h4">
                 {title}
               </Text>
-<<<<<<< HEAD
               <HiChevronDown
                 className={clsx(
                   'transition-transform transform-gpu duration-300 w-5 h-5',
                   open && 'rotate-[180deg]',
-=======
-              <IconClose
-                className={clsx(
-                  'transition-transform transform-gpu duration-200',
-                  !open && 'rotate-[45deg]',
->>>>>>> refs/remotes/origin/main
                 )}
               />
             </div>
@@ -675,21 +481,13 @@ function ProductDetail({
 
           <Disclosure.Panel className={'pb-4 pt-2 grid gap-2'}>
             <div
-<<<<<<< HEAD
               className="prose"
-=======
-              className="prose dark:prose-invert"
->>>>>>> refs/remotes/origin/main
               dangerouslySetInnerHTML={{__html: content}}
             />
             {learnMore && (
               <div className="">
                 <Link
-<<<<<<< HEAD
                   className="pb-px border-b border-b-custom-signature-green  text-custom-signature-green hover:text-custom-black basic-animation "
-=======
-                  className="pb-px border-b border-primary/30 text-primary/50"
->>>>>>> refs/remotes/origin/main
                   to={learnMore}
                 >
                   Learn more
@@ -795,18 +593,11 @@ const PRODUCT_QUERY = `#graphql
 `;
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-<<<<<<< HEAD
   query productRecommendations(
-=======
-  ${PRODUCT_CARD_FRAGMENT}
-  query productRecommendations(
-    $productId: ID!
->>>>>>> refs/remotes/origin/main
     $count: Int
     $country: CountryCode
     $language: LanguageCode
   ) @inContext(country: $country, language: $language) {
-<<<<<<< HEAD
     bestSelling: products(first: $count, sortKey: BEST_SELLING) {
       nodes {
         id
@@ -840,44 +631,22 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     }
   }
 }`;
-=======
-    recommended: productRecommendations(productId: $productId) {
-      ...ProductCard
-    }
-    additional: products(first: $count, sortKey: BEST_SELLING) {
-      nodes {
-        ...ProductCard
-      }
-    }
-  }
-`;
->>>>>>> refs/remotes/origin/main
 
 async function getRecommendedProducts(
   storefront: Storefront,
   productId: string,
 ) {
   const products = await storefront.query<{
-<<<<<<< HEAD
     bestSelling: ProductConnection;
     newest: ProductConnection;
-=======
-    recommended: ProductType[];
-    additional: ProductConnection;
->>>>>>> refs/remotes/origin/main
   }>(RECOMMENDED_PRODUCTS_QUERY, {
     variables: {productId, count: 12},
   });
 
   invariant(products, 'No data returned from Shopify API');
 
-<<<<<<< HEAD
-const mergedProducts = products.bestSelling.nodes
+  const mergedProducts = products.bestSelling.nodes
     .concat(products.newest.nodes)
-=======
-  const mergedProducts = products.recommended
-    .concat(products.additional.nodes)
->>>>>>> refs/remotes/origin/main
     .filter(
       (value, index, array) =>
         array.findIndex((value2) => value2.id === value.id) === index,

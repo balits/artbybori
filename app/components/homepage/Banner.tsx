@@ -21,7 +21,6 @@ export default function Banner({image}: Props) {
         sizes="(min-width: 80em) 1400px, (min-width: 48em) 900px, 500px"
       />
       <div className="absolute inset-0 w-full h-full grid place-items-center">
-<<<<<<< HEAD
         <div className="lg:p-4 z-[2] text-custom-white grid place-items-center">
           <h1 className="mb-12 text-5xl md:text-6xl lg:text-7xl xl:text-8xl  font-cantata ">
           Ceramics&nbsp;
@@ -31,15 +30,6 @@ export default function Banner({image}: Props) {
           home.
           </h1>
         </div>
-=======
-        <h1 className="lg:p-4 z-[2] text-custom-white font-cantata text-6xl sm:text-6xl md:text-7xl lg:text-8xl grid place-items-center">
-          Ceramics&nbsp;
-          <br className="lg:hidden" />
-          for&nbsp;your
-          <br className="lg:hidden" />
-          home.
-        </h1>
->>>>>>> refs/remotes/origin/main
       </div>
     </section>
   );

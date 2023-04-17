@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-<<<<<<< HEAD
 import React from "react"
 
 export type ContainerProps = {
@@ -12,21 +11,7 @@ export type ContainerProps = {
 export const Container: React.FC<ContainerProps> = ({
   children,
   className = '',
-  as = "div",
-=======
-
-type Props = {
-  children: React.ReactNode;
-  className?: string;
-  as?: React.ElementType;
-  padding?: boolean;
-};
-
-const Container: React.FC<Props> = ({
-  children,
-  className = '',
   as = 'div',
->>>>>>> refs/remotes/origin/main
   padding = true,
 }) => {
   const style = clsx(
@@ -35,7 +20,6 @@ const Container: React.FC<Props> = ({
     className,
   );
 
-<<<<<<< HEAD
   return React.createElement(as, {className: style}, children);
 };
 
@@ -52,8 +36,4 @@ export const NoWrapContainer: React.FC<ContainerProps> = ({
 
   return React.createElement(as, {className: style}, children);
 };
-=======
-  return <div className={style}>{children}</div>;
-};
 export default Container;
->>>>>>> refs/remotes/origin/main

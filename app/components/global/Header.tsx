@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Form, useParams } from '@remix-run/react';
 import { useEffect, useState } from 'react';
 import { Container } from '~/components/global/Container';
@@ -13,21 +12,6 @@ import CartDrawer from '~/components/drawer/CartDrawer';
 import NavDrawer from '~/components/drawer/NavDrawer';
 import { HiSearch } from 'react-icons/hi';
 import { Link } from '../Link';
-=======
-import {Form, useParams} from '@remix-run/react';
-import {useEffect, useState} from 'react';
-import Container from '~/components/global/Container';
-import Logo from '~/components/global/Logo';
-import Nav from '~/components/global/Nav';
-import {BiShoppingBag} from 'react-icons/bi';
-import {HiBars2} from 'react-icons/hi2';
-import clsx from 'clsx';
-import {useDrawer} from '../Drawer';
-import {useCartFetchers} from '~/hooks/useCartFetchers';
-import CartDrawer from '~/components/drawer/CartDrawer';
-import NavDrawer from '~/components/drawer/NavDrawer';
-import { HiSearch } from 'react-icons/hi';
->>>>>>> refs/remotes/origin/main
 
 export default function Header() {
   const {
@@ -73,17 +57,12 @@ export default function Header() {
           <Logo />
           <Nav flexDirection="row" />
 
-<<<<<<< HEAD
           <div className='flex items-center justify-center gap-2 sm:gap-4 md:gap-6'>
             <SearchBar className="hidden lg:flex" />
 
             <Link to="/search">
               <HiSearch className='lg:hidden h-4 w-4 md:w-5 md:h-5 cursor-pointer focus:ring-custom-black' />
             </Link>
-=======
-          <div className='flex items-center gap-2'>
-            <SearchBar />
->>>>>>> refs/remotes/origin/main
             <button
               onClick={openCart}
               className="p-2 md:p-3 lg:p-4 pr-0"
@@ -110,17 +89,12 @@ export default function Header() {
   );
 }
 
-<<<<<<< HEAD
 function SearchBar({ className }: { className: string }) {
-=======
-function SearchBar() {
->>>>>>> refs/remotes/origin/main
   const params = useParams();
   return (
     <Form
       method="get"
       action={params.lang ? `/${params.lang}/search` : '/search'}
-<<<<<<< HEAD
     >
       <div
         className={clsx("flex items-center gap-2", className)}
@@ -139,22 +113,6 @@ function SearchBar() {
           <HiSearch className='h-4 w-4 md:w-5 md:h-5  lg:w-6 lg:h-6 cursor-pointer focus:ring-custom-black' />
         </button>
       </div>
-=======
-      className="flex items-center gap-2"
-    >
-      <input
-        className='focus:border-custom-black/10  px-2'
-        type="search"
-        placeholder="Search"
-        name="q"
-      />
-      <button
-        type="submit"
-        className="p-2"
-      >
-        <HiSearch className='h-4 w-4 md:w-5 md:h-5  cursor-pointer focus:ring-custom-black'/>
-      </button>
->>>>>>> refs/remotes/origin/main
     </Form>
   );
 }

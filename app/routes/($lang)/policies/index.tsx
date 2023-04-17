@@ -5,11 +5,7 @@ import invariant from 'tiny-invariant';
 import {PageHeader, Section, Heading, Link} from '~/components';
 import {routeHeaders, CACHE_LONG} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
-<<<<<<< HEAD
 import {Container} from '~/components/global/Container';
-=======
-import Container from '~/components/global/Container';
->>>>>>> refs/remotes/origin/main
 import {useEffect, useState} from 'react';
 import clsx from 'clsx';
 
@@ -61,11 +57,7 @@ export default function Policies() {
                       className={clsx(
                         'font-semibold text-2xl hover:opacity-80 active:opacity-100',
                         policy.id === selectedPolicy?.id &&
-<<<<<<< HEAD
                           'underline decoration-3 decoration-offset-3',
-=======
-                          ' underline decoration-3 decoration-offset-3',
->>>>>>> refs/remotes/origin/main
                       )}
                       onClick={() => setSelectedPolicy(policy)}
                     >

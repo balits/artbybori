@@ -12,11 +12,7 @@ import {ProductGrid} from '~/components/ProductGrid';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
-<<<<<<< HEAD
 import {Container} from '~/components/global/Container';
-=======
-import Container from '~/components/global/Container';
->>>>>>> refs/remotes/origin/main
 
 export const headers = routeHeaders;
 

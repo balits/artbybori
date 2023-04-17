@@ -1,16 +1,17 @@
 # WIP
+- [ ] remove layout/enhanced menu/..
 - [x] CAROUSEL: Kész már csak collections, és image width / height
 - [ ] ErrorBoundary + CatchBoundary
 
-- [ ] aspect-square helyett aspect-[4/5] + SmartImage
+- [x] aspect-square helyett aspect-[4/5] + SmartImage
   - [x] shop grid
-  - [ ] carousel
-  - [ ] category handle
+  - [x] carousel
+  - [ ] collection -> category handle
 
 - [ ] FALLBACK / SKELETON
-- [ ] Images
-- [ ] Preloaded Image size / srcset
+- [ ] Images: split 1 / split 2
+- [x] Preloaded Image size / srcset
 - [ ] footer on small devices
-- [ ] productHandle page
+- [x] productHandle page
 - [ ] Meta / Seo
 

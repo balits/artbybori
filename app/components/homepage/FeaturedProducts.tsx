@@ -1,17 +1,8 @@
-<<<<<<< HEAD
 import {Link} from "~/components"
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import {SerializeFrom} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {Container} from '../global/Container';
-=======
-import {Link} from '@remix-run/react';
-import type {Product} from '@shopify/hydrogen/storefront-api-types';
-import {SerializeFrom} from '@shopify/remix-oxygen';
-import clsx from 'clsx';
-import Container from '../global/Container';
-import {CgSpinner} from 'react-icons/cg';
->>>>>>> refs/remotes/origin/main
 import {Image, Money} from '@shopify/hydrogen';
 
 interface Props {
@@ -43,11 +34,7 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
                 'relative  group rounded-sm min-w-full w-[20%] min-h-full aspect-square relative cursor-pointer basic-animation delay-0 hover:opacity-90',
               )}
             >
-<<<<<<< HEAD
               <Link to="/products/${prod.handle}" prefetch="intent">
-=======
-              <Link to={`/products/${prod.handle}`} prefetch="intent">
->>>>>>> refs/remotes/origin/main
                 <div className="aspect-square relative flex items-center justify-center overflow-clip rounded-sm">
                   {image && (
                     <Image
