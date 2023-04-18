@@ -6,14 +6,26 @@ import {
 
 import SmartImage from '~/components/global/SmartImage';
 
+export type ExtraLabel = "sale" | "new" | "sold out :(" | ""
+
 type ProductCardProps = {
+  /** title the title of the variant*/
   title: string;
+  /** the price of the variant (compare Price to be implemented)*/
   money?: MoneyV2;
+  /** the price of the variant (compare Price to be implemented)*/
   img: ImageType;
-  extraLabel?: string;
+  /** extra info associated with the Variant*/
+  extraLabel?: ExtraLabel;
+  /** wether to display the details on top of the image or below it*/
   textOnTop: boolean
 };
 
+/**
+* A Card that renders a ProductVariant with props in `ProductCardProps`.
+* IMPORTANT: Please make sure to query the required fields for the product variant of your choise.
+* @params {props} `ProductCardProps`
+* */
 const ProductCard: React.FC<ProductCardProps> = ({
   title,
   money,

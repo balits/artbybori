@@ -72,3 +72,4 @@ export const PRODUCT_CARD_FRAGMENT = `#graphql
     }
   }
 `;
+

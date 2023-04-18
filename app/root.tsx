@@ -26,6 +26,7 @@ import {DEFAULT_LOCALE, parseMenu, type EnhancedMenu} from './lib/utils';
 import invariant from 'tiny-invariant';
 import {Shop, Cart} from '@shopify/hydrogen/storefront-api-types';
 import {useAnalytics} from './hooks/useAnalytics';
+import Container from './components/global/Container';
 
 export const links: LinksFunction = () => {
   return [
@@ -97,17 +98,18 @@ export default function App() {
 
 function NotFoundError({type}: {type?: string}) {
   const description = `We couldn’t find the ${type} you’re looking for. Try checking the URL or heading back to the home page.`;
+
   return (
-    <section className="w-full h-[50vh] scaling-mt-header grid place-items-center">
+    <section className="w-full h-[50vh] grid place-items-center">
       <div>
-        <h1 className="font-semibold tracking-tight text-6xl mb-8">
+        <h1 className="font-semibold tracking-tight text-2xl md:text-3xl lg: text-4 xl:text-5xl mb-8">
           Page Not Found
         </h1>
-        <p className="text-custom-black/60 mb-2">{description}</p>
+        <p className="text-autoscale-small text-custom-black/60 mb-2">{description}</p>
         <Link
           to="/"
           prefetch="intent"
-          className="underline decoration-offset-2 text-custom-signature-green"
+          className="underline decoration-1  hover:text-custom-signature-green"
         >
           Take me to the homepage.
         </Link>
@@ -131,13 +133,15 @@ export function CatchBoundary() {
       </head>
       <body>
         <Layout>
-          {isNotFound ? (
-            <NotFoundError type={caught.data?.pageType} />
-          ) : (
-            <GenericError
-              error={{message: `${caught.status} ${caught.data}`}}
-            />
-          )}
+          <Container className='scaling-mt-header'>
+            {isNotFound ? (
+              <NotFoundError type={caught.data?.pageType} />
+            ) : (
+                <GenericError
+                  error={{message: `${caught.status} ${caught.data}`}}
+                />
+              )}
+          </Container>
         </Layout>
         <Scripts />
       </body>

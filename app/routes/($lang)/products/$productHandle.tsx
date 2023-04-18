@@ -1,6 +1,6 @@
 import {type ReactNode, useRef, Suspense, useMemo} from 'react';
 import {Disclosure, Listbox} from '@headlessui/react';
-import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, SerializeFrom, type LoaderArgs} from '@shopify/remix-oxygen';
 import {
   useLoaderData,
   Await,
@@ -11,17 +11,14 @@ import {
 
 import {
   AnalyticsPageType,
+  Image,
   Money,
   ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen';
 import {
-  Heading,
   IconCaret,
   IconCheck,
   ProductGallery,
-  ProductSwimlane,
-  Section,
-  Skeleton,
   Text,
   Link,
   AddToCartButton,
@@ -77,7 +74,7 @@ export async function loader({params, request, context}: LoaderArgs) {
     throw new Response(null, {status: 404});
   }
 
-  const recommended = await getRecommendedProducts(context.storefront, product.id);
+  const recommended = getRecommendedProducts(context.storefront, product.id);
   const firstVariant = product.variants.nodes[0];
   const selectedVariant = product.selectedVariant ?? firstVariant;
 
@@ -90,8 +87,7 @@ export async function loader({params, request, context}: LoaderArgs) {
     price: selectedVariant.price.amount,
   };
 
-  const seo = seoPayload.product({
-    product,
+  const seo = seoPayload.product({ product,
     selectedVariant,
     url: request.url,
   });
@@ -164,10 +160,25 @@ export default function Product() {
       </Container>
 
       <NoWrapContainer className="h-fit my-32">
-          <h2 className="tracking-tight text-custom-black text-2xl md:text-2xl lg:text-4xl font-serif mb-12 ">
-            You might also like.
-          </h2>
-          {recommended && <ProductCarousel products={recommended} />}
+        <h2 className="tracking-tight text-custom-black text-2xl md:text-2xl lg:text-4xl font-serif mb-12 ">
+          You might also like.
+        </h2>
+        <Suspense fallback={<CarouselSkeleton />}>
+          <Await
+            errorElement="There was a problem loading recomended products"
+            resolve={recommended}
+          >
+            {(data) => {
+              console.log(data.recomended)
+/*               return <p>{JSON.stringify(data.recomended)}</p> */
+
+              return data?.recomended && (
+                <ProductCarousel
+                  products={data.recomended as SerializeFrom<ProductType[]>}
+                  textOnTop={true} />)
+            }}
+          </Await>
+        </Suspense>
       </NoWrapContainer>
 
       <InstagramGallery mt="mt-8"/>
@@ -183,10 +194,10 @@ export function ProductDescription() {
   const transition = useTransition();
 
   /**
-   * We update `searchParams` with in-flight request data from `transition` (if available)
-   * to create an optimistic UI, e.g. check the product option before the
-   * request has completed.
-   */
+* We update `searchParams` with in-flight request data from `transition` (if available)
+* to create an optimistic UI, e.g. check the product option before the
+* request has completed.
+*/
   const searchParams = useMemo(() => {
     return transition.location
       ? new URLSearchParams(transition.location.search)
@@ -196,11 +207,11 @@ export function ProductDescription() {
   const firstVariant = product.variants.nodes[0];
 
   /**
-   * We're making an explicit choice here to display the product options
-   * UI with a default variant, rather than wait for the user to select
-   * options first. Developers are welcome to opt-out of this behavior.
-   * By default, the first variant's options are used.
-   */
+* We're making an explicit choice here to display the product options
+* UI with a default variant, rather than wait for the user to select
+* options first. Developers are welcome to opt-out of this behavior.
+* By default, the first variant's options are used.
+*/
   const searchParamsWithDefaults = useMemo<URLSearchParams>(() => {
     const clonedParams = new URLSearchParams(searchParams);
 
@@ -214,17 +225,17 @@ export function ProductDescription() {
   }, [searchParams, firstVariant.selectedOptions]);
 
   /**
-   * Likewise, we're defaulting to the first variant for purposes
-   * of add to cart if there is none returned from the loader.
-   * A developer can opt out of this, too.
-   */
+* Likewise, we're defaulting to the first variant for purposes
+* of add to cart if there is none returned from the loader.
+* A developer can opt out of this, too.
+*/
   const selectedVariant = product.selectedVariant ?? firstVariant;
   const isOutOfStock = !selectedVariant?.availableForSale;
 
   const isOnSale =
     selectedVariant?.price?.amount &&
-    selectedVariant?.compareAtPrice?.amount &&
-    selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
+      selectedVariant?.compareAtPrice?.amount &&
+      selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
 
   const productAnalytics: ShopifyAnalyticsProduct = {
     ...analytics.products[0],
@@ -268,28 +279,28 @@ export function ProductDescription() {
                 Sold&nbsp;out
               </button>
             ) : (
-              <>
-              <AddToCartButton
-                variant="signature"
-                className="w-full rounded-sm"
-                disabled={isOutOfStock}
-                lines={[
-                  {
-                    merchandiseId: selectedVariant.id,
-                    quantity: 1,
-                  },
-                ]}
-                data-test="add-to-cart"
-                analytics={{
-                  products: [productAnalytics],
-                  totalValue: parseFloat(productAnalytics.price),
-                }}
-              >
-                Add&nbsp;to&nbsp;Cart
-              </AddToCartButton>
-              <MyButton variant="black">Checkout</MyButton>
-              </>
-            )}
+                <>
+                  <AddToCartButton
+                    variant="signature"
+                    className="w-full rounded-sm"
+                    disabled={isOutOfStock}
+                    lines={[
+                      {
+                        merchandiseId: selectedVariant.id,
+                        quantity: 1,
+                      },
+                    ]}
+                    data-test="add-to-cart"
+                    analytics={{
+                      products: [productAnalytics],
+                      totalValue: parseFloat(productAnalytics.price),
+                    }}
+                  >
+                    Add&nbsp;to&nbsp;Cart
+                  </AddToCartButton>
+                  <MyButton variant="black">Checkout</MyButton>
+                </>
+              )}
           </div>
         )}
       </div>
@@ -301,9 +312,9 @@ function ProductOptions({
   options,
   searchParamsWithDefaults,
 }: {
-  options: ProductType['options'];
-  searchParamsWithDefaults: URLSearchParams;
-}) {
+    options: ProductType['options'];
+    searchParamsWithDefaults: URLSearchParams;
+  }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   return (
     <div className="grid grid-cols-1 gap-8">
@@ -317,13 +328,13 @@ function ProductOptions({
             <legend className="text-lg font-semibold">{option.name}:</legend>
             <div className="flex flex gap-4">
               {/**
-               * First, we render a bunch of <Link> elements for each option value.
-               * When the user clicks one of these buttons, it will hit the loader
-               * to get the new data.
-               *
-               * If there are more than 7 values, we render a dropdown.
-               * Otherwise, we just render plain links.
-               */}
+* First, we render a bunch of <Link> elements for each option value.
+* When the user clicks one of these buttons, it will hit the loader
+* to get the new data.
+*
+* If there are more than 7 values, we render a dropdown.
+* Otherwise, we just render plain links.
+*/}
               {option.values.length > 4 ? (
                 <div className="relative w-full">
                   <Listbox>
@@ -371,10 +382,10 @@ function ProductOptions({
                                   {value}
                                   {searchParamsWithDefaults.get(option.name) ===
                                     value && (
-                                    <span className="ml-2">
-                                      <IconCheck />
-                                    </span>
-                                  )}
+                                      <span className="ml-2">
+                                        <IconCheck />
+                                      </span>
+                                    )}
                                 </ProductOptionLink>
                               )}
                             </Listbox.Option>
@@ -385,30 +396,30 @@ function ProductOptions({
                   </Listbox>
                 </div>
               ) : (
-                <>
-                  {option.values.map((value) => {
-                    const checked =
-                      searchParamsWithDefaults.get(option.name) === value;
-                    const id = `option-${option.name}-${value}`;
+                  <>
+                    {option.values.map((value) => {
+                      const checked =
+                        searchParamsWithDefaults.get(option.name) === value;
+                      const id = `option-${option.name}-${value}`;
 
-                    return (
-                      <p key={id}>
-                        <ProductOptionLink
-                          optionName={option.name}
-                          optionValue={value}
-                          searchParams={searchParamsWithDefaults}
-                          className={clsx(
-                            'py-1 border-b-[1px] cursor-pointer transition-all duration-200',
-                            checked
-                              ? 'border-custom-black'
-                              : 'border-custom-placeholder-green',
-                          )}
-                        />
-                      </p>
-                    );
-                  })}
-                </>
-              )}
+                      return (
+                        <p key={id}>
+                          <ProductOptionLink
+                            optionName={option.name}
+                            optionValue={value}
+                            searchParams={searchParamsWithDefaults}
+                            className={clsx(
+                              'py-1 border-b-[1px] cursor-pointer transition-all duration-200',
+                              checked
+                                ? 'border-custom-black'
+                                : 'border-custom-placeholder-green',
+                            )}
+                          />
+                        </p>
+                      );
+                    })}
+                  </>
+                )}
             </div>
           </fieldset>
         ))}
@@ -423,12 +434,12 @@ function ProductOptionLink({
   children,
   ...props
 }: {
-  optionName: string;
-  optionValue: string;
-  searchParams: URLSearchParams;
-  children?: ReactNode;
-  [key: string]: any;
-}) {
+    optionName: string;
+    optionValue: string;
+    searchParams: URLSearchParams;
+    children?: ReactNode;
+    [key: string]: any;
+  }) {
   const {pathname} = useLocation();
   const isLangPathname = /\/[a-zA-Z]{2}-[a-zA-Z]{2}\//g.test(pathname);
   // fixes internalized pathname
@@ -457,10 +468,10 @@ function ProductDetail({
   content,
   learnMore,
 }: {
-  title: string;
-  content: string;
-  learnMore?: string;
-}) {
+    title: string;
+    content: string;
+    learnMore?: string;
+  }) {
   return (
     <Disclosure key={title} as="div" className="grid w-full gap-8">
       {({open}) => (
@@ -502,132 +513,111 @@ function ProductDetail({
 }
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
-  fragment ProductVariantFragment on ProductVariant {
-    id
-    availableForSale
-    selectedOptions {
-      name
-      value
-    }
-    image {
-      id
-      url
-      altText
-      width
-      height
-    }
-    price {
-      amount
-      currencyCode
-    }
-    compareAtPrice {
-      amount
-      currencyCode
-    }
-    sku
-    title
-    unitPrice {
-      amount
-      currencyCode
-    }
-    product {
-      title
-      handle
-    }
-  }
+fragment ProductVariantFragment on ProductVariant {
+id
+availableForSale
+selectedOptions {
+name
+value
+}
+image {
+id
+url
+altText
+width
+height
+}
+price {
+amount
+currencyCode
+}
+compareAtPrice {
+amount
+currencyCode
+}
+sku
+title
+unitPrice {
+amount
+currencyCode
+}
+product {
+title
+handle
+}
+}
 `;
 
 const PRODUCT_QUERY = `#graphql
-  ${MEDIA_FRAGMENT}
-  ${PRODUCT_VARIANT_FRAGMENT}
-  query Product(
-    $country: CountryCode
-    $language: LanguageCode
-    $handle: String!
-    $selectedOptions: [SelectedOptionInput!]!
-  ) @inContext(country: $country, language: $language) {
-    product(handle: $handle) {
-      id
-      title
-      vendor
-      handle
-      descriptionHtml
-      description
-      options {
-        name
-        values
-      }
-      selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
-        ...ProductVariantFragment
-      }
-      media(first: 7) {
-        nodes {
-          ...Media
-        }
-      }
-      variants(first: 1) {
-        nodes {
-          ...ProductVariantFragment
-        }
-      }
-      seo {
-        description
-        title
-      }
-    }
-    shop {
-      name
-      primaryDomain {
-        url
-      }
-      shippingPolicy {
-        body
-        handle
-      }
-      refundPolicy {
-        body
-        handle
-      }
-    }
-  }
+${MEDIA_FRAGMENT}
+${PRODUCT_VARIANT_FRAGMENT}
+query Product(
+$country: CountryCode
+$language: LanguageCode
+$handle: String!
+$selectedOptions: [SelectedOptionInput!]!
+) @inContext(country: $country, language: $language) {
+product(handle: $handle) {
+id
+title
+vendor
+handle
+descriptionHtml
+description
+options {
+name
+values
+}
+selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
+...ProductVariantFragment
+}
+media(first: 7) {
+nodes {
+...Media
+}
+}
+variants(first: 1) {
+nodes {
+...ProductVariantFragment
+}
+}
+seo {
+description
+title
+}
+}
+shop {
+name
+primaryDomain {
+url
+}
+shippingPolicy {
+body
+handle
+}
+refundPolicy {
+body
+handle
+}
+}
+}
 `;
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  query productRecommendations(
-    $count: Int
-    $country: CountryCode
-    $language: LanguageCode
-  ) @inContext(country: $country, language: $language) {
-    bestSelling: products(first: $count, sortKey: BEST_SELLING) {
-      nodes {
-        id
-        title
-        handle
-        description
-        images (first: 1) {
-          nodes {
-            url
-            altText
-            width
-            height
-        }
-      }
+${PRODUCT_CARD_FRAGMENT}
+query productRecommendations(
+  $count: Int
+  $country: CountryCode
+  $language: LanguageCode
+) @inContext(country: $country, language: $language) {
+  bestSelling: products(first: $count, sortKey: BEST_SELLING) {
+    nodes {
+      ...ProductCard
     }
   }
   newest: products(first:6, sortKey: UPDATED_AT) {
     nodes {
-      id
-      title
-      handle
-      description
-      images (first: 3) {
-        nodes {
-          url
-          altText
-          width
-          height
-        }
-      }
+      ...ProductCard
     }
   }
 }`;
@@ -646,17 +636,17 @@ async function getRecommendedProducts(
   invariant(products, 'No data returned from Shopify API');
 
   const mergedProducts = products.bestSelling.nodes
-    .concat(products.newest.nodes)
-    .filter(
-      (value, index, array) =>
-        array.findIndex((value2) => value2.id === value.id) === index,
-    );
+  .concat(products.newest.nodes)
+  .filter(
+    (value, index, array) =>
+      array.findIndex((value2) => value2.id === value.id) === index,
+  );
 
   const originalProduct = mergedProducts
-    .map((item: ProductType) => item.id)
-    .indexOf(productId);
+  .map((item: ProductType) => item.id)
+  .indexOf(productId);
 
   mergedProducts.splice(originalProduct, 1);
 
-  return mergedProducts;
+  return { recomended: mergedProducts };
 }

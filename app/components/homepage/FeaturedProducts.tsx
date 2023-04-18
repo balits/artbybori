@@ -34,7 +34,7 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
                 'relative  group rounded-sm min-w-full w-[20%] min-h-full aspect-square relative cursor-pointer basic-animation delay-0 hover:opacity-90',
               )}
             >
-              <Link to="/products/${prod.handle}" prefetch="intent">
+              <Link to={`/products/${prod.handle}`} prefetch="intent">
                 <div className="aspect-square relative flex items-center justify-center overflow-clip rounded-sm">
                   {image && (
                     <Image

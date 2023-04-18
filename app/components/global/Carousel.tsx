@@ -56,6 +56,15 @@ type ProductCarouselProps = DefaultCarouselProps & {
   products: SerializeFrom<Product[]>;
 };
 
+/***
+  * This version takes an array of Products and displays them with a `ProductCard`.
+  * Please make sure that your version of Product has the following:
+  * - title of the product
+  * - the first variant
+  * - image of the first variant
+  * - price of the first variant
+  * -  comparePrice of first the variant (To Be Implementedb
+  * */
 export function ProductCarousel({
   products,
   textOnTop,
