@@ -53,7 +53,7 @@ module.exports = {
         'sidebar-tablet': '50vw',
         'sidebar-desktop': '35vw',
 
-        'carousel-item': '18rem',
+        'carousel-item-sm': '18rem',
         'carousel-item-md': '21rem',
         'carousel-item-lg': '25rem',
         'carousel-item-xl': '28rem',

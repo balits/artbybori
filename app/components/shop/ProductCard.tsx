@@ -11,7 +11,7 @@ type ProductCardProps = {
   money?: MoneyV2;
   img: ImageType;
   extraLabel?: string;
-  textOnTop?: boolean
+  textOnTop: boolean
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   money,
   img,
   extraLabel,
-  textOnTop = false,
+  textOnTop,
 }) => {
   return (
     <>
@@ -32,34 +32,36 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </p>
           </div>
         )}
-        {
-          textOnTop && <div className="text-custom-white transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
-            <div className="grid grid-cols-1 p-4  ">
-              <p className=" font-semibold text-autoscale">{title}</p>
-              {money &&  (
-                <Money
-                  className="text-autoscale-small"
-                  withoutTrailingZeros
-                  data={money}
-                />
-              )}
+        {textOnTop && (
+            <div className="p-2 md:p-3 lg:p-4 text-custom-white transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
+              <Details title={title} money={money} />
             </div>
-          </div>
-        }
-      </div>
-      {!textOnTop && (
-        <div className="grid grid-cols-1 mt-2 md:mt-3 lg:mt-4">
-          <p className=" font-medium text-sm md:text-md xl:text-lg">{title}</p>
-          {money &&  (
-            <Money
-              className="text-xs md:text-sm xl:text-md"
-              withoutTrailingZeros
-              data={money}
-            />
           )}
-        </div>
-      )}
+      </div>
+      {!textOnTop && <Details title={title} money={money} />}
     </>
   );
 };
 export default ProductCard;
+
+function Details({
+  title,
+  money
+}: {
+    title: string
+    money?: MoneyV2
+  }) {
+  return (
+    <div className="grid grid-cols-1 mt-2 lg:mt-3 xl:mt-4">
+      <h3 className="text-sm md:text-md xl:text-lg">{title}</h3>
+      {money &&  (
+        <Money
+          className="text-xs md:text-sm xl:text-md"
+          withoutTrailingZeros
+          data={money}
+        />
+      )}
+    </div>
+
+  )
+}

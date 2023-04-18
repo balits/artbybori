@@ -42,6 +42,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
                   money={price}
                   img={image as Image}
                   extraLabel={extraLabel}
+                  textOnTop={false}
                 />
               </Link>
             </li>

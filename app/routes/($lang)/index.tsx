@@ -185,7 +185,7 @@ export default function Homepage() {
                     coll.handle !== 'featured-products',
                 );
                 return (
-                  <CollectionCarousel collections={items} />
+                  <CollectionCarousel collections={items} textOnTop={true}/>
                 );
               }}
             </Await>
