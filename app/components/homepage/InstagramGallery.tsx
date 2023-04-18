@@ -15,7 +15,7 @@ export default function InstagramGallery({mt = 'mt-16'}: {mt?: string}) {
           key={v}
           className="w-full aspect-square grid place-items-center  group bg-custom-placeholder-green cursor-pointer basic-animation filter hover:brightness-90 active:brightness-70"
         >
-          <SiInstagram className="w-3 h-3 md:w-8 md:h-8 lg:w-10 lg:h-10 text-custom-white opacity-0 basic-animation group-hover:opacity-100" />
+          <SiInstagram className="w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 text-custom-white opacity-0 basic-animation group-hover:opacity-100" />
         </div>
       ))}
     </Container>
