@@ -1,17 +1,39 @@
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {Container} from '~/components/global/Container';
+import { HeadersFunction, LinksFunction } from '@shopify/remix-oxygen';
+
+export const link: LinksFunction = () => [
+  {
+    rel: "preload",
+    href: "/portrait.JPG",
+    as: "image",
+    type: "image/svg"
+  }
+]
+
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "max-age=300, s-maxage=3600",
+});
 
 export default function About() {
   return (
     <>
-      <section className="grid grid-cols-2 w-full h-[calc(100vh-96px)] mt-header-base md:mt-header-md lg:mt-header-lg">
-        <div className="relative overflow-hidden"></div>
-        <div className="bg-custom-signature-green text-custom-white flex items-end justify-center px-16">
-          <div className="mb-24">
-            <h1 className="mb-20 text-8xl font-serif">Hi there!</h1>
-            <div className="columns-2 space-y-8 gap-x-10">
+      <section className="flex flex-col-reverse lg:grid lg:grid-cols-2  w-full h-fit lg:h-minus-header scaling-mt-header">
+        <div className="relative overflow-hidden bg-custom-placeholder-green h-minus-header">
+          <img
+            src='/portrait.JPG'
+            className='absolute inset-0 w-full h-full object-cover object-center fadeIn'
+          />
+
+        </div>
+
+        <div className="h-fit lg:h-minus-header bg-custom-signature-green text-custom-white flex items-end justify-center px-6 md:px-8 lg:px-12">
+          <div className="py-28 lg:pt-0">
+            <h1 className="mb-20  text-6xl md:text-7xl lg:text-8xl font-serif">Hi&nbsp;there!</h1>
+            <div className="lg:columns-2 space-y-8 gap-x-10">
               <p>
-                I always wanted to be an independent artist, I&apso;d thought
+                I always wanted to be an independent artist, I&apos;d thought
                 about it since I was a little girl. In 2017 I got accepted in
                 the Secondary School of Visual Arts. Here I learned all the
                 basics of working with clay for four years. Then I wanted to
@@ -32,38 +54,17 @@ export default function About() {
         </div>
       </section>
 
-      <Container className="grid place-items-center my-40">
-        <section className="mx-auto w-fit grid gap-y-4 gap-x-16 lg:grid-cols-3 lg:grid-rows-2">
-          <div className="grid place-items-center"> </div>
-          <div className="grid place-items-center"> </div>
-          <div className="grid place-items-center"> </div>
-
-          <p>
-            {' '}
-            All of our products are arefully had-crafted by ceramic artist, Bori
-            Borbely. They fire at high temperatures so they are microwave and
-            dishwasher safe. All of our products are arefully had-crafted by
-            ceramic artist, Bori Borbely. They fire at high temperatures so they
-            are microwave and dishwasher safe.{' '}
-          </p>
-          <p>
-            {' '}
-            All of our products are arefully had-crafted by ceramic artist, Bori
-            Borbely. They fire at high temperatures so they are microwave and
-            dishwasher safe. All of our products are arefully had-crafted by
-            ceramic artist, Bori Borbely. They fire at high temperatures so they
-            are microwave and dishwasher safe. All of our products are arefully
-            had-crafted by ceramic artist, Bori Borbely. They fire at high
-            temperatures so they are microwave and dishwasher safe.{' '}
-          </p>
-          <p>
-            {' '}
-            All of our products are arefully had-crafted by ceramic artist, Bori
-            Borbely. They fire at high temperatures so they are microwave and
-            dishwasher safe. All of our products are arefully had-crafted by
-            ceramic artist, Bori Borbely.{' '}
-          </p>
-        </section>
+      <Container as="section" className="grid gap-y-4 md:gap-y-10 lg:gap-y-12 gap-x-16 lg:grid-cols-3 my-20 md:my-28 lg:my-40">
+          {texts.map(txt => (
+            <div key={txt.id} className="grid place-items-center">
+              <div className='flex flex-col items-center justify-center'>
+                <div className='h-44 w-fit grid place-items-center'>{txt.icon({className:"h-20 w-20 md:h-32 md:w-32 xl:h-36 xl:w-36"})}</div>
+                <p className='mt-4 lg:mt-6 text-autoscale-small sm:w-1/2 lg:w-full'>
+                  {txt.body}
+                </p>
+              </div>
+            </div>
+          ))}
       </Container>
 
       <InstagramGallery />
@@ -71,13 +72,14 @@ export default function About() {
   );
 }
 
-const SVG1 = () => (
+const SVG1: React.FC<{className: string}> = ({className}) => (
   <svg
     width="140"
     height="70"
     viewBox="0 0 140 70"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className={className}
   >
     <path
       d="M107.938 37.5099C106.444 37.5099 102.626 38.2281 99.1141 38.2281C95.6018 38.2281 91.0788 38.8072 88.4498 38.8072C85.5218 38.8072 81.7066 39.5064 79.0319 38.2418C76.3848 36.9902 76.4373 32.4313 78.53 30.6098C83.5416 26.2477 91.7424 25.9348 97.8382 25.3647C105.007 24.6942 112.498 25.1329 119.685 25.2391C121.636 25.2679 125 25.3284 125 28.0658C125 31.0638 117.871 32.9076 115.7 34.0018C111.778 35.9781 112.333 37.5099 107.938 37.5099Z"
@@ -130,13 +132,14 @@ const SVG1 = () => (
   </svg>
 );
 
-const SVG2 = () => (
+const SVG2: React.FC<{className: string}> = ({className}) => (
   <svg
     width="125"
     height="167"
     viewBox="0 0 125 167"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className={className}
   >
     <path
       d="M2.1121 158.691C1.88806 147.444 1.65082 136.333 5.13857 125.569C7.38941 118.622 9.61178 111.659 12.7667 105.064C19.069 91.8888 27.4201 78.2233 41.7925 72.8305C49.2902 70.0172 56.3649 68.175 64.376 68.175C69.6734 68.175 74.9722 68.1372 80.2694 68.175C82.1315 68.1882 83.833 68.4215 85.579 69.0634C88.3974 70.0996 91.034 71.497 93.5434 73.1503C96.2828 74.9552 98.5363 77.4103 101.349 79.0496C103.139 80.0934 105.927 82.3219 106.951 84.2353C107.879 85.9695 109.197 86.7571 110.109 88.5028C111.788 91.7151 112.659 95.334 113.578 98.8266C114.512 102.376 115.353 105.952 116.375 109.47C117.122 112.043 118.673 114.311 119.667 116.791C120.629 119.193 121.182 121.595 121.578 124.148C122.227 128.324 122.429 132.596 122.87 136.799C123.172 139.682 122.852 142.381 122.852 145.275C122.852 147.934 122.852 150.594 122.852 153.253"
@@ -225,44 +228,63 @@ const SVG2 = () => (
   </svg>
 );
 
-const SVG3 = () => (
+const SVG3: React.FC<{className: string}> = ({className}) => (
   <svg
     width="96"
     height="107"
     viewBox="0 0 96 107"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className={className}
   >
     {' '}
     <path
       d="M17.2234 83.0699C20.3766 95.3702 28.9562 100.887 40.4162 104.335C43.3583 105.519 47.416 104.866 49.2688 104.335C52.2404 103.483 57.432 104.251 59.9372 102.855C63.6788 100.77 74.2905 96.4043 77.1546 93.5314C83.4298 87.237 86.8781 74.0107 86.8781 64.3037C86.8781 53.4896 88.8142 42.3983 80.8912 34.4511C76.1949 29.7403 59.9372 35.4068 59.9372 27.9694C59.9372 24.3831 61.5465 4.04943 57.9224 3.44357C54.677 2.90101 52.8498 2 49.2688 2C48.4945 2 44.8425 2.00014 41.449 2.51408C41.449 8.80001 40.7113 13.8073 40.7113 18.7937C40.7113 24.7492 41.5339 27.7834 38.6457 32.8533C32.7153 43.2632 20.8553 39.6443 16.6615 51.7967C14.4413 58.2305 15.6073 76.7658 17.2234 83.0699Z"
       stroke="#273120"
-      stroke-width="3"
-      stroke-linecap="round"
+      strokeWidth="3"
+      strokeLinecap="round"
     />{' '}
     <path
       d="M74.9316 32.0462C75.5624 26.3299 88.2906 22.4497 92.8041 29.3834C94.4398 31.896 94.163 34.9624 93.993 38.0436C93.7774 41.952 88.9298 44.8634 86.5472 44.8634"
       stroke="#273120"
-      stroke-width="3"
-      stroke-linecap="round"
+      strokeWidth="3"
+      strokeLinecap="round"
     />{' '}
     <path
       d="M78.7705 32.9357C79.191 29.2899 87.6765 26.8152 90.6855 31.2374C91.7759 32.8399 91.5914 34.7956 91.4781 36.7607C91.3343 39.2534 87.3658 42.3044 85.7773 42.3044"
       stroke="#273120"
-      stroke-width="3"
-      stroke-linecap="round"
+      strokeWidth="3"
+      strokeLinecap="round"
     />{' '}
     <path
       d="M20.5528 45.1126C16.4518 40.8379 7.51474 39.5168 2.83251 47.1747C-0.52597 54.7469 6.86117 60.2173 14.5472 60.2173"
       stroke="#273120"
-      stroke-width="3"
-      stroke-linecap="round"
+      strokeWidth="3"
+      strokeLinecap="round"
     />{' '}
     <path
       d="M17.9937 48.1641C15.8725 45.6582 11.2499 44.8838 8.82807 49.3729C7.09092 53.8118 10.9119 57.0186 14.8874 57.0186"
       stroke="#273120"
-      stroke-width="3"
-      stroke-linecap="round"
+      strokeWidth="3"
+      strokeLinecap="round"
     />{' '}
   </svg>
 );
+
+const texts = [
+  {
+    body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
+    icon: SVG1,
+    id:1
+  },
+  {
+    body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
+    icon: SVG2,
+    id:2
+  },
+  {
+    body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
+    icon: SVG3,
+    id:3
+  },
+]

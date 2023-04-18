@@ -129,7 +129,7 @@ function useScroll() {
     const updateScrollDirection = () => {
       const scrollY = window.scrollY;
       const dir = scrollY > lastScrollY ? 'down' : 'up';
-      if (dir !== scrollDirection && Math.abs(scrollY - lastScrollY) > 10) {
+      if (dir !== scrollDirection && Math.abs(scrollY - lastScrollY) > 8) {
         setScrollDirecion(dir);
       }
       lastScrollY = scrollY > 0 ? scrollY : 0;

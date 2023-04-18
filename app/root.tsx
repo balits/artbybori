@@ -131,7 +131,7 @@ export function CatchBoundary() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className='overflow-clip'>
         <Layout>
           <Container className='scaling-mt-header'>
             {isNotFound ? (
