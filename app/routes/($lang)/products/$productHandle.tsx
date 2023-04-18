@@ -131,7 +131,7 @@ function SwitchContainer({
     <Container as={as} className={className}>
       {children}
     </Container>
-  ) : <section className={className}>{children}</section>
+  ) : <section id="mobile-img-gallery" className={className}>{children}</section>
 }
 
 export default function ProductPage() {
@@ -142,7 +142,7 @@ export default function ProductPage() {
   return (
     <>
       <SwitchContainer
-        as="section"
+        as="div"
         className="relative scaling-mt-header grid grid-cols-1 md:grid-cols-2 md:gap-12 lg:gap-20 lg:grid-cols-3"
       >
         <div className="w-full lg:col-span-2">
@@ -189,9 +189,6 @@ export default function ProductPage() {
             resolve={recommended}
           >
             {(data) => {
-              console.log(data.recomended)
-/*               return <p>{JSON.stringify(data.recomended)}</p> */
-
               return data?.recomended && (
                 <ProductCarousel
                   products={data.recomended as SerializeFrom<ProductType[]>}
@@ -336,10 +333,10 @@ function ProductOptions({
     searchParamsWithDefaults: URLSearchParams;
   }) {
   const closeRef = useRef<HTMLButtonElement>(null);
-  return (
+  const realOptions = options.filter((o) => o.values.length >1)
+  return realOptions.length > 0 ? (
     <div className="grid grid-cols-1 gap-8">
-      {options
-        .filter((option) => option.values.length > 1)
+      {realOptions
         .map((option) => (
           <fieldset
             key={option.name}
@@ -444,7 +441,7 @@ function ProductOptions({
           </fieldset>
         ))}
     </div>
-  );
+  ): <></>
 }
 
 function ProductOptionLink({
