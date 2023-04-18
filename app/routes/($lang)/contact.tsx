@@ -8,7 +8,6 @@ export async function action({request, params, context}: ActionArgs) {
   const body = await request.formData();
 
   const obj = Object.fromEntries(body);
-  console.log(obj);
 
   return json(obj);
 }
