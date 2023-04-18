@@ -60,7 +60,7 @@ export default function Header() {
           <div className='flex items-center justify-center gap-2 sm:gap-4 md:gap-6'>
             <SearchBar className="hidden lg:flex" />
 
-            <Link to="/search">
+            <Link to="/search" aria-label='Go to search page'>
               <HiSearch className='lg:hidden h-4 w-4 md:w-5 md:h-5 cursor-pointer focus:ring-custom-black' />
             </Link>
             <button
@@ -108,6 +108,7 @@ function SearchBar({ className }: { className: string }) {
         />
         <button
           type="submit"
+          aria-label='Apply search and go to search page'
           className="p-2 md:p-3 lg:p-4 "
         >
           <HiSearch className='h-4 w-4 md:w-5 md:h-5  lg:w-6 lg:h-6 cursor-pointer focus:ring-custom-black' />
