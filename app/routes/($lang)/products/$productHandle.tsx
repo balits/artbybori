@@ -11,7 +11,6 @@ import {
 
 import {
   AnalyticsPageType,
-  Image,
   Money,
   ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen';
@@ -19,7 +18,6 @@ import {
   IconCaret,
   IconCheck,
   ProductGallery,
-  Text,
   Link,
   AddToCartButton,
 } from '~/components';
@@ -38,14 +36,16 @@ import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import type {Storefront} from '~/lib/type';
 import type {Product} from 'schema-dts';
 import {routeHeaders, CACHE_SHORT} from '~/data/cache';
-import {Container, NoWrapContainer} from '~/components/global/Container';
+import {Container, ContainerProps, NoWrapContainer} from '~/components/global/Container';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 
 import MyButton from "~/components/global/Button"
 import { ProductCarousel, Skeleton as CarouselSkeleton } from '~/components/global/Carousel';
 import { HiChevronDown } from 'react-icons/hi';
+import { useWindowSize } from 'react-use';
 
 export const headers = routeHeaders;
+
 
 export async function loader({params, request, context}: LoaderArgs) {
   const {productHandle} = params;
@@ -114,24 +114,44 @@ export async function loader({params, request, context}: LoaderArgs) {
   );
 }
 
-export default function Product() {
+/**
+* This component renders a full-width section up to [medium breakpoint](https://tailwindcss.com/docs/responsive-design)
+* After that it renders a `Container` which has a max-w property
+* */
+function SwitchContainer({
+  children,
+  className,
+  as
+}: {
+    children: React.ReactNode
+} & ContainerProps) {
+  const {width} = useWindowSize();
+
+  return width >= 768 ? (
+    <Container as={as} className={className}>
+      {children}
+    </Container>
+  ) : <section className={className}>{children}</section>
+}
+
+export default function ProductPage() {
   const {product, shop, recommended} = useLoaderData<typeof loader>();
   const {media, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
 
   return (
     <>
-      <Container
+      <SwitchContainer
         as="section"
-        className="scaling-mt-header grid grid-cols-1 md:grid-cols-2 md:gap-12 lg:gap-20 lg:grid-cols-3"
+        className="relative scaling-mt-header grid grid-cols-1 md:grid-cols-2 md:gap-12 lg:gap-20 lg:grid-cols-3"
       >
-        <div className="bg-gray-100 w-full lg:col-span-2">
+        <div className="w-full lg:col-span-2">
           <ProductGallery
             media={media.nodes}
             className="w-screen md:w-full "
           />
         </div>
-        <section className="sticky hiddenScroll px-6 py-4 lg:p-0 lg:mt-12">
+        <section className="top-0 sticky   h-fit px-6 py-4 lg:p-0 md:scaling-pt-header">
           <ProductDescription />
           <div className="grid gap-4 py-4">
             {descriptionHtml && (
@@ -157,7 +177,7 @@ export default function Product() {
           </div>
         </section>
 
-      </Container>
+      </SwitchContainer>
 
       <NoWrapContainer className="h-fit my-32">
         <h2 className="tracking-tight text-custom-black text-2xl md:text-2xl lg:text-4xl font-serif mb-12 ">
@@ -473,14 +493,14 @@ function ProductDetail({
     learnMore?: string;
   }) {
   return (
-    <Disclosure key={title} as="div" className="grid w-full gap-8">
+    <Disclosure key={title} as="div" className="grid w-full gap-4 md:gap-6 lg:gap-8">
       {({open}) => (
         <>
-          <Disclosure.Button className="text-left">
+          <Disclosure.Button className={`text-left ${ open ? "text-custom-black" : "text-custom-black/60"}`}>
             <div className="flex justify-between">
-              <Text size="lead" as="h4">
+              <h3 className=" lg:text-lg ">
                 {title}
-              </Text>
+              </h3>
               <HiChevronDown
                 className={clsx(
                   'transition-transform transform-gpu duration-300 w-5 h-5',
@@ -490,15 +510,15 @@ function ProductDetail({
             </div>
           </Disclosure.Button>
 
-          <Disclosure.Panel className={'pb-4 pt-2 grid gap-2'}>
+          <Disclosure.Panel className={'pb-4 lg:pt-2 grid gap-2'}>
             <div
-              className="prose"
+              className="prose text-sm lg:text-md"
               dangerouslySetInnerHTML={{__html: content}}
             />
             {learnMore && (
               <div className="">
                 <Link
-                  className="pb-px border-b border-b-custom-signature-green  text-custom-signature-green hover:text-custom-black basic-animation "
+                  className="underline underline-2 underline-offset-2 hover:opacity-70  "
                   to={learnMore}
                 >
                   Learn more

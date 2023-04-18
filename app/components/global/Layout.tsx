@@ -2,21 +2,18 @@ import Header from '~/components/global/Header';
 import Footer from '~/components/global/Footer';
 import {
   Drawer,
-  useDrawer,
   Cart,
   CartLoading,
   Link,
-  CountrySelector,
 } from '~/components';
-import {useParams, Form, Await, useMatches} from '@remix-run/react';
-import {Suspense, useEffect, useMemo} from 'react';
+import { Await, useMatches} from '@remix-run/react';
+import {Suspense, useMemo} from 'react';
 import {useIsHydrated} from '~/hooks/useIsHydrated';
-import {useCartFetchers} from '~/hooks/useCartFetchers';
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
     <>
-      <div className="flex flex-col min-h-screen overflow-hidden">
+      <div className="flex flex-col min-h-screen">
         <div className="">
           <a href="#mainContent" className="sr-only">
             Skip to content
