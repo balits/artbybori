@@ -32,7 +32,7 @@ export function CollectionCarousel({
                 widths={[280, 350,450,550, 650]}
                 sizes="(max-width: 768px) 80vw, 60vw"
                 alt={coll.image?.altText ?? coll.title}
-                className="w-full h-[300px] sm:h-auto sm:w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg "
+                className="h-[300px] sm:h-auto w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg "
                 loading='eager'
               />
               {textOnTop ?  (
@@ -75,7 +75,7 @@ export function ProductCarousel({
         const variant = prod.variants.nodes[0];
         if(!variant.image) return null;
 
-        return <li key={prod.id} className="snap-start relative group cursor-pointer sm:w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg ">
+        return <li key={prod.id} className="snap-start relative group cursor-pointer w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg ">
           <Link to={`/products/${prod.handle}`} prefetch="intent">
             <ProductCard
               title={prod.title}
@@ -94,7 +94,7 @@ export function Skeleton() {
   return (
     <ul className='grid w-full snap-mandatory snap-x scroll-px-6 grid-rows-1 grid-flow-col justify-start gap-6 md:gap-10 lg:gap-12 overflow-x-scroll hiddenScroll'>
       {[1,2,3,4,5].map((x) => (
-        <li key={x} className="snap-start relative group cursor-pointer sm:w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg " />
+        <li key={x} className="snap-start relative group cursor-pointer w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg " />
       ))}
     </ul>
   );
