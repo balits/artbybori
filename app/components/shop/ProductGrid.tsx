@@ -4,11 +4,9 @@ import {
   MoneyV2,
   type Product,
 } from '@shopify/hydrogen/storefront-api-types';
-import { CgSpinner } from 'react-icons/cg';
 import { isDiscounted, isNewArrival } from '~/lib/utils';
 import { Link } from '~/components';
 import ProductCard from '~/components/shop/ProductCard';
-import { useState } from 'react';
 
 type ProductGridProps = {
   products: Product[];
@@ -16,7 +14,7 @@ type ProductGridProps = {
 
 export default function ProductGrid({ products }: ProductGridProps) {
   return (
-      <ul className='grid gap-x-6 gap-y-4 md:gap-y-8 lg:gap-y-12 grid-cols-1 place-items-center xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 '>
+      <ul className='grid gap-6 md:gap-8 xl:gap-12 grid-cols-1 place-items-center xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 '>
         {products.map((product, i) => {
           let extraLabel = '';
 
@@ -58,7 +56,7 @@ export const Fallback = () => (
     {[0, 1, 2, 3, 4, 5].map((e) => (
       <li
         key={e}
-        className="rounded-sm grid place-items-center bg-custom-placeholder-green aspect-square overflow-hidden cursor-not-allowed transition-all delay-75 hover:opacity-80"
+        className="animate-pulse rounded-sm grid place-items-center bg-custom-placeholder-green aspect-square overflow-hidden cursor-not-allowed transition-all delay-75 hover:opacity-80"
       />
     ))}
   </ul>
