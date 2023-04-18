@@ -1,4 +1,5 @@
 import {Link} from '@remix-run/react';
+import { Image } from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {Container} from '../global/Container';
 
@@ -12,8 +13,9 @@ export default function SplitView() {
         >
           <img
             src="/split-1.jpg"
+            sizes='(max-width: 480px) 300px, (max-width: 640px) 400px, (max-width: 768px) 500px, (max-width: 1024px) 600px, (max-width: 1280), 700px, 1000px'
             alt="Standalone Vase"
-            className="object-cover object-bottom w-full h-[350px] md:h-[80vw] lg:h-screen"
+            className="object-cover fadeIn w-full h-[350px] md:h-[80vw] lg:h-screen"
           />
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover object-bottom transition-colors ease-in-out group-hover:bg-black/10" />
 
@@ -29,8 +31,9 @@ export default function SplitView() {
         <div className="relative h-full bg-custom-black grid place-items-center bg-black">
           <img
             src="/split-2.jpg"
-            alt="Black clay"
-            className="object-cover w-full h-[350px] md:h-[80vw] lg:h-screen"
+            sizes='(max-width: 480px) 300px, (max-width: 640px) 400px, (max-width: 768px) 500px, (max-width: 1024px) 600px, (max-width: 1280), 700px, 1000px'
+            alt="Raw black clay"
+            className="object-cover fadeIn w-full h-[350px] md:h-[80vw] lg:h-screen"
           />
 
           <article className="absolute w-full h-full z-[2] hidden md:grid  p-4 place-items-center ">
