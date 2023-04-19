@@ -2,22 +2,35 @@ import clsx from 'clsx';
 import {SiInstagram} from 'react-icons/si';
 import {Container} from '../global/Container';
 
-export default function InstagramGallery({mt = 'mt-16'}: {mt?: string}) {
+/***
+ * This component renders 6 pics from Instagram (pagination to be implemented).
+ */
+export default function InstagramGallery({
+  mt = 'mt-16'
+}: {
+    mt?: string
+  }) {
+
+  const feed = [1,2,3,4,5,6];
+
+  return null
   return (
     <Container
+      as={"section"}
       className={clsx(
-        'mb-10 grid grid-cols-2 grid-rows-4 gap-2 md:grid-cols-4 md:grid-rows-2',
+        'mb-10  grid place-items.center',
         mt,
       )}
     >
-      {[1, 2, 3, 4, 5, 6, 7, 8].map((v) => (
-        <div
-          key={v}
-          className="grid place-items-center relative group bg-custom-placeholder-green aspect-square overflow-hidden cursor-pointer transition-all filter hover:brightness-90 active:brightness-70"
-        >
-          <SiInstagram className="w-1/6 aspect-square text-custom-white opacity-0 transition-opacity  group-hover:opacity-100" />
-        </div>
-      ))}
+      <ul className='grid grid-cols-2 grid-rows-3 md:grid-rows-3 md:grid-cols-2 '>
+        {feed.map((post) => (
+          <li key={post}>
+            <div className='group bg-custom-placeholder-green aspect-square h-[150px] sm:h-[250px] md:h-[300px] lg:h-[350px] w-[150px] sm:w-[250px] md:w-[300px] lg:w-[350px]'>
+              <SiInstagram className="w-5 h-5 lg:w-8 lg:h-8 text-custom-white basic-animation  opacity-0 group-hover:opacity-100" />
+            </div>
+          </li>
+        ))}
+      </ul>
     </Container>
   );
 }

@@ -4,6 +4,7 @@
   font-weight: 400;
   src: url('./fonts/IBMPlexSerif-Text.woff2') format('woff2');
 }
+
 @font-face {
   font-family: 'IBMPlexSerif';
   font-display: swap;
@@ -11,3 +12,18 @@
   font-style: italic;
   src: url('./fonts/IBMPlexSerif-TextItalic.woff2') format('woff2');
 }
+
+/*
+@font-face {
+  font-family: 'CantataOne';
+  font-display: swap;
+  font-weight: 400;
+  src: url('./fonts/Cantata-One.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  font-weight: 400;
+  src: url('./fonts/Inter.woff2') format('woff2');
+}
+*/

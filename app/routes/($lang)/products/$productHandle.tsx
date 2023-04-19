@@ -118,7 +118,7 @@ export async function loader({params, request, context}: LoaderArgs) {
 * This component renders a full-width section up to [medium breakpoint](https://tailwindcss.com/docs/responsive-design)
 * After that it renders a `Container` which has a max-w property
 * */
-function SwitchContainer({
+function ContainerSwitch({
   children,
   className,
   as
@@ -141,7 +141,7 @@ export default function ProductPage() {
 
   return (
     <>
-      <SwitchContainer
+      <ContainerSwitch
         as="div"
         className="relative scaling-mt-header grid grid-cols-1 md:grid-cols-2 md:gap-12 lg:gap-20 lg:grid-cols-3"
       >
@@ -177,7 +177,7 @@ export default function ProductPage() {
           </div>
         </section>
 
-      </SwitchContainer>
+      </ContainerSwitch>
 
       <NoWrapContainer className="h-fit my-32">
         <h2 className="tracking-tight text-custom-black text-2xl md:text-2xl lg:text-4xl font-serif mb-12 ">
