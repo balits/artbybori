@@ -19,21 +19,20 @@ function Multi({
   textOnTop = false
 }: CollectionCarouselProps) {
   const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
+    lg: {
+      breakpoint: { max: 5000, min: 1024 },
       items: 4
     },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+    md: {
+      breakpoint: { max: 1024, min: 768 },
       items: 3
     },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
+    sm: {
+      breakpoint: { max: 768, min: 640 },
       items: 2
     },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
+    xs: {
+      breakpoint: { max: 640, min: 0 },
       items: 1
     }
   };
@@ -47,7 +46,7 @@ function Multi({
       showDots={true}
       renderDotsOutside
       dotListClass='my-dot-list'
-      customDot={<MyDot />}
+      customDot={<MyDots />}
     >
       {collections.map((coll) => {
         if (!coll.image) return null
@@ -169,7 +168,7 @@ export function Skeleton() {
   );
 }
 
-export const MyDot = ({
+export const MyDots = ({
   onClick,
   carouselState,
   index,
@@ -179,7 +178,7 @@ export const MyDot = ({
     onClick={() => onClick()}
   >
     {
-      <RxDotFilled className={`hover:opacity-80 w-8 h-8 ${active ? "text-custom-signatere-green" : "text-custom-placeholder-green"}`}/>
+      <RxDotFilled className={`hover:opacity-80 w-6 h-6 sm:w-8 sm:h-8 ${active ? "text-custom-signatere-green" : "text-custom-placeholder-green"}`}/>
     }
   </button> : null
 }

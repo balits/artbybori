@@ -6,7 +6,7 @@ import {
 } from '@shopify/hydrogen/storefront-api-types';
 import { isDiscounted, isNewArrival } from '~/lib/utils';
 import { Link } from '~/components';
-import ProductCard from '~/components/shop/ProductCard';
+import ProductCard, { ExtraLabel } from '~/components/shop/ProductCard';
 
 type ProductGridProps = {
   products: Product[];
@@ -16,7 +16,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
   return (
       <ul className='grid gap-6 md:gap-8 xl:gap-12 grid-cols-1 place-items-center xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 '>
         {products.map((product, i) => {
-          let extraLabel = '';
+          let extraLabel: ExtraLabel = ""
 
           const defaultVairant = flattenConnection(product.variants)[0];
 
