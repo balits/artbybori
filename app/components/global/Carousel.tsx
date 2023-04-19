@@ -14,13 +14,31 @@ type CollectionCarouselProps = DefaultCarouselProps & {
   collections: SerializeFrom<Collection[]>;
 };
 
-function Multi({
+export const MyDots = ({
+  onClick,
+  carouselState,
+  index,
+  active,
+}: DotProps) => {
+  return onClick ? <button
+    onClick={() => onClick()}
+  >
+    {
+      <RxDotFilled className={`hover:opacity-80 w-6 h-6 sm:w-8 sm:h-8 ${active ? "text-custom-signatere-green" : "text-custom-placeholder-green"}`}/>
+    }
+  </button> : null
+}
+
+export function CollectionCarousel({
   collections,
   textOnTop = false
 }: CollectionCarouselProps) {
+  const haveCollections = collections && collections.length > 0;
+  if (!haveCollections) return null;
+
   const responsive = {
     lg: {
-      breakpoint: { max: 5000, min: 1024 },
+      breakpoint: { max: 10000, min: 1024 },
       items: 4
     },
     md: {
@@ -78,48 +96,6 @@ function Multi({
   )
 }
 
-export function CollectionCarousel({
-  collections,
-  textOnTop = false
-}: CollectionCarouselProps) {
-  const haveCollections = collections && collections.length > 0;
-  if (!haveCollections) return null;
-
-  return Multi({collections, textOnTop})
-
-  return (
-    <ul
-      className='grid w-full snap-mandatory snap-x scroll-px-6 grid-rows-1 grid-flow-col justify-start gap-6 md:gap-10 lg:gap-12 overflow-x-scroll hiddenScroll'>
-      {collections.map((coll) => {
-        if (!coll.image) return null
-        return (
-          <li key={coll.id} className="snap-center relative group cursor-pointer ">
-            <Link to={`/collections/${coll.handle}`} prefetch="intent">
-              <SmartImage
-                image={coll.image}
-                widths={[280, 350,450,550, 650]}
-                sizes="(max-width: 768px) 80vw, 60vw"
-                alt={coll.image?.altText ?? coll.title}
-                className="h-[300px] sm:h-auto w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg "
-                loading='eager'
-              />
-              {textOnTop ?  (
-                <div className="absolute z-[2] inset-0 w-full h-full grid place-items-center basic-animation group-hover:bg-black/10">
-                  <h3 className="z-[3] text-xl md:text-2xl lg:text-3xl  font-bold uppercase text-white basic-animation opacity-0 group-hover:opacity-100">
-                    {coll.title}
-                  </h3>
-                </div>
-              ): (
-                <h3 className='mt-2 lg:mt-3 xl:mt-4 font-medium text-sm md:text-md xl:text-lg'>{coll.title}</h3>
-              )}
-            </Link>
-          </li>
-        )
-      })}
-    </ul>
-  );
-}
-
 type ProductCarouselProps = DefaultCarouselProps & {
   products: SerializeFrom<Product[]>;
 };
@@ -137,14 +113,44 @@ export function ProductCarousel({
   products,
   textOnTop,
 }: ProductCarouselProps) {
+  if (!products || products.length == 0) return null;
+
+  const responsive = {
+    lg: {
+      breakpoint: { max: 10000, min: 1024 },
+      items: 4
+    },
+    md: {
+      breakpoint: { max: 1024, min: 768 },
+      items: 3
+    },
+    sm: {
+      breakpoint: { max: 768, min: 640 },
+      items: 2
+    },
+    xs: {
+      breakpoint: { max: 640, min: 0 },
+      items: 1
+    }
+  };
+
+
   return (
-    <ul className='grid w-full snap-mandatory snap-x scroll-px-6 grid-rows-1 grid-flow-col justify-start gap-6 md:gap-10 lg:gap-12 overflow-x-scroll hiddenScroll'>
+    <Carousel
+      responsive={responsive}
+      draggable={false}
+      itemClass="my-carousel-item"
+      showDots={true}
+      renderDotsOutside
+      dotListClass='my-dot-list'
+      customDot={<MyDots />}
+    >
       {products.map((prod) => {
         const variant = prod.variants.nodes[0];
         if(!variant.image) return null;
 
-        return <li key={prod.id} className="snap-start relative group cursor-pointer w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg ">
-          <Link to={`/products/${prod.handle}`} prefetch="intent">
+        return (
+          <Link key={prod.id } to={`/products/${prod.handle}`} prefetch="intent">
             <ProductCard
               title={prod.title}
               money={variant.price}
@@ -152,10 +158,10 @@ export function ProductCarousel({
               textOnTop={textOnTop}
             />
           </Link>
-        </li>
+        )
       })}
-    </ul>
-  );
+    </Carousel>
+  )
 }
 
 export function Skeleton() {
@@ -168,17 +174,3 @@ export function Skeleton() {
   );
 }
 
-export const MyDots = ({
-  onClick,
-  carouselState,
-  index,
-  active,
-}: DotProps) => {
-  return onClick ? <button
-    onClick={() => onClick()}
-  >
-    {
-      <RxDotFilled className={`hover:opacity-80 w-6 h-6 sm:w-8 sm:h-8 ${active ? "text-custom-signatere-green" : "text-custom-placeholder-green"}`}/>
-    }
-  </button> : null
-}

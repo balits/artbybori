@@ -45,3 +45,4 @@
 ### to be implemented
 - [ ] insta gallery pagination
 - [ ] compare price strikethrough on Product Card
+- [ ] rpductHandle: image onClick => Modal of Image
