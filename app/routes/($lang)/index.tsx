@@ -28,19 +28,6 @@ import {Container, NoWrapContainer} from '~/components/global/Container';
 
 export const headers = routeHeaders;
 
-export const links: LinksFunction = () => [
-  /* {
-    rel: 'preload',
-    as: 'image',
-    href: '/split-1.jpg',
-  },
-  {
-    rel: 'preload',
-    as: 'image',
-    href: '/split-2.jpg',
-  }, */
-];
-
 export async function loader({ params, context }: LoaderArgs) {
   const { language, country } = context.storefront.i18n;
 

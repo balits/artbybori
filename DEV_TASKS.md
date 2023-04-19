@@ -1,4 +1,4 @@
-# TASKS ON BRACN `DEV`
+#  TASKS ON BRACN `DEV`
 
 
 
@@ -12,14 +12,15 @@
   - [x] product carousel
 
 ### peti
+- [ ] download fonts
 - [ ] social media icons
 - [ ] Insta API + aspect square
-- [ ] ezzel lehet fizetni iconok
+- [x] ezzel lehet fizetni iconok
 - PAGES
   - homepage
     - [ ] cim animacio
     - [ ] carousel nyilacskák két oldalt / pontocskak
-    - [ ] split view kép és szöveg + jobb oldalon ne szurkuljon
+    - [x] split view kép és szöveg + jobb oldalon ne szurkuljon
     - [ ] country selector
   - shop page
     - [ ] product card image change on hover

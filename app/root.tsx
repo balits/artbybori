@@ -20,6 +20,7 @@ import {ShopifySalesChannel, Seo} from '@shopify/hydrogen';
 import Layout from './components/global/Layout';
 import {GenericError} from './components/GenericError';
 import tailwind from './styles/app.css';
+import carouselCss from "react-multi-carousel/lib/styles.css";
 import favicon from '../public/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import {DEFAULT_LOCALE, parseMenu, type EnhancedMenu} from './lib/utils';
@@ -30,6 +31,7 @@ import Container from './components/global/Container';
 
 export const links: LinksFunction = () => {
   return [
+    {rel: 'stylesheet', href: carouselCss},
     {rel: 'stylesheet', href: tailwind},
     {
       rel: 'preconnect',

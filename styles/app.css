@@ -254,3 +254,25 @@ shop-pay-button {
     right: 0;
     bottom: 0;
 }
+
+.my-carousel-container {
+  height: fit-content;
+  background-color: var(--custom-placeholder);
+}
+
+
+/*relative group cursor-pointer */
+.my-carousel-item {
+  position: relative;
+  cursor: pointer;
+  margin-right: .5em ;
+  margin-left: .5rem ;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.my-dot-list {
+  position: static;
+  display: flex;
+  column-gap: .5rem;
+}

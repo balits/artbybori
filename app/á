@@ -3,8 +3,9 @@ import { Link } from "~/components"
 import SmartImage from '~/components/global/SmartImage';
 import { SerializeFrom } from '@shopify/remix-oxygen';
 import ProductCard from '~/components/shop/ProductCard';
-import Carousel, { DotProps } from "react-multi-carousel";
-import { RxDot, RxDotFilled } from 'react-icons/rx';
+
+import Carousel, { ArrowProps, ButtonGroupProps } from "react-multi-carousel";
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 type DefaultCarouselProps = {
   textOnTop: boolean;
@@ -37,17 +38,14 @@ function Multi({
       items: 1
     }
   };
-
-
   return (
     <Carousel
       responsive={responsive}
       draggable={false}
+      ssr={true}
       itemClass="my-carousel-item"
-      showDots={true}
-      renderDotsOutside
-      dotListClass='my-dot-list'
-      customDot={<MyDot />}
+      arrows={false}
+      customButtonGroup={<ButtonGroup />}
     >
       {collections.map((coll) => {
         if (!coll.image) return null
@@ -169,17 +167,31 @@ export function Skeleton() {
   );
 }
 
-export const MyDot = ({
+function RightArrow({
   onClick,
-  carouselState,
-  index,
-  active,
-}: DotProps) => {
-  return onClick ? <button
-    onClick={() => onClick()}
-  >
-    {
-      <RxDotFilled className={`hover:opacity-80 w-8 h-8 ${active ? "text-custom-signatere-green" : "text-custom-placeholder-green"}`}/>
-    }
-  </button> : null
+  carouselState
+}: ArrowProps) {
+  return <button onClick={onClick}>
+    <HiChevronRight className='w-5 h-5' />
+  </button>
 }
+
+function LeftArrow({
+  onClick,
+  carouselState
+}: ArrowProps) {
+  return <button onClick={onClick}>
+    <HiChevronLeft className='w-5 h-5' />
+  </button>
+}
+
+const ButtonGroup = ({ next, previous, goToSlide, carouselState }: ButtonGroupProps) => {
+  if (!next || !previous || !goToSlide || !carouselState) return null
+  return (
+    <div className="carousel-button-group"> // remember to give it position:absolute
+      <button className={carouselState!.currentSlide === 0 ? 'disable' : ''} onClick={() => previous()} />
+      <button onClick={() => next()}>next??</button>
+      <button onClick={() => goToSlide(carouselState.currentSlide + 1)}> Go to any slide </button>
+    </div>
+  );
+};

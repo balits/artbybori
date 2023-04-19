@@ -1,24 +1,16 @@
 import {Link} from '@remix-run/react';
-import { Image } from '@shopify/hydrogen';
 import clsx from 'clsx';
 import {Container} from '../global/Container';
 
 export default function SplitView() {
   return (
     <section className="lg:shadow-sm my-24 w-full flex flex-col justify-center items-center">
-      <div className="overflow-y-hidden  w-full grid grid-cols-2">
+      <div className="overflow-y-hidden  w-full grid grid-cols-2 h-[60vh] lg:h-minus-header">
         <Link
           to="/shop"
           className="relative h-full bg-custom-placeholder-green cursor-pointer group"
         >
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover object-bottom transition-colors ease-in-out group-hover:bg-black/10" />
-          <img
-            src="/split-1.jpg"
-            sizes='(max-width: 480px) 300px, (max-width: 640px) 400px, (max-width: 768px) 500px, (max-width: 1024px) 600px, (max-width: 1280), 700px, 1000px'
-            alt="Standalone Vase"
-            className="object-cover fadeIn w-full h-[350px] md:h-[80vw] lg:h-screen"
-          />
-
           <div className="absolute inset-0 w-full h-full grid place-items-center font-medium text-custom-white z-[2] ">
             <h2 className="font-cantata text-lg md:text-2xl lg:text-4xl">
               Surround yourself
@@ -28,16 +20,8 @@ export default function SplitView() {
           </div>
         </Link>
 
-        <div className="relative h-full grid place-items-center bg-black group">
-          <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover object-bottom transition-colors ease-in-out group-hover:bg-black/10" />
-
-          <img
-            src="/split-2.jpg"
-            sizes='(max-width: 480px) 300px, (max-width: 640px) 400px, (max-width: 768px) 500px, (max-width: 1024px) 600px, (max-width: 1280), 700px, 1000px'
-            alt="Raw black clay"
-            className="object-cover fadeIn w-full h-[350px] md:h-[80vw] lg:h-screen"
-          />
-
+        <div className="relative  grid place-items-center bg-custom-signature-green group">
+          <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover" />
 
           <article className="absolute w-full h-full z-[3] hidden md:grid  p-4 place-items-center ">
             <div className=' w-2/3 lg:w-3/5 max-w-[400px]'>
