@@ -23,6 +23,7 @@ import CartView, {
   Fallback as CartViewSkeleton,
 } from '~/components/cart/CartView';
 import { Container} from '~/components/global/Container';
+import { seoPayload } from '~/lib/seo.server';
 
 export async function action({request, context}: ActionArgs) {
   const {session, storefront} = context;
@@ -176,6 +177,18 @@ export async function action({request, context}: ActionArgs) {
     },
     {status, headers},
   );
+}
+
+export async function loader() {
+  const seo = seoPayload.customPage({
+    url: "https://www.artbybori.com/cart",
+    title: "Cart",
+    description: "View or modify your cart, and then head to checkout!"
+  })
+
+  return json({
+    seo
+  })
 }
 
 export default function CartRoute() {

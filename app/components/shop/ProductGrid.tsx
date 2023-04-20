@@ -7,9 +7,10 @@ import {
 import { isDiscounted, isNewArrival } from '~/lib/utils';
 import { Link } from '~/components';
 import ProductCard, { ExtraLabel } from '~/components/shop/ProductCard';
+import { SerializeFrom } from '@shopify/remix-oxygen';
 
 type ProductGridProps = {
-  products: Product[];
+  products: SerializeFrom<Product>[];
 };
 
 export default function ProductGrid({ products }: ProductGridProps) {

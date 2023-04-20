@@ -368,6 +368,28 @@ function page({
   };
 }
 
+function customPage({
+  title,
+  description,
+  url
+}: {
+  title: string,
+  description: string,
+  url: Request['url']
+}) {
+  return {
+    description: truncate(description),
+    title,
+    titleTemplate: "%s | Art by Bori",
+    url,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: title
+    }
+  }
+}
+
 function policy({
   policy,
   url,
@@ -429,6 +451,7 @@ export const seoPayload = {
   home,
   listCollections,
   page,
+  customPage,
   policies,
   policy,
   product,

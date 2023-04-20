@@ -1,5 +1,5 @@
 import {LoaderArgs, redirect} from '@shopify/remix-oxygen';
 
-export async function loader(args: LoaderArgs) {
-  throw redirect('/shop', 308);
+export async function loader({params}: LoaderArgs) {
+  return redirect(params?.lang ? `${params.lang}/products` : '/products');
 }

@@ -3,6 +3,7 @@ import {json, type ActionArgs} from '@shopify/remix-oxygen';
 import {useActionData, useFetcher, Form, useNavigation} from '@remix-run/react';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {useState} from 'react';
+import { seoPayload } from '~/lib/seo.server';
 
 export async function action({request, params, context}: ActionArgs) {
   const body = await request.formData();
@@ -10,6 +11,18 @@ export async function action({request, params, context}: ActionArgs) {
   const obj = Object.fromEntries(body);
 
   return json(obj);
+}
+
+export async function loader() {
+  const seo = seoPayload.customPage({
+    title: "Contact",
+    description: "Write a custom email, or read the frequently asked questions",
+    url: "https://www.artbybori.com/contact"
+  })
+
+  return json({
+    seo
+  })
 }
 
 function ContactForm() {

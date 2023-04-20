@@ -1,5 +1,5 @@
-import {SyntheticEvent, useMemo, useState} from 'react';
-import {Menu} from '@headlessui/react';
+import {Fragment, SyntheticEvent, useMemo, useState} from 'react';
+import {Menu, Transition} from '@headlessui/react';
 
 import {Heading, IconFilters, IconCaret, IconXMark, Text} from '~/components';
 import {
@@ -22,6 +22,7 @@ import {
   SortParam,
 } from '~/routes/($lang)/collections/$collectionHandle';
 import { HiAdjustmentsHorizontal } from 'react-icons/hi2';
+import { FilterDropDown } from './global/Icon';
 
 type Props = {
   filters: Filter[];
@@ -43,19 +44,20 @@ export function SortFilter({
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={
-            'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5'
+            'relative flex items-center justify-center w-8 h-8 focus:ring-custom-signature-green/10'
           }
         >
-          <HiAdjustmentsHorizontal className='w-4 h-4 md:w-5 md:h-5 cursor-pointer'/>
+          <FilterDropDown className="basic-animation delay-150 hover:opacity-80  "/>
         </button>
         <SortMenu />
       </div>
-      <div className="flex flex-col flex-wrap md:flex-row">
+
+      <div className="flex flex-col flex-wrap ">
         <div
-          className={`transition-all duration-200 ${
+          className={`basic-animation delay-150 ${
             isOpen
-              ? 'opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full'
-              : 'opacity-0 md:min-w-[0px] md:w-[0px] pr-0 max-h-0 md:max-h-full'
+              ? 'opacity-100 min-w-full max-h-full'
+              : 'opacity-0 max-h-0 '
           }`}
         >
           <FiltersDrawer
@@ -64,7 +66,9 @@ export function SortFilter({
             appliedFilters={appliedFilters}
           />
         </div>
-        <div className="flex-1">{children}</div>
+        <div className="mt-4">
+          {children}
+        </div>
       </div>
     </>
   );
@@ -116,38 +120,23 @@ export function FiltersDrawer({
     }
   };
 
-  const collectionsMarkup = collections.map((collection) => {
-    return (
-      <li key={collection.handle} className="pb-4">
-        <Link
-          to={`/collections/${collection.handle}`}
-          className="focus:underline hover:underline"
-          key={collection.handle}
-          prefetch="intent"
-        >
-          {collection.title}
-        </Link>
-      </li>
-    );
-  });
-
   return (
     <>
-      <nav className="py-8">
+      <nav className="pb-6 lg:pb-12">
         {appliedFilters.length > 0 ? (
           <div className="pb-8">
             <AppliedFilters filters={appliedFilters} />
           </div>
         ) : null}
 
-        <Heading as="h4" size="lead" className="pb-4">
+        <h4 className="pb-4 text-base md:text-lg font-semibold">
           Filter By
-        </Heading>
-        <div className="divide-y">
+        </h4>
+        <div className=" flex gap-8 overflow-auto">
           {filters.map(
             (filter: Filter) =>
               filter.values.length > 1 && (
-                <Disclosure as="div" key={filter.id} className="w-full">
+                <Disclosure as="div" key={filter.id} className="w-fit px-2">
                   {({open}) => (
                     <>
                       <Disclosure.Button className="flex justify-between w-full py-4">
@@ -372,34 +361,43 @@ export default function SortMenu() {
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
-    <Menu as="div" className="relative z-40">
-      <Menu.Button className="flex items-center">
-        <span className="px-2">
-          <span className="px-2 font-medium">Sort by:</span>
+    <Menu as="div" className="relative z-30 text-sm">
+      <Menu.Button className="flex items-center bg-custom-signature-green rounded-md p-2  text-custom-white">
+        <span className="px-1 md:px-2">
+          <span className="px-1 md:px-2 font-medium">Sort by:</span>
           <span>{(activeItem || items[0]).label}</span>
         </span>
         <IconCaret />
       </Menu.Button>
 
-      <Menu.Items
-        as="nav"
-        className="absolute right-0 flex flex-col p-4 text-right rounded-sm bg-contrast"
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
       >
-        {items.map((item) => (
-          <Menu.Item key={item.label}>
-            {() => (
-              <Link
-                className={`block text-sm pb-2 px-3 ${
-                  activeItem?.key === item.key ? 'font-bold' : 'font-normal'
-                }`}
-                to={getSortLink(item.key, params, location)}
-              >
-                {item.label}
-              </Link>
-            )}
-          </Menu.Item>
-        ))}
-      </Menu.Items>
+
+        <Menu.Items
+          as="nav"
+          className="absolute right-0 flex flex-col text-right rounded-sm mt-2 bg-custom-white shadow-md rounded-sm"
+        >
+          {items.map((item) => (
+            <Menu.Item key={item.label}>
+              {({active}) => (
+                <Link
+                  className={`block text-sm py-2 px-4  ${ activeItem?.key === item.key ? 'font-bold' : 'font-normal' } ${active ? "bg-custom-signature-green opacity-80 text-custom-white" : ""}`}
+                  to={getSortLink(item.key, params, location)}
+                >
+                  {item.label}
+                </Link>
+              )}
+            </Menu.Item>
+          ))}
+        </Menu.Items>
+      </Transition>
     </Menu>
   );
 }

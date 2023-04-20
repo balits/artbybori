@@ -26,28 +26,28 @@ const Nav: React.FC<Props & ComponentProps<'nav'>> = ({
     >
       <ul
         className={clsx(
-          'w-fit h-fit flex',
+          'w-fit h-fit flex ',
           flexDirection === 'row'
-            ? ' items-center text-md lg:text-md lg:gap-x-14 xl:gap-x-11 '
+            ? ' items-center   lg:gap-x-14 xl:gap-x-11 '
             : ' flex-col items-start justify-center gap-y-12 text-xl ',
         )}
       >
-        <li className="cursor-pointer  hover:opacity-80 active:opacity-80">
+        <li className="cursor-pointer text-base hover:opacity-80 active:opacity-80">
           <Link prefetch="intent" to="/"  onClick={closeSidebarOnClick}>
             home
           </Link>
         </li>
-        <li className="cursor-pointer  hover:opacity-80 active:opacity-80">
+        <li className="cursor-pointer text-base hover:opacity-80 active:opacity-80">
           <Link prefetch="intent" to="/shop"  onClick={closeSidebarOnClick}>
             shop
           </Link>
         </li>
-        <li className="cursor-pointer  hover:opacity-80 active:opacity-80">
+        <li className="cursor-pointer  text-base hover:opacity-80 active:opacity-80">
           <Link prefetch="intent" to="/about" onClick={closeSidebarOnClick}>
             about
           </Link>
         </li>
-        <li className="cursor-pointer  hover:opacity-80 active:opacity-80">
+        <li className="cursor-pointer text-base hover:opacity-80 active:opacity-80">
           <Link prefetch="intent" to="/contact" onClick={closeSidebarOnClick}>
             contact
           </Link>

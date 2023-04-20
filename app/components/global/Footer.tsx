@@ -1,4 +1,5 @@
 import { Link } from "~/components"
+import {Link as RemixLink} from "@remix-run/react"
 import { Container } from '~/components/global/Container';
 import { SiFacebook, SiGmail, SiInstagram, SiTiktok } from 'react-icons/si';
 
@@ -66,19 +67,19 @@ export default function Footer() {
           <div className="h-fit">
             <Strong text="Social media" />
             <ul>
-              <li className="flex gap-x-3 md:gap-x-6 lg:gap-x-8">
-                <Link to="https://facebook.com/artbybori" prefetch="none">
+              <li className="flex gap-x-4 md:gap-x-6 lg:gap-x-8">
+                <RemixLink to="https://facebook.com/artbybori" target={"_blank"} aria-label="Visit the official Facebook page for Art By Bori" rel="noopener noreferer">
                   <SiFacebook className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
-                </Link>
-                <Link to="https://instagram.com/artbybori" prefetch="none">
+                </RemixLink>
+                <RemixLink to="https://instagram.com/artbybori" target={"_blank"} aria-label="Visit the official Instagram account of Art By Bori" rel="noopener noreferer">
                   <SiInstagram className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
-                </Link>
-                <Link to="https://tiktok.com" prefetch="none">
+                </RemixLink>
+                <RemixLink to="https://tiktok.com/@artbybori" target={"_blank"} aria-label="Visit the official Tiktok account of Art By Bori" rel="noopener noreferer">
                   <SiTiktok className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
-                </Link>
-                <Link to="" prefetch="none">
+                </RemixLink>
+                <RemixLink to="mailto:artbybori@gmail.com?subject=Custom%Order" target={"_blank"} aria-label="Write an email to Art by Bori" rel="noopener noreferer">
                   <SiGmail className="h-4 w-4 sm:h-5 sm:w-5 hover:opacity-60 cursor-pointer" />
-                </Link>
+                </RemixLink>
               </li>
             </ul>
           </div>
@@ -91,7 +92,7 @@ export default function Footer() {
           <div className="flex flex-col gap-y-2">
             <PaymentOptionsList/>
             <div className="flex flex-col md:flex-row gap-x-4 ">
-              <Link to="/" className="hover:underline text-xs">
+              <Link to="/" className="hover:underline text-xs" reloadDocument>
                 &#169; 2023 ART BY BORI,
               </Link>
               <Link

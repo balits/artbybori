@@ -12,6 +12,7 @@ import CartDrawer from '~/components/drawer/CartDrawer';
 import NavDrawer from '~/components/drawer/NavDrawer';
 import { HiSearch } from 'react-icons/hi';
 import { Link } from '../Link';
+import { Bars, SearchIcon, ShoppingBag } from './Icon';
 
 export default function Header() {
   const {
@@ -52,7 +53,7 @@ export default function Header() {
             className="lg:hidden p-2 md:p-3 lg:p-4 pl-0"
             aria-label="Open navigation panel from the left side."
           >
-            <HiBars2 className="w-4 h-4 md:w-5 md:h-5" />
+            <Bars />
           </button>
           <Logo />
           <Nav flexDirection="row" />
@@ -60,15 +61,15 @@ export default function Header() {
           <div className='flex items-center justify-center gap-2 sm:gap-4 md:gap-6'>
             <SearchBar className="hidden lg:flex" />
 
-            <Link to="/search" aria-label='Go to search page'>
-              <HiSearch className='lg:hidden h-4 w-4 md:w-5 md:h-5 cursor-pointer focus:ring-custom-black' />
+            <Link to="/search" aria-label='Go to search page' className="lg:hidden p-2 md:p-3 lg:p-4 ">
+              <SearchIcon />
             </Link>
             <button
               onClick={openCart}
               className="p-2 md:p-3 lg:p-4 pr-0"
               aria-label="Open cart panel from the right side."
             >
-              <BiShoppingBag className="h-4 w-4 md:w-5 md:h-5 lg:w-6 lg:h-6 cursor-pointer" />
+              <ShoppingBag />
             </button>
           </div>
         </Container>
@@ -111,7 +112,7 @@ function SearchBar({ className }: { className: string }) {
           aria-label='Apply search and go to search page'
           className="p-2 md:p-3 lg:p-4 "
         >
-          <HiSearch className='h-4 w-4 md:w-5 md:h-5  lg:w-6 lg:h-6 cursor-pointer focus:ring-custom-black' />
+          <SearchIcon />
         </button>
       </div>
     </Form>

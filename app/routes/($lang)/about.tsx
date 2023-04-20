@@ -1,6 +1,8 @@
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {Container} from '~/components/global/Container';
 import { HeadersFunction, LinksFunction } from '@shopify/remix-oxygen';
+import { seoPayload } from '~/lib/seo.server';
+import { json } from '@shopify/remix-oxygen';
 
 export const link: LinksFunction = () => [
   {
@@ -16,10 +18,22 @@ export const headers: HeadersFunction = () => ({
   "Cache-Control": "max-age=300, s-maxage=3600",
 });
 
+export async function loader() {
+  const seo = seoPayload.customPage({
+    title: "About",
+    description: "Learn all about Art by Bori",
+    url: "https://www.artbybori.com/about"
+  })
+
+  return json({
+    seo
+  })
+}
+
 export default function About() {
   return (
     <>
-      <section className="flex flex-col-reverse lg:grid lg:grid-cols-2  w-full h-fit lg:h-minus-header scaling-mt-header">
+      <section className="flex flex-col-reverse md:grid md:grid-cols-2  w-full h-fit md:h-minus-header scaling-mt-header">
         <div className="relative overflow-hidden bg-custom-placeholder-green h-minus-header">
           <img
             src='/portrait.JPG'
@@ -28,10 +42,10 @@ export default function About() {
 
         </div>
 
-        <div className="h-fit lg:h-minus-header bg-custom-signature-green text-custom-white flex items-end justify-center px-6 md:px-8 lg:px-12">
-          <div className="py-28 lg:pt-0">
-            <h1 className="mb-20  text-6xl md:text-7xl lg:text-8xl font-serif">Hi&nbsp;there!</h1>
-            <div className="lg:columns-2 space-y-8 gap-x-10">
+        <div className="h-minus-header bg-custom-signature-green text-custom-white flex items-end justify-center px-7 md:px-8 md:px-12">
+          <div className="py-28 md:pt-0">
+            <h1 className="mb-20  text-6xl md:text-7xl md:text-8xl font-serif">Hi&nbsp;there!</h1>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-xs sm:text-sm md:text-base">
               <p>
                 I always wanted to be an independent artist, I&apos;d thought
                 about it since I was a little girl. In 2017 I got accepted in
@@ -41,13 +55,15 @@ export default function About() {
                 throwing small cups and mugs and then bigger and bigger objects.
                 Low and behold, Art by Bori was born.
               </p>
-              <p>
+              <p className='flex flex-col space-y-6'>
+                <span>
                 I make one of a kind ceramics in small batches that I sell in my
                 online shop or sometimes on local art markets.
-              </p>
-              <p>
+                </span>
+                <span>
                 With the pieces I sell and create, I hope to brighten your
                 spaces and everyday rituals.
+                </span>
               </p>
             </div>
           </div>

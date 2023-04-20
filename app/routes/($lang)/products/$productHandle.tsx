@@ -1,4 +1,4 @@
-import {type ReactNode, useRef, Suspense, useMemo} from 'react';
+import {type ReactNode, useRef, Suspense, useMemo, useCallback} from 'react';
 import {Disclosure, Listbox} from '@headlessui/react';
 import {defer, SerializeFrom, type LoaderArgs} from '@shopify/remix-oxygen';
 import {
@@ -34,7 +34,6 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import type {Storefront} from '~/lib/type';
-import type {Product} from 'schema-dts';
 import {routeHeaders, CACHE_SHORT} from '~/data/cache';
 import {Container, ContainerProps, NoWrapContainer} from '~/components/global/Container';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
@@ -259,6 +258,10 @@ export function ProductDescription() {
     quantity: 1,
   };
 
+  const firstSentence = useCallback((desc: string) => {
+    return desc.split(/[.!?\s]/)[0];
+  }, [])
+
   return (
     <div className="grid gap-8">
       <div className="grid gap-8">
@@ -282,7 +285,7 @@ export function ProductDescription() {
             />
           </div>
         </div>
-        <div className=" flex flex-col gap-4 ">{product.description}</div>
+        <div className=" flex flex-col gap-4 ">{firstSentence(product.description)}</div>
 
         <ProductOptions
           options={product.options}

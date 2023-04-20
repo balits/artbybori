@@ -7,12 +7,14 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import {flattenConnection, AnalyticsPageType} from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
-import {PageHeader, Section, Text, SortFilter} from '~/components';
-import {ProductGrid} from '~/components/ProductGrid';
+import { Section, SortFilter} from '~/components';
+import ProductGrid  from '~/components/shop/ProductGrid';
+
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
-import {Container} from '~/components/global/Container';
+import { Product } from 'schema-dts';
+import { NoWrapContainer } from '~/components/global/Container';
 
 export const headers = routeHeaders;
 
@@ -50,12 +52,14 @@ export async function loader({params, request, context}: LoaderArgs) {
   invariant(collectionHandle, 'Missing collectionHandle param');
 
   const searchParams = new URL(request.url).searchParams;
-  const knownFilters = ['productVendor', 'productType'];
+  const knownFilters = [ 'productType'];
   const available = 'available';
   const variantOption = 'variantOption';
+
   const {sortKey, reverse} = getSortValuesFromParam(
     searchParams.get('sort') as SortParam,
   );
+
   const cursor = searchParams.get('cursor');
   const filters: FiltersQueryParams = [];
   const appliedFilters: AppliedFilter[] = [];
@@ -161,20 +165,22 @@ export default function Collection() {
           </div>
         )}
       </div>
-      <Section>
+      <NoWrapContainer as="section">
         <SortFilter
           filters={collection.products.filters as Filter[]}
           appliedFilters={appliedFilters}
           collections={collections as CollectionType[]}
         >
-          <ProductGrid
+          {/* <ProductGrid
             key={collection.id}
             collection={collection as CollectionType}
             url={`/collections/${collection.handle}`}
             data-test="product-grid"
-          />
+          /> */}
+          <ProductGrid products={flattenConnection(collection.products)} />
+
         </SortFilter>
-      </Section>
+      </NoWrapContainer>
     </>
   );
 }
