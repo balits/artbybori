@@ -4,7 +4,8 @@ import SmartImage from '~/components/global/SmartImage';
 import { SerializeFrom } from '@shopify/remix-oxygen';
 import ProductCard from '~/components/shop/ProductCard';
 import Carousel, { DotProps } from "react-multi-carousel";
-import { RxDot, RxDotFilled } from 'react-icons/rx';
+import { RxDotFilled } from 'react-icons/rx';
+import clsx from 'clsx';
 
 type DefaultCarouselProps = {
   textOnTop: boolean;
@@ -14,23 +15,6 @@ type CollectionCarouselProps = DefaultCarouselProps & {
   collections: SerializeFrom<Collection[]>;
 };
 
-export const MyDots = ({
-  onClick,
-  carouselState,
-  index,
-  active,
-}: DotProps) => {
-  if (!carouselState || !onClick) return null
-
-  return carouselState?.slidesToShow < carouselState?.totalItems ? <button
-    onClick={() => onClick()}
-  >
-    {
-      <RxDotFilled className={`hover:opacity-80 w-6 h-6 lg:w-8 lg:h-8 ${active ? "text-black/60" : "text-custom-placeholder-green"}`}/>
-    }
-  </button> : null
-}
-
 export function CollectionCarousel({
   collections,
   textOnTop = false
@@ -38,39 +22,11 @@ export function CollectionCarousel({
   const haveCollections = collections && collections.length > 0;
   if (!haveCollections) return null;
 
-  const responsive = {
-    lg: {
-      breakpoint: { max: 10000, min: 1024 },
-      items: 4
-    },
-    md: {
-      breakpoint: { max: 1024, min: 768 },
-      items: 3
-    },
-    sm: {
-      breakpoint: { max: 768, min: 640 },
-      items: 2
-    },
-    xs: {
-      breakpoint: { max: 640, min: 0 },
-      items: 1
-    }
-  };
-
-
   return (
-    <Carousel
-      responsive={responsive}
-      draggable={false}
-      showDots={true}
-      renderDotsOutside
-      itemClass='p-2 overflow-hidden relative'
-      customDot={<MyDots />}
-      arrows={false}
-    >
+    <Wrapper>
       {collections.filter(c => c.image).map((coll) => {
         return (
-            <Link  key={coll.id} to={`/collections/${coll.handle}`} prefetch="intent" className="relative group">
+            <Link  key={coll.id} to={`/collections/${coll.handle}`} prefetch="intent" className={clsx("relative group", !textOnTop && "basic-animation hover:opacity-90")}>
               <SmartImage
                 image={coll.image!}
                 widths={[280, 350,450,550, 650]}
@@ -92,7 +48,7 @@ export function CollectionCarousel({
             </Link>
         )
       })}
-    </Carousel>
+    </Wrapper>
   )
 }
 
@@ -107,14 +63,39 @@ type ProductCarouselProps = DefaultCarouselProps & {
   * - the first variant
   * - image of the first variant
   * - price of the first variant
-  * -  comparePrice of first the variant (To Be Implementedb
+  * -  comparePrice of first the variant (To Be Implementedb)
   * */
 export function ProductCarousel({
   products,
   textOnTop,
 }: ProductCarouselProps) {
   if (!products || products.length == 0) return null;
+  return (
+    <Wrapper>
+      {products.map((prod) => {
+        const variant = prod.variants.nodes[0];
+        if(!variant.image) return null;
 
+        return (
+          <Link key={prod.id } to={`/products/${prod.handle}`} prefetch="intent">
+            <ProductCard
+              title={prod.title}
+              money={variant.price}
+              img={variant.image}
+              textOnTop={textOnTop}
+            />
+          </Link>
+        )
+      })}
+    </Wrapper>
+  )
+}
+
+const Wrapper = ({
+  children
+}:{
+  children: React.ReactNode
+}) => {
   const responsive = {
     lg: {
       breakpoint: { max: 10000, min: 1024 },
@@ -134,36 +115,39 @@ export function ProductCarousel({
     }
   };
 
-
   return (
     <Carousel
       responsive={responsive}
       arrows={false}
       draggable={false}
-      itemClass='p-2'
+      itemClass='p-2 overflow-hidden relative'
+      dotListClass='static flex  w-full my-2 lg:my-4'
       showDots={true}
-      renderDotsOutside
-      dotListClass='my-dot-list'
       customDot={<MyDots />}
+      renderDotsOutside
     >
-      {products.map((prod) => {
-        const variant = prod.variants.nodes[0];
-        if(!variant.image) return null;
-
-        return (
-          <Link key={prod.id } to={`/products/${prod.handle}`} prefetch="intent">
-            <ProductCard
-              title={prod.title}
-              money={variant.price}
-              img={variant.image}
-              textOnTop={textOnTop}
-            />
-          </Link>
-        )
-      })}
+      {children}
     </Carousel>
   )
 }
+
+export const MyDots = ({
+  onClick,
+  carouselState,
+  active,
+}: DotProps) => {
+  if (!carouselState || !onClick) return <></>
+
+  return carouselState?.slidesToShow < carouselState?.totalItems ? (
+  <button
+    onClick={() => onClick()}
+  >
+    {
+      <RxDotFilled className={`hover:opacity-80 w-6 h-6 lg:w-8 lg:h-8 ${active ? "text-black/60" : "text-custom-placeholder-green"}`}/>
+    }
+  </button>) : <></>
+}
+
 
 export function Skeleton() {
   return (

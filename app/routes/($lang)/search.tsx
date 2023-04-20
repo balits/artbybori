@@ -13,9 +13,7 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import { Suspense } from 'react';
 import invariant from 'tiny-invariant';
-import {
-  ProductGrid
-} from '~/components';
+import ProductGrid from '~/components/shop/ProductGrid';
 import { PRODUCT_CARD_FRAGMENT } from '~/data/fragments';
 import { PAGINATION_SIZE } from '~/lib/const';
 import { seoPayload } from '~/lib/seo.server';
@@ -76,7 +74,7 @@ export async function loader({ request, context: { storefront } }: LoaderArgs) {
 
 export default function Search() {
   const { searchTerm, products, noResultRecommendations } =
-  useLoaderData<typeof loader>();
+    useLoaderData<typeof loader>();
   const noResults = products?.nodes?.length === 0;
 
   return (
@@ -97,64 +95,63 @@ export default function Search() {
           />
         </Form>
       </div>
-      {!searchTerm || noResults ? (
-        <>
-          {noResults && (
-            <section >
-              <p className="opacity-50">
-                No results, try something else.
-              </p>
-            </section>
-          )}
-          <Suspense>
-            <Await
-              errorElement="There was a problem loading related products"
-              resolve={noResultRecommendations}
-            >
-              {(data) => (
-                <div className='space-y-16 lg:space-y-20'>
-                  {data?.featuredCollections && <section>
-                    <h2 className='text-lg sm:text-xl md:text-2xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
-                      Trending Collections.
-                    </h2>
-                    <CollectionCarousel
-                      collections={
-                        data!.featuredCollections.filter(c => c.handle !== "hero" && c.handle !== "featured-products") as SerializeFrom<Collection[]>
-                      }
-                      textOnTop={false}
-                    />
-                  </section>
-                  }
-                  {data?.featuredProducts &&
-                    (
-                      <section>
-                        <h2 className='text-lg sm:text-xl md:text-2xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
-                          Trending Products.
-                        </h2>
-                        <ProductCarousel
-                          products={
-                            data?.featuredProducts as SerializeFrom<Product[]>
+      <section>
+        {!searchTerm || noResults ? (
+          <>
+            {noResults && (
+              <div >
+                <h2 className="opacity-50">
+                  No results, try something else.
+                </h2>
+              </div>
+            )}
+            <Suspense>
+              <Await
+                errorElement="There was a problem loading related products"
+                resolve={noResultRecommendations}
+              >
+                {(data) => (
+                  <div className='space-y-16 lg:space-y-20'>
+                    {data?.featuredCollections && (
+                      <article>
+                        <h3 className='text-lg sm:text-xl md:text-2xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
+                          Trending Collections.
+                        </h3>
+                        <CollectionCarousel
+                          collections={
+                            data!.featuredCollections.filter(c => c.handle !== "hero" && c.handle !== "featured-products") as SerializeFrom<Collection[]>
                           }
                           textOnTop={false}
                         />
-                      </section>
+                      </article>
                     )
-                  }
-                </div>
-              )
-              }
-            </Await>
-          </Suspense>
-        </>
-      ) : (
-          <section >
-            <ProductGrid
-              key="search"
-              url={`/search?q=${searchTerm}`}
-              collection={{ products } as Collection}
-            />
-          </section>
+                    }
+                    {data?.featuredProducts &&
+                      (
+                        <article>
+                          <h3 className='text-lg sm:text-xl md:text-2xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
+                            Trending Products.
+                          </h3>
+                          <ProductCarousel
+                            products={
+                              data?.featuredProducts as SerializeFrom<Product[]>
+                            }
+                            textOnTop={false}
+                          />
+                        </article>
+                      )
+                    }
+                  </div>
+                )
+                }
+              </Await>
+            </Suspense>
+          </>
+        ) : (
+          <ProductGrid products={flattenConnection(products)}/>
         )}
+
+      </section>
     </NoWrapContainer>
   );
 }

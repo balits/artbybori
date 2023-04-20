@@ -26,6 +26,9 @@
 - [ ] Insta API + aspect square
 - [ ] BUTTONS: focus + aria-label buttons or links
 - [ ] buyerIp
+- [ ] FIX! carousel bbuttons o top ????
+- [ ] tailwind font
+- [ ] search product grid
 - PAGES
   - homepage
     - [ ] cim animacio
