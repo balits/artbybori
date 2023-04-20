@@ -21,7 +21,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: [
+        /* sans: [
           'Inter',
           'ui-sans-serif',
           'BlinkMacSystemFont',
@@ -29,7 +29,7 @@ module.exports = {
           'system-ui',
           'sans-serif',
         ],
-        cantata: ['Cantata One', "serif"],
+        cantata: ['Cantata One', "serif"], */
       },
       fontSize: {
         md: ['16px', '24px'],
@@ -45,11 +45,10 @@ module.exports = {
         wrapper: '1300px',
       },
       spacing: {
-        'header-base': '4rem',
-        'header-md': '5rem',
-        'header-lg': '6rem',
+        'header-base': 'var(--header-base)',
+        'header-md': 'var(--header-md)',
+        'header-lg': 'var(--header-lg)',
 
-        'sidebar-phone': '70vw',
         'sidebar-tablet': '50vw',
         'sidebar-desktop': '35vw',
 

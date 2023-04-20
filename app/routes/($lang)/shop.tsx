@@ -1,4 +1,4 @@
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
+import {json, SerializeFrom, type LoaderArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import type {Product, ProductConnection} from '@shopify/hydrogen/storefront-api-types';
 import invariant from 'tiny-invariant';
@@ -37,7 +37,7 @@ export async function loader({request, context: {storefront}}: LoaderArgs) {
     descriptionHtml: 'All the store products',
     description: 'All the store products',
     seo: {
-      title: 'All Products',
+      title: 'Shop',
       description: 'All the store products',
     },
     metafields: [],
@@ -72,7 +72,7 @@ export default function AllProducts() {
         <h1 className='text-2xl md:text-4xl lg:text-5xl font-cantata '>Shop all products.</h1>
       </div>
        {products && (
-        <ProductGrid products={flattenConnection(products) as Product[]} />
+        <ProductGrid products={flattenConnection(products) as SerializeFrom<Product[]>} />
       ) }
       <InstagramGallery mt="mt-32" />
     </NoWrapContainer>

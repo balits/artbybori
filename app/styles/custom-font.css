@@ -13,17 +13,30 @@
   src: url('./fonts/IBMPlexSerif-TextItalic.woff2') format('woff2');
 }
 
-/*
 @font-face {
   font-family: 'CantataOne';
-  font-display: swap;
   font-weight: 400;
-  src: url('./fonts/Cantata-One.woff2') format('woff2');
+  src: url('./fonts/CantataOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-weight: 400;
+  src: url('./fonts/Inter-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Inter';
-  font-display: swap;
-  font-weight: 400;
-  src: url('./fonts/Inter.woff2') format('woff2');
+  font-weight: 600;
+  src: url('./fonts/Inter-SemiBold.ttf') format('truetype');
 }
-*/
+
+@font-face {
+  font-family: 'Inter';
+  font-weight: 800;
+  src: url('./fonts/Inter-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter-VariableFont_slnt\,wght.ttf') format('truetype');
+}

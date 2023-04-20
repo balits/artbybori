@@ -20,11 +20,13 @@ export const MyDots = ({
   index,
   active,
 }: DotProps) => {
-  return onClick ? <button
+  if (!carouselState || !onClick) return null
+
+  return carouselState?.slidesToShow < carouselState?.totalItems ? <button
     onClick={() => onClick()}
   >
     {
-      <RxDotFilled className={`hover:opacity-80 w-6 h-6 sm:w-8 sm:h-8 ${active ? "text-custom-signatere-green" : "text-custom-placeholder-green"}`}/>
+      <RxDotFilled className={`hover:opacity-80 w-6 h-6 lg:w-8 lg:h-8 ${active ? "text-black/60" : "text-custom-placeholder-green"}`}/>
     }
   </button> : null
 }
@@ -60,19 +62,17 @@ export function CollectionCarousel({
     <Carousel
       responsive={responsive}
       draggable={false}
-      itemClass="my-carousel-item"
       showDots={true}
       renderDotsOutside
-      dotListClass='my-dot-list'
+      itemClass='p-2 overflow-hidden relative'
       customDot={<MyDots />}
+      arrows={false}
     >
-      {collections.map((coll) => {
-        if (!coll.image) return null
-
+      {collections.filter(c => c.image).map((coll) => {
         return (
-            <Link  key={coll.id} to={`/collections/${coll.handle}`} prefetch="intent">
+            <Link  key={coll.id} to={`/collections/${coll.handle}`} prefetch="intent" className="relative group">
               <SmartImage
-                image={coll.image}
+                image={coll.image!}
                 widths={[280, 350,450,550, 650]}
                 sizes="(max-width: 768px) 80vw, 60vw"
                 alt={coll.image?.altText ?? coll.title}
@@ -81,13 +81,13 @@ export function CollectionCarousel({
                 loading='eager'
               />
               {textOnTop ?  (
-                <div className="absolute z-[2] inset-0 w-full h-full grid place-items-center basic-animation group-hover:bg-black/10">
-                  <h3 className="z-[3] text-xl md:text-2xl lg:text-3xl  font-bold uppercase text-white basic-animation opacity-0 group-hover:opacity-100">
+                <div className="absolute z-[5] inset-0 w-full h-full grid place-items-center basic-animation group-hover:bg-black/10">
+                  <h3 className="z-[10] text-xl md:text-2xl lg:text-3xl text-custom-white font-semibold uppercase  basic-animation opacity-0 group-hover:opacity-100">
                     {coll.title}
                   </h3>
                 </div>
               ): (
-                <h3 className='mt-2 lg:mt-3 xl:mt-4 font-medium text-sm md:text-md xl:text-lg'>{coll.title}</h3>
+                <h3 className='mt-2 lg:mt-3 xl:mt-4 font-medium text-sm md:text-md xl:text-lg '>{coll.title}</h3>
               )}
             </Link>
         )
@@ -138,8 +138,9 @@ export function ProductCarousel({
   return (
     <Carousel
       responsive={responsive}
+      arrows={false}
       draggable={false}
-      itemClass="my-carousel-item"
+      itemClass='p-2'
       showDots={true}
       renderDotsOutside
       dotListClass='my-dot-list'

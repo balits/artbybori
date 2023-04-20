@@ -112,14 +112,14 @@ export default function Search() {
               resolve={noResultRecommendations}
             >
               {(data) => (
-                <div className='space-y-8 lg:space-y-16'>
+                <div className='space-y-16 lg:space-y-20'>
                   {data?.featuredCollections && <section>
-                    <h2 className='text-lg md:text-xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
+                    <h2 className='text-lg sm:text-xl md:text-2xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
                       Trending Collections.
                     </h2>
                     <CollectionCarousel
                       collections={
-                        data!.featuredCollections as SerializeFrom<Collection[]>
+                        data!.featuredCollections.filter(c => c.handle !== "hero" && c.handle !== "featured-products") as SerializeFrom<Collection[]>
                       }
                       textOnTop={false}
                     />
@@ -128,7 +128,7 @@ export default function Search() {
                   {data?.featuredProducts &&
                     (
                       <section>
-                        <h2 className='text-lg md:text-xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
+                        <h2 className='text-lg sm:text-xl md:text-2xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
                           Trending Products.
                         </h2>
                         <ProductCarousel

@@ -47,7 +47,7 @@ export function CountrySelector() {
   return (
     <section
       ref={observerRef}
-      className="grid w-full gap-1 text-autoscale-small"
+      className="grid w-full gap-1 text-xs sm:text-sm md:text-base"
     >
       <div className="relative">
         <details
