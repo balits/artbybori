@@ -4,6 +4,7 @@
 - [ ] képek kicsinyítése
 
 ### done
+- [x] seo
 - [x] about page: svg + mobile view
 - [x] ezzel lehet fizetni iconok
 - [x] social media icons
@@ -22,7 +23,6 @@
     - [x] szoveg rendezés: 1 nagy text bal, 2 kicsi jobb
 
 ### peti
-- [ ] seo
 - [ ] Insta API + aspect square
 - [ ] BUTTONS: focus + aria-label buttons or links
 - [ ] buyerIp
