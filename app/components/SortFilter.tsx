@@ -23,6 +23,7 @@ import {
 } from '~/routes/($lang)/collections/$collectionHandle';
 import { HiAdjustmentsHorizontal } from 'react-icons/hi2';
 import { FilterDropDown } from './global/Icon';
+import { HiX } from 'react-icons/hi';
 
 type Props = {
   filters: Filter[];
@@ -47,17 +48,17 @@ export function SortFilter({
             'relative flex items-center justify-center w-8 h-8 focus:ring-custom-signature-green/10'
           }
         >
-          <FilterDropDown className="basic-animation delay-150 hover:opacity-80  "/>
+          <FilterDropDown/>
         </button>
         <SortMenu />
       </div>
 
       <div className="flex flex-col flex-wrap ">
         <div
-          className={`basic-animation delay-150 ${
+          className={`basic-animation transform-gpu delay-150 ${
             isOpen
-              ? 'opacity-100 min-w-full max-h-full'
-              : 'opacity-0 max-h-0 '
+              ? 'opacity-100  max-h-full top-12'
+              : 'opacity-50 min-h-[0px]  h-[0px] max-w-full'
           }`}
         >
           <FiltersDrawer
@@ -66,6 +67,9 @@ export function SortFilter({
             appliedFilters={appliedFilters}
           />
         </div>
+
+
+
         <div className="mt-4">
           {children}
         </div>
@@ -121,10 +125,9 @@ export function FiltersDrawer({
   };
 
   return (
-    <>
-      <nav className="pb-6 lg:pb-12">
+      <nav className="py-6 lg:py-10 space-y-4 w-full">
         {appliedFilters.length > 0 ? (
-          <div className="pb-8">
+          <div className="">
             <AppliedFilters filters={appliedFilters} />
           </div>
         ) : null}
@@ -139,7 +142,7 @@ export function FiltersDrawer({
                 <Disclosure as="div" key={filter.id} className="w-fit px-2">
                   {({open}) => (
                     <>
-                      <Disclosure.Button className="flex justify-between w-full py-4">
+                      <Disclosure.Button className="flex gap-x-2 lg:gap-x-4 justify-between w-full py-4">
                         <Text size="lead">{filter.label}</Text>
                         <IconCaret direction={open ? 'up' : 'down'} />
                       </Disclosure.Button>
@@ -161,7 +164,6 @@ export function FiltersDrawer({
           )}
         </div>
       </nav>
-    </>
   );
 }
 
@@ -170,21 +172,19 @@ function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
   const location = useLocation();
   return (
     <>
-      <Heading as="h4" size="lead" className="pb-4">
-        Applied filters
-      </Heading>
+        <h4 className="pb-4 text-base md:text-lg font-semibold">
+          Applied&nbsp;filters
+        </h4>
       <div className="flex flex-wrap gap-2">
         {filters.map((filter: AppliedFilter) => {
           return (
             <Link
               to={getAppliedFilterLink(filter, params, location)}
-              className="flex px-2 border rounded-full gap"
+              className="flex items-center px-2 border rounded-full gap-x-2"
               key={`${filter.label}-${filter.urlParam}`}
             >
               <span className="flex-grow">{filter.label}</span>
-              <span>
-                <IconXMark />
-              </span>
+                <HiX />
             </Link>
           );
         })}
