@@ -21,15 +21,15 @@ module.exports = {
         },
       },
       fontFamily: {
-        /* sans: [
-          'Inter',
+        sans: [
+          'Inter var',
           'ui-sans-serif',
           'BlinkMacSystemFont',
           'Helvetica Neue',
           'system-ui',
           'sans-serif',
         ],
-        cantata: ['Cantata One', "serif"], */
+        cantata: ['"Cantata One"', "Georgia", "Times", "serif"],
       },
       fontSize: {
         md: ['16px', '24px'],

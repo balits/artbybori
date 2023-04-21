@@ -4,12 +4,16 @@
 - [ ] képek kicsinyítése
 
 ### done
+- [x] FIX! carousel bbuttons o top ????
+- [x] seo
 - [x] about page: svg + mobile view
 - [x] ezzel lehet fizetni iconok
 - [x] social media icons
 - [x] social media linkek noopener noreferer ?????
 - [x] cart sidebar
 - [x] SOLUTION: NO BUTTON,  carousel button z index not bigger than sidebar
+- [x] search product grid
+- [x] tailwind font
 - PAGES
   - product handle page
     - [x] görgető pontok
@@ -22,7 +26,6 @@
     - [x] szoveg rendezés: 1 nagy text bal, 2 kicsi jobb
 
 ### peti
-- [ ] seo
 - [ ] Insta API + aspect square
 - [ ] BUTTONS: focus + aria-label buttons or links
 - [ ] buyerIp

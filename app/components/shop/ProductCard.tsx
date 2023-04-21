@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <SmartImage image={img} alt={img.altText ?? title} className="w-full" loading='eager'/>
         {extraLabel && (
           <div className="absolute top-0 right-0 p-4">
-            <p className="text-custom-white w-fit text-xs lg:text-md capitalize">
+            <p className="text-custom-white w-fit text-xs md:text-sm lg:text-md capitalize">
               {extraLabel}
             </p>
           </div>

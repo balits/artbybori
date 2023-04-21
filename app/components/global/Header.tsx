@@ -61,7 +61,7 @@ export default function Header() {
           <div className='flex items-center justify-center gap-2 sm:gap-4 md:gap-6'>
             <SearchBar className="hidden lg:flex" />
 
-            <Link to="/search" aria-label='Go to search page' className="lg:hidden p-2 md:p-3 lg:p-4 ">
+            <Link to="/search?q=" aria-label='Go to search page' className="lg:hidden p-2 md:p-3 lg:p-4 ">
               <SearchIcon />
             </Link>
             <button
