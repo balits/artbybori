@@ -3,15 +3,12 @@ import { useEffect, useState } from 'react';
 import { Container } from '~/components/global/Container';
 import Logo from '~/components/global/Logo';
 import Nav from '~/components/global/Nav';
-import { BiShoppingBag } from 'react-icons/bi';
-import { HiBars2 } from 'react-icons/hi2';
 import clsx from 'clsx';
 import { useDrawer } from '../Drawer';
 import { useCartFetchers } from '~/hooks/useCartFetchers';
 import CartDrawer from '~/components/drawer/CartDrawer';
 import NavDrawer from '~/components/drawer/NavDrawer';
-import { HiSearch } from 'react-icons/hi';
-import { Link } from '../Link';
+import { Link } from '../ui/Link';
 import { Bars, SearchIcon, ShoppingBag } from './Icon';
 
 export default function Header() {

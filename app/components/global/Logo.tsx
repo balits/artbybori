@@ -1,4 +1,4 @@
-import {Link} from "~/components"
+import { Link } from "../ui/Link";
 
 export default function Logo() {
   return (

@@ -1,6 +1,5 @@
 import {Button} from './Button';
-import {FeaturedSection} from './FeaturedSection';
-import {PageHeader, Text} from './Text';
+import {PageHeader, Text} from './ui/Text';
 
 export function GenericError({
   error,
@@ -41,7 +40,6 @@ export function GenericError({
           Take me to the home page
         </Button>
       </PageHeader>
-      <FeaturedSection />
     </>
   );
 }

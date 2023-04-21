@@ -176,10 +176,10 @@ function FAQ() {
   );
 }
 
-export default function Contact() {
+export default function ContactPage() {
   return (
     <>
-      <div className="min-h-screen max-h-fit w-full grid place-items-center scaling-pt-header">
+      <div className="min-h-screen max-h-fit w-full grid place-items-center scaling-mt-header">
         <Container className="  grid grid-cols-1 grid-flow-row gap-20 md:gap-32 lg:gap-40">
           <div className="mt-12 grid grid-cols-1 gap-y-16 md:gap-y-0 md:grid-cols-2 lg:gap-16">
             <h1 className="text-custom-black tracking-tight font-bold text-5xl md:text-6xl lg:text-8xl ">

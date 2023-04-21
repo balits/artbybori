@@ -35,10 +35,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <>
-      <div className="bg-custom-placeholder-green rounded-sm group relative aspect-square cursor-pointer basic-animation shadow-sm  hover:opacity-90">
-        <SmartImage image={img} alt={img.altText ?? title} className="w-full" loading='eager'/>
+      <div className="bg-custom-placeholder-green rounded-md group relative aspect-square cursor-pointer basic-animation shadow-sm  hover:opacity-90">
+        <SmartImage image={img} alt={img.altText ?? title} className="w-full rounded-md" loading='eager'/>
         {extraLabel && (
-          <div className="absolute top-0 right-0 p-4">
+          <div className="absolute top-0 right-0 p-3 lg:p-4">
             <p className="text-custom-white w-fit text-xs md:text-sm lg:text-md capitalize">
               {extraLabel}
             </p>
@@ -64,11 +64,11 @@ function Details({
     money?: MoneyV2
   }) {
   return (
-    <div className="grid grid-cols-1 mt-2 lg:mt-3 xl:mt-4">
-      <h3 className="text-sm md:text-md xl:text-lg">{title}</h3>
+    <div className="grid gap-y-1 grid-cols-1 mt-2 lg:mt-4">
+      <h3 className="text-sm md:text-md text-custom-grey">{title}</h3>
       {money &&  (
         <Money
-          className="text-xs md:text-sm xl:text-md"
+          className="text-xs md:text-sm lg:text-md xl:text-lg font-semibold text-custom-black"
           withoutTrailingZeros
           data={money}
         />

@@ -14,13 +14,6 @@ import {
   Money,
   ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen';
-import {
-  IconCaret,
-  IconCheck,
-  ProductGallery,
-  Link,
-  AddToCartButton,
-} from '~/components';
 import {getExcerpt} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
 import invariant from 'tiny-invariant';
@@ -38,10 +31,12 @@ import {routeHeaders, CACHE_SHORT} from '~/data/cache';
 import {Container, ContainerProps, NoWrapContainer} from '~/components/global/Container';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 
-import MyButton from "~/components/global/Button"
 import { ProductCarousel, Skeleton as CarouselSkeleton } from '~/components/global/Carousel';
 import { HiChevronDown } from 'react-icons/hi';
 import { useWindowSize } from 'react-use';
+import { AddToCartButton, ProductGallery } from '~/components';
+import { Link } from '~/components/ui/Link';
+import { IconCaret, IconCheck } from '~/components/ui/Icon';
 
 export const headers = routeHeaders;
 
@@ -318,7 +313,7 @@ export function ProductDescription() {
                   >
                     Add&nbsp;to&nbsp;Cart
                   </AddToCartButton>
-                  <MyButton variant="black">Checkout</MyButton>
+                  <button >Checkout</button>
                 </>
               )}
           </div>

@@ -1,4 +1,4 @@
-import {Link} from "~/components"
+import { Link } from '../ui/Link';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import {SerializeFrom} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
@@ -19,7 +19,7 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
 
   return (
     <Container className="mt-[10vh]">
-      <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-4 ">
+      <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-8 ">
         Featured products.
       </h2>
 
@@ -58,7 +58,7 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
                     i === 0 ? 'p-4 lg:p-8' : 'p-2 lg:p-4',
                   ])}
                 >
-                  <p className=" font-semibold text-sm md:text-md lg:text-lg">
+                  <p className=" font-semibold text-sm md:text-md">
                     {prod.title}
                   </p>
                   <div className="uppercase text-xs sm:text-sm lg:text-md">

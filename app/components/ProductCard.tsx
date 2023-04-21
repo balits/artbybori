@@ -119,7 +119,7 @@ export function ProductCard({
               merchandiseId: firstVariant.id,
             },
           ]}
-          variant="secondary"
+          white="secondary"
           className="mt-2"
           analytics={{
             products: [productAnalytics],

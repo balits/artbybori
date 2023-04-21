@@ -5,7 +5,7 @@ import {
   type Product,
 } from '@shopify/hydrogen/storefront-api-types';
 import { isDiscounted, isNewArrival } from '~/lib/utils';
-import { Link } from '~/components';
+import { Link } from '../ui/Link';
 import ProductCard, { ExtraLabel } from '~/components/shop/ProductCard';
 import { SerializeFrom } from '@shopify/remix-oxygen';
 
@@ -15,7 +15,7 @@ type ProductGridProps = {
 
 export default function ProductGrid({ products }: ProductGridProps) {
   return (
-      <ul className='grid gap-6 md:gap-8 xl:gap-12 grid-cols-1 place-items-center xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 '>
+      <ul className='grid gap-6 md:gap-8 lg:gap-10 place-items-center grid-cols-2 md:grid-cols-3  '>
         {products.map((product, i) => {
           let extraLabel: ExtraLabel = ""
 
@@ -33,7 +33,6 @@ export default function ProductGrid({ products }: ProductGridProps) {
           } else {
             extraLabel = "sold out :("
           }
-
 
           return (
             <li key={product.id}>

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import {ComponentProps} from 'react';
-import { Link } from '../Link';
+import { Link } from '../ui/Link';
 
 type Props = {
   flexDirection: 'col' | 'row';

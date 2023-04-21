@@ -7,13 +7,12 @@ import type {
 } from '@shopify/hydrogen/storefront-api-types';
 import {flattenConnection, AnalyticsPageType} from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
-import { Section, SortFilter} from '~/components';
+import {  SortFilter} from '~/components';
 import ProductGrid  from '~/components/shop/ProductGrid';
 
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
-import { Product } from 'schema-dts';
 import { NoWrapContainer } from '~/components/global/Container';
 
 export const headers = routeHeaders;

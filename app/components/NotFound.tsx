@@ -1,7 +1,6 @@
 import {Button} from './Button';
-import {FeaturedSection} from './FeaturedSection';
-import {Link} from './Link';
-import {PageHeader, Text} from './Text';
+import {Link} from './ui/Link';
+import {PageHeader, Text} from './ui/Text';
 
 export function NotFound({type = 'page'}: {type?: string}) {
   const heading = `We’ve lost this ${type}`;
@@ -15,7 +14,6 @@ export function NotFound({type = 'page'}: {type?: string}) {
         </Text>
         <Link to={'/'}>Take me to the home page</Link>
       </PageHeader>
-      <FeaturedSection />
     </>
   );
 }

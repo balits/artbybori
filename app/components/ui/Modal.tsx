@@ -1,4 +1,5 @@
-import {IconClose, Link} from '~/components';
+import { Link} from '~/components';
+import { X } from '../global/Icon';
 
 export function Modal({
   children,
@@ -34,7 +35,7 @@ export function Modal({
                 to={cancelLink}
                 className="p-4 -m-4 transition text-primary hover:text-primary/50"
               >
-                <IconClose aria-label="Close panel" />
+                <X aria-label="Close panel" />
               </Link>
             </div>
             {children}

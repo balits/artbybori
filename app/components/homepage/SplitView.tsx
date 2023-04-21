@@ -1,10 +1,10 @@
-import {Link} from '@remix-run/react';
 import clsx from 'clsx';
 import {Container} from '../global/Container';
+import { Link } from '../ui/Link';
 
 export default function SplitView() {
   return (
-    <section className="lg:shadow-sm my-24 w-full flex flex-col justify-center items-center">
+    <section className="lg:shadow-sm mt-8 md:my-8 lg:mt-24 w-full flex flex-col justify-center items-center">
       <div className="overflow-y-hidden  w-full grid grid-cols-2 h-[60vh] lg:h-minus-header">
         <Link
           to="/shop"
@@ -31,7 +31,7 @@ export default function SplitView() {
         </div>
       </div>
 
-      <Container className="md:hidden pt-6">
+      <Container className="md:hidden py-10 ">
         <TextBlock color="black"/>
       </Container>
     </section>
@@ -45,15 +45,15 @@ function TextBlock({
     color: "black" | "white"
 }) {
   return (
-    <div className={clsx('grid grid-cols-1 gap-y-4 md:gap-y-8 lg:gap-y-10', color === "black" ? "text-custom-black" : "text-custom-white")}>
+    <div className={clsx('grid grid-cols-1 gap-y-4 lg:gap-y-8  text-sm lg:text-md ', color === "black" ? "text-custom-black" : "text-custom-white")}>
       <h2 className=" font-semibold">Handmade with love.</h2>
-        <p className="text-xs sm:text-sm md:text-md ">
+        <p className="">
           All of our products are arefully had-crafted by ceramic
           artist, Bori Borbely. They fire at high temperatures so they
           are microwave and dishwasher safe. All of our products are
           arefully had-crafted by ceramic artist,{' '}
         </p>
-        <p className="text-xs sm:text-sm md:text-md  ">
+        <p className="">
           All of our products are arefully had-crafted by ceramic
           artist, Bori Borbely. They fire at high temperatures so they
           are microwave and dishwasher safe. All of our products are
@@ -62,7 +62,7 @@ function TextBlock({
         <Link
           prefetch="intent"
           to="/about"
-          className={clsx("transition-colors ease-in-out hover:bg-zinc-200/20 focus:bg-zinc-200/30 border tracking-wide  font-semibold py-1 lg:py-2 px-8 lg:px-14 w-fit", color === "black" ? "border-custom-black" : "border-custom-white")}
+          className={clsx("mt-4 transition-colors ease-in-out hover:bg-zinc-200/20 focus:bg-zinc-200/30 border  font-semibold py-1 lg:py-2 px-8 lg:px-14 w-fit", color === "black" ? "border-custom-black" : "border-custom-white")}
         >
           Learn&nbsp;more.
         </Link>

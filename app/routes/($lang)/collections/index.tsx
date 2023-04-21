@@ -10,13 +10,12 @@ import {
   PageHeader,
   Section,
   Link,
-  Pagination,
-  getPaginationVariables,
   Button,
 } from '~/components';
 import { getImageLoadingPriority } from '~/lib/const';
 import { seoPayload } from '~/lib/seo.server';
 import { CACHE_SHORT, routeHeaders } from '~/data/cache';
+import { getPaginationVariables, Pagination } from '~/components/ui';
 
 const PAGINATION_SIZE = 8;
 

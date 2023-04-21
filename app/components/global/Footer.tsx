@@ -1,4 +1,4 @@
-import { Link } from "~/components"
+import { Link } from "../ui/Link";
 import {Link as RemixLink} from "@remix-run/react"
 import { Container } from '~/components/global/Container';
 import { SiFacebook, SiGmail, SiInstagram, SiTiktok } from 'react-icons/si';
@@ -42,7 +42,7 @@ export default function Footer() {
                     <Link
                       to={link.url}
                       prefetch="intent"
-                      className="cursor-pointer hover:opacity-80 hover:underline"
+                      className="cursor-pointer hover:opacity-80 hover:underline text-xs md:text-sm lg:text-md"
                     >
                       {link.text}
                     </Link>
@@ -53,11 +53,11 @@ export default function Footer() {
 
             <div className="h-fit row-start-1 col-span-2 md:row-start-auto md:col-span-1">
               <Strong text="Art by Bori" />
-              <p className="text-autoscale-small mb-2">
+              <p className="text-xs md:text-sm mb-2 lg:text-md">
                 I make one of a kind ceramics in small batches that I sell in my
                 online shop or sometimes on local art markets.
               </p>
-              <p className="text-autoscale-small">
+              <p className="text-xs md:text-sm lg:text-md">
                 With the pieces I sell and create, I hope to brighten your
                 spaces and everyday rituals.
               </p>
@@ -112,7 +112,7 @@ export default function Footer() {
 
 const Strong = ({ text }: { text: string }) => {
   return (
-    <p className="font-bold capitalize md:mb-4 mb-6 text-lg">
+    <p className="font-bold capitalize md:mb-4 mb-6 font-semibold">
       {text}
     </p>
   );

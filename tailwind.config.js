@@ -14,10 +14,11 @@ module.exports = {
           white: 'var(--custom-white)',
           black: 'var(--custom-black)',
           orange: '#fe670c',
-          grey: '#d9d9d9',
+          grey: '#374151',
           'darker-green': '#828770',
           'signature-green': 'var(--custom-signature)',
           'placeholder-green': 'var(--custom-placeholder)',
+          'brighter-green': ' #B2BEB5'
         },
       },
       fontFamily: {

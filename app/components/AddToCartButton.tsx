@@ -2,7 +2,7 @@ import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
 import {useFetcher, useMatches} from '@remix-run/react';
 import {CartAction} from '~/lib/type';
 import clsx from 'clsx';
-import MyButton from "~/components/global/Button"
+import {Button} from "~/components/ui"
 
 export function AddToCartButton({
   variant = "white",
@@ -34,8 +34,7 @@ export function AddToCartButton({
       <input type="hidden" name="countryCode" value={selectedLocale.country} />
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
       <input type="hidden" name="analytics" value={JSON.stringify(analytics)} />
-      <MyButton
-        variant={variant}
+      <Button
         type="submit"
         className={clsx(
           ' font-semibold py-2 px-8 border border-custom-black',
@@ -48,7 +47,7 @@ export function AddToCartButton({
         {...props}
       >
         {children}
-      </MyButton>
+      </Button>
     </fetcher.Form>
   );
 }

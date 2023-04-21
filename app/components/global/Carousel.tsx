@@ -1,5 +1,5 @@
 import { Collection, Product } from '@shopify/hydrogen/storefront-api-types';
-import { Link } from "~/components"
+import { Link } from '../ui/Link';
 import SmartImage from '~/components/global/SmartImage';
 import { SerializeFrom } from '@shopify/remix-oxygen';
 import ProductCard from '~/components/shop/ProductCard';

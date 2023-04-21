@@ -1,6 +1,6 @@
 import {Fragment, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
-import {HiX} from 'react-icons/hi';
+import { X } from './global/Icon';
 
 export type DrawerProps = {
   heading: string | JSX.Element;
@@ -73,7 +73,7 @@ export function Drawer({
                       onClick={onClose}
                       data-test="close-cart"
                     >
-                      <HiX aria-label="Close panel" className="w-5 h-5" />
+                      <X aria-label="Close panel" className="w-5 h-5" />
                     </button>
                     <Dialog.Title>
                       <div

@@ -1,7 +1,7 @@
 import {Fragment, SyntheticEvent, useMemo, useState} from 'react';
 import {Menu, Transition} from '@headlessui/react';
 
-import {Heading, IconFilters, IconCaret, IconXMark, Text} from '~/components';
+import {Heading, IconFilters, IconCaret, IconXMark, Text} from '~/components/ui';
 import {
   Link,
   useLocation,

@@ -2,7 +2,7 @@ import {json, SerializeFrom, type LoaderArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import type {Product, ProductConnection} from '@shopify/hydrogen/storefront-api-types';
 import invariant from 'tiny-invariant';
-import {getPaginationVariables} from '~/components';
+import { getPaginationVariables } from '~/components/ui/Pagination';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders, CACHE_SHORT} from '~/data/cache';
@@ -10,7 +10,7 @@ import ProductGrid from '~/components/shop/ProductGrid';
 import {flattenConnection} from '@shopify/hydrogen';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {Collection, CollectionConnection} from '@shopify/hydrogen/storefront-api-types';
-import { NoWrapContainer } from '~/components/global/Container';
+import Container, { NoWrapContainer } from '~/components/global/Container';
 const PAGE_BY = 8;
 
 export const headers = routeHeaders;
@@ -67,7 +67,7 @@ export default function AllProducts() {
   const {products} = useLoaderData<typeof loader>();
 
   return (
-    <NoWrapContainer as={"section"} className="scaling-mt-header mb-8">
+    <Container as={"section"} className="scaling-mt-header mb-8">
       <div className='pt-6 md:pt-10 lg:pt-12 mb-8 md:mg-12 lg:mb-16'>
         <h1 className='text-2xl md:text-4xl lg:text-5xl font-cantata '>Shop all products.</h1>
       </div>
@@ -75,7 +75,7 @@ export default function AllProducts() {
         <ProductGrid products={flattenConnection(products) as SerializeFrom<Product[]>} />
       ) }
       <InstagramGallery mt="mt-32" />
-    </NoWrapContainer>
+    </Container>
   );
 }
 

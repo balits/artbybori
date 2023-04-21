@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react"
 import {IconBaseProps} from "react-icons"
 import { BiShoppingBag } from "react-icons/bi";
-import { HiSearch } from "react-icons/hi";
+import { HiSearch, HiX } from "react-icons/hi";
 import { HiBars2, HiBars3BottomLeft } from "react-icons/hi2";
 
 type IconProps = IconBaseProps & {
@@ -19,7 +19,7 @@ export function IconWrapper({
   children,
   as = "span",
 }: IconProps & WrapperProps) {
-  return React.createElement(as,{className: clsx(" h-4 w-4 md:w-5 md:h-5 xl:w-6 xl:h-6 cursor-pointer focus:ring-custom-signature-green " , className)}, children);
+  return React.createElement(as,{className: clsx("cursor-pointer focus:ring-custom-signature-green " , className)}, children);
 }
 
 export function SearchIcon(props: IconProps) {
@@ -37,6 +37,12 @@ export function ShoppingBag(props: IconProps) {
 export function Bars(props:IconProps) {
   return <IconWrapper {...props}>
     <HiBars2 />
+  </IconWrapper>
+}
+
+export function X(props: IconProps) {
+  return <IconWrapper {...props}>
+    <HiX />
   </IconWrapper>
 }
 

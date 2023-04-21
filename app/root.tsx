@@ -33,6 +33,7 @@ export const links: LinksFunction = () => {
   return [
     {rel: 'stylesheet', href: carouselCss},
     {rel: 'stylesheet', href: tailwind},
+    {rel: "stylesheet", href: "https://rsms.me/inter/inter.css"},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
@@ -88,7 +89,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className='selection:bg-custom-brighter-green'>
         <Layout>
           <Outlet />
         </Layout>
