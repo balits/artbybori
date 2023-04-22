@@ -4,32 +4,37 @@ import clsx from 'clsx';
 
 import {missingClass} from '~/lib/utils';
 
+type Props = {
+  as?: React.ElementType;
+  to?: string,
+  className?: string;
+  variant?: 'signature' | 'light' | 'dark' | "inline"
+  width?: 'auto' | 'full';
+  [key: string]: any;
+};
+
 export const Button = forwardRef(
   (
     {
       as = 'button',
       className = '',
-      variant = 'primary',
+      to,
+      variant = 'light',
       width = 'auto',
       ...props
-    }: {
-      as?: React.ElementType;
-      className?: string;
-      variant?: 'primary' | 'secondary' | 'inline';
-      width?: 'auto' | 'full';
-      [key: string]: any;
-    },
-    ref,
+    }: Props,
+    ref
   ) => {
     const Component = props?.to ? Link : as;
 
     const baseButtonClasses =
-      'inline-block rounded font-medium text-center py-3 px-6';
+      'inline-block rounded-md font-medium text-center py-3 px-6 hover:opacity-80 active:opacity-90';
 
     const variants = {
-      primary: `${baseButtonClasses} bg-primary text-contrast`,
-      secondary: `${baseButtonClasses} border border-primary/10 bg-contrast text-primary`,
-      inline: 'border-b border-primary/10 leading-none pb-1',
+      signature: " bg-custom-signature-green text-custom-white",
+      light: " border border-custom-black bg-custom-white text-custom-black",
+      dark: " border border-custom-black bg-custom-black text-custom-white",
+      inline: "border-b border- leading-none pb-1",
     };
 
     const widths = {
@@ -38,6 +43,7 @@ export const Button = forwardRef(
     };
 
     const styles = clsx(
+      baseButtonClasses,
       missingClass(className, 'bg-') && variants[variant],
       missingClass(className, 'w-') && widths[width],
       className,
@@ -51,7 +57,7 @@ export const Button = forwardRef(
         {...props}
         ref={ref}
       />
-    );
+    )
   },
 );
 

@@ -1,5 +1,4 @@
-import {Button} from './Button';
-import {PageHeader, Text} from './ui/Text';
+import {PageHeader, Text, Button} from './ui';
 
 export function GenericError({
   error,
@@ -36,7 +35,7 @@ export function GenericError({
             }}
           />
         )}
-        <Button width="auto" variant="secondary" to={'/'}>
+        <Button width="auto" variant="white" to={'/'}>
           Take me to the home page
         </Button>
       </PageHeader>

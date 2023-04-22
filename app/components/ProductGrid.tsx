@@ -1,4 +1,5 @@
-import {Button, Grid, ProductCard, Link} from '~/components';
+import {Grid, ProductCard, Link} from '~/components';
+import { Button } from './ui';
 import {getImageLoadingPriority} from '~/lib/const';
 import type {Collection, Product} from '@shopify/hydrogen/storefront-api-types';
 import {useFetcher} from '@remix-run/react';
@@ -76,7 +77,7 @@ export function ProductGrid({
         <div className="flex items-center justify-center mt-6">
           <Button
             disabled={fetcher.state !== 'idle'}
-            variant="secondary"
+            variant="white"
             onClick={fetchMoreProducts}
             width="full"
             prefetch="intent"

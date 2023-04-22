@@ -13,7 +13,7 @@ import ProductGrid  from '~/components/shop/ProductGrid';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
-import { NoWrapContainer } from '~/components/global/Container';
+import Container, { NoWrapContainer } from '~/components/global/Container';
 
 export const headers = routeHeaders;
 
@@ -155,7 +155,7 @@ export default function Collection() {
     useLoaderData<typeof loader>();
 
   return (
-    <>
+    <Container>
       <div className='scaling-mt-header p-4 md:p-8 lg:p-12'>
         <h1 className='text-4xl font-semibold mb-4'>{collection.title}</h1>
         {collection?.description && (
@@ -164,7 +164,7 @@ export default function Collection() {
           </div>
         )}
       </div>
-      <NoWrapContainer as="section">
+      <ul>
         <SortFilter
           filters={collection.products.filters as Filter[]}
           appliedFilters={appliedFilters}
@@ -179,8 +179,8 @@ export default function Collection() {
           <ProductGrid products={flattenConnection(collection.products)} />
 
         </SortFilter>
-      </NoWrapContainer>
-    </>
+      </ul>
+    </Container>
   );
 }
 

@@ -3,8 +3,10 @@ import {
   Image as ImageType,
   MoneyV2,
 } from '@shopify/hydrogen/storefront-api-types';
+import clsx from 'clsx';
 
 import SmartImage from '~/components/global/SmartImage';
+import { MyMoney } from '../ui';
 
 export type ExtraLabel = "sale" | "new" | "sold out :(" | ""
 
@@ -45,12 +47,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
         {textOnTop && (
-            <div className="p-2 md:p-3 lg:p-4 text-custom-white transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
-              <Details title={title} money={money} />
+            <div className="p-2 md:p-3 lg:p-4  transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
+              <Details title={title} money={money} variant="light"/>
             </div>
           )}
       </div>
-      {!textOnTop && <Details title={title} money={money} />}
+      {!textOnTop && <Details title={title} money={money} variant="dark"/>}
     </>
   );
 };
@@ -58,18 +60,19 @@ export default ProductCard;
 
 function Details({
   title,
-  money
+  money,
+  variant
 }: {
     title: string
     money?: MoneyV2
+    variant: "dark" | "light"
   }) {
   return (
     <div className="grid gap-y-1 grid-cols-1 mt-2 lg:mt-4">
-      <h3 className="text-sm md:text-md text-custom-grey">{title}</h3>
+      <h3 className={clsx("text-sm md:text-md ", variant === "dark" ? "text-custom-grey" : "text-custom-white")}>{title}</h3>
       {money &&  (
-        <Money
-          className="text-xs md:text-sm lg:text-md xl:text-lg font-semibold text-custom-black"
-          withoutTrailingZeros
+        <MyMoney
+          className={clsx("text-xs md:text-sm lg:text-md xl:text-lg font-semibold", variant === "dark" ? "text-custom-black" : "text-custom-white")}
           data={money}
         />
       )}

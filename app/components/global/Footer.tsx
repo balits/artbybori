@@ -85,7 +85,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t-2 border-t-custom-grey/40 py-6 my-12 text-custom-white/60 w-full flex items-start justify-between">
+        <div className="border-t-2 border-gray-100/20 py-6 my-12 text-custom-white/60 w-full flex items-start justify-between">
           <div className="w-fit sm:w-1/3">
             <CountrySelector />
           </div>

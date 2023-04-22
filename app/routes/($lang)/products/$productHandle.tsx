@@ -11,7 +11,6 @@ import {
 
 import {
   AnalyticsPageType,
-  Money,
   ShopifyAnalyticsProduct,
 } from '@shopify/hydrogen';
 import {getExcerpt} from '~/lib/utils';
@@ -32,14 +31,15 @@ import {Container, ContainerProps, NoWrapContainer} from '~/components/global/Co
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 
 import { ProductCarousel, Skeleton as CarouselSkeleton } from '~/components/global/Carousel';
-import { HiChevronDown } from 'react-icons/hi';
 import { useWindowSize } from 'react-use';
 import { AddToCartButton, ProductGallery } from '~/components';
 import { Link } from '~/components/ui/Link';
 import { IconCaret, IconCheck } from '~/components/ui/Icon';
+import { Button, MyMoney } from '~/components/ui';
+import { Minus, Plus } from '~/components/global/Icon';
+import Breadcrumbs from '~/components/global/Breadcrumbs';
 
 export const headers = routeHeaders;
-
 
 export async function loader({params, request, context}: LoaderArgs) {
   const {productHandle} = params;
@@ -133,21 +133,25 @@ export default function ProductPage() {
   const {media, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
 
+
   return (
     <>
       <ContainerSwitch
         as="div"
-        className="relative scaling-mt-header grid grid-cols-1 md:grid-cols-2 md:gap-12 lg:gap-20 lg:grid-cols-3"
+        className="relative scaling-mt-header grid grid-cols-1 md:grid-cols-2 md:gap-8 "
       >
-        <div className="w-full lg:col-span-2">
+        <div className="w-full ">
           <ProductGallery
             media={media.nodes}
             className="w-screen md:w-full "
           />
         </div>
-        <section className="top-0 sticky   h-fit px-6 py-4 lg:p-0 md:scaling-pt-header">
+
+        <section className="top-0 sticky h-fit px-6 py-4  md:scaling-pt-header">
+          <Breadcrumbs product={product} />
           <ProductDescription />
-          <div className="grid gap-4 py-4">
+
+          <div className="divide-y divide-custom-placeholder-green grid ">
             {descriptionHtml && (
               <ProductDetail
                 title="Details"
@@ -185,8 +189,10 @@ export default function ProductPage() {
             {(data) => {
               return data?.recomended && (
                 <ProductCarousel
+                  size='normal'
                   products={data.recomended as SerializeFrom<ProductType[]>}
-                  textOnTop={true} />)
+                  textOnTop={true}
+                />)
             }}
           </Await>
         </Suspense>
@@ -257,27 +263,23 @@ export function ProductDescription() {
     return desc.split(/[.!?\s]/)[0];
   }, [])
 
+
   return (
     <div className="grid gap-8">
       <div className="grid gap-8">
-        <div>
-          <h1 className="tracking-tight font-cantata font-bold text-4xl">
+        <div className='flex items-center justify-between'>
+          <h1 className="tracking-tight font-semibold text-2xl">
             {product.title}
           </h1>
-          <div className="-light tracking-tight flex gap-2 mt-2">
+          <div className="text-xl font-semibold tracking-tight flex gap-2 mt-2">
             {isOnSale && (
-              <Money
-                withoutTrailingZeros
+              <MyMoney
                 data={selectedVariant?.compareAtPrice!}
                 as="span"
                 className="opacity-50 strike"
               />
             )}
-            <Money
-              withoutTrailingZeros
-              data={selectedVariant?.price!}
-              as="span"
-            />
+            <MyMoney data={selectedVariant.price!} as={"span"} />
           </div>
         </div>
         <div className=" flex flex-col gap-4 ">{firstSentence(product.description)}</div>
@@ -297,7 +299,7 @@ export function ProductDescription() {
                 <>
                   <AddToCartButton
                     variant="signature"
-                    className="w-full rounded-sm"
+                    width='full'
                     disabled={isOutOfStock}
                     lines={[
                       {
@@ -313,7 +315,7 @@ export function ProductDescription() {
                   >
                     Add&nbsp;to&nbsp;Cart
                   </AddToCartButton>
-                  <button >Checkout</button>
+                  <Button>Checkout</Button>
                 </>
               )}
           </div>
@@ -340,7 +342,7 @@ function ProductOptions({
             key={option.name}
             className="grid grid-cols-1 gap-y-3 last:mb-0"
           >
-            <legend className="text-lg font-semibold">{option.name}:</legend>
+            <legend className=" font-semibold mb-2">{option.name}:</legend>
             <div className="flex flex gap-4">
               {/**
 * First, we render a bunch of <Link> elements for each option value.
@@ -488,7 +490,7 @@ function ProductDetail({
     learnMore?: string;
   }) {
   return (
-    <Disclosure key={title} as="div" className="grid w-full gap-4 md:gap-6 lg:gap-8">
+    <Disclosure key={title} as="div" className="grid w-full gap-2 gap-6 py-4">
       {({open}) => (
         <>
           <Disclosure.Button className={`text-left ${ open ? "text-custom-black" : "text-custom-black/60"}`}>
@@ -496,16 +498,11 @@ function ProductDetail({
               <h3 className=" lg:text-lg ">
                 {title}
               </h3>
-              <HiChevronDown
-                className={clsx(
-                  'transition-transform transform-gpu duration-300 w-5 h-5',
-                  open && 'rotate-[180deg]',
-                )}
-              />
+              {open ? <Minus /> : <Plus / >}
             </div>
           </Disclosure.Button>
 
-          <Disclosure.Panel className={'pb-4 lg:pt-2 grid gap-2'}>
+          <Disclosure.Panel className={' grid gap-2'}>
             <div
               className="prose text-sm lg:text-md"
               dangerouslySetInnerHTML={{__html: content}}
@@ -579,41 +576,47 @@ vendor
 handle
 descriptionHtml
 description
+collections(first: 5) {
+  nodes {
+    handle
+    title
+  }
+}
 options {
-name
-values
+  name
+  values
 }
 selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
-...ProductVariantFragment
+  ...ProductVariantFragment
 }
 media(first: 7) {
-nodes {
-...Media
-}
+  nodes {
+    ...Media
+  }
 }
 variants(first: 1) {
-nodes {
-...ProductVariantFragment
-}
+  nodes {
+    ...ProductVariantFragment
+  }
 }
 seo {
-description
-title
+  description
+  title
 }
 }
 shop {
-name
-primaryDomain {
-url
-}
-shippingPolicy {
-body
-handle
-}
-refundPolicy {
-body
-handle
-}
+  name
+  primaryDomain {
+    url
+  }
+  shippingPolicy {
+    body
+    handle
+  }
+  refundPolicy {
+    body
+    handle
+  }
 }
 }
 `;

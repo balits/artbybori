@@ -68,11 +68,9 @@ export function SortFilter({
           />
         </div>
 
-
-
-        <div className="mt-4">
+        <>
           {children}
-        </div>
+        </>
       </div>
     </>
   );

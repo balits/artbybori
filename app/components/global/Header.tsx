@@ -38,7 +38,7 @@ export default function Header() {
     <>
       <header
         className={clsx(
-          `transition-all transform-gpu  duration-500 ease-in-out fixed z-30 bg-custom-white w-full header-height`,
+          `transition-all transform-gpu  duration-300 ease-in-out fixed z-30 bg-custom-white w-full header-height`,
           scrollDirection === 'down'
             ? '-top-header-base md:-top-header-md lg:-top-header-lg'
             : 'top-0',

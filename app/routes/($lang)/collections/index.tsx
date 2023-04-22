@@ -77,7 +77,7 @@ export default function Collections() {
                 <div className="flex items-center justify-center mt-6">
                   <Button
                     to={prevPageUrl}
-                    variant="secondary"
+                    variant="white"
                     width="full"
                     prefetch="intent"
                     disabled={!isLoading}

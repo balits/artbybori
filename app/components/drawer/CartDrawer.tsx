@@ -2,11 +2,11 @@ import {Drawer, DrawerProps} from '~/components/Drawer';
 import {Await, Form, useMatches} from '@remix-run/react';
 import {Cart, CartLine} from '@shopify/hydrogen/storefront-api-types';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen';
-import {HiX} from 'react-icons/hi';
 import {Suspense, useMemo} from 'react';
 import { Link } from '../ui/Link';
 import { HiArrowPath } from 'react-icons/hi2';
 import { useIsHydrated } from '~/hooks/useIsHydrated';
+import { Button } from '../ui';
 
 function Empty() {
   return (
@@ -79,15 +79,14 @@ function CartColumnView({
             )
         )}
       </ul>
-      <div className="flex-shink-0 w-full my-2 flex flex-col ">
-        <Link
+      <div className="flex-shink-0 w-full my-2 flex flex-col mb-4">
+        <Button
           onClick={closeDrawer}
           to="/cart"
-          prefetch="intent"
-          className="py-3 text-center w-full bg-custom-black text-custom-white rounded-sm font-semibold uppercase"
+          variant="signature"
         >
-          View Cart.
-        </Link>
+          View cart
+        </Button>
       </div>
     </section>
   ) : (

@@ -157,8 +157,8 @@ export default function Homepage() {
       )}
       <SplitView />
 
-      <NoWrapContainer className="h-fit mb-24">
-        <div className="md:px-4 lg:px-8">
+      <Container className="h-fit my-20">
+        <div className="">
           <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-4 lg:mb-8 ">
             Shop by categories.
           </h2>
@@ -172,13 +172,13 @@ export default function Homepage() {
                     coll.handle !== 'featured-products',
                 );
                 return (
-                  <CollectionCarousel collections={items} textOnTop={true}/>
+                  <CollectionCarousel size='small' collections={items} textOnTop={true}/>
                 );
               }}
             </Await>
           </Suspense>
         </div>
-      </NoWrapContainer>
+      </Container>
 
       <InstagramGallery />
     </>

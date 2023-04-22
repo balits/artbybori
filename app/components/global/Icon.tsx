@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react"
 import {IconBaseProps} from "react-icons"
 import { BiShoppingBag } from "react-icons/bi";
-import { HiSearch, HiX } from "react-icons/hi";
+import { HiMinus, HiPlus, HiSearch, HiX } from "react-icons/hi";
 import { HiBars2, HiBars3BottomLeft } from "react-icons/hi2";
 
 type IconProps = IconBaseProps & {
@@ -14,7 +14,7 @@ type WrapperProps = {
   children: React.ReactNode
 }
 
-export function IconWrapper({
+function IconWrapper({
   className,
   children,
   as = "span",
@@ -43,6 +43,18 @@ export function Bars(props:IconProps) {
 export function X(props: IconProps) {
   return <IconWrapper {...props}>
     <HiX />
+  </IconWrapper>
+}
+
+export function Minus(props: IconProps) {
+  return <IconWrapper {...props}>
+    <HiMinus />
+  </IconWrapper>
+}
+
+export function Plus(props: IconProps) {
+  return <IconWrapper {...props}>
+    <HiPlus />
   </IconWrapper>
 }
 

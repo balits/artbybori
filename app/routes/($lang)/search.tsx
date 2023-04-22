@@ -118,6 +118,7 @@ export default function Search() {
                           Trending Collections.
                         </h3>
                         <CollectionCarousel
+                          size='normal'
                           collections={
                             data!.featuredCollections.filter(c => c.handle !== "hero" && c.handle !== "featured-products") as SerializeFrom<Collection[]>
                           }
@@ -133,6 +134,7 @@ export default function Search() {
                             Trending Products.
                           </h3>
                           <ProductCarousel
+                            size='normal'
                             products={
                               data?.featuredProducts as SerializeFrom<Product[]>
                             }

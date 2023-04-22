@@ -9,6 +9,7 @@ import clsx from 'clsx';
 
 type DefaultCarouselProps = {
   textOnTop: boolean;
+  size: "small" | "normal"
 }
 
 type CollectionCarouselProps = DefaultCarouselProps & {
@@ -17,13 +18,14 @@ type CollectionCarouselProps = DefaultCarouselProps & {
 
 export function CollectionCarousel({
   collections,
-  textOnTop = false
+  textOnTop = false,
+  size
 }: CollectionCarouselProps) {
   const haveCollections = collections && collections.length > 0;
   if (!haveCollections) return null;
 
   return (
-    <Wrapper>
+    <Wrapper size={size}>
       {collections.filter(c => c.image).map((coll) => {
         return (
             <Link  key={coll.id} to={`/collections/${coll.handle}`} prefetch="intent" className={clsx("relative group", !textOnTop && "basic-animation hover:opacity-90")}>
@@ -32,8 +34,7 @@ export function CollectionCarousel({
                 widths={[280, 350,450,550, 650]}
                 sizes="(max-width: 768px) 80vw, 60vw"
                 alt={coll.image?.altText ?? coll.title}
-/*                 className="h-[300px] sm:h-auto w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg " */
-                className="w-full "
+                className="w-full rounded-md"
                 loading='eager'
               />
               {textOnTop ?  (
@@ -68,10 +69,11 @@ type ProductCarouselProps = DefaultCarouselProps & {
 export function ProductCarousel({
   products,
   textOnTop,
+  size
 }: ProductCarouselProps) {
   if (!products || products.length == 0) return null;
   return (
-    <Wrapper>
+    <Wrapper size={size}>
       {products.map((prod) => {
         const variant = prod.variants.nodes[0];
         if(!variant.image) return null;
@@ -92,11 +94,26 @@ export function ProductCarousel({
 }
 
 const Wrapper = ({
-  children
+  children,
+  size
 }:{
-  children: React.ReactNode
+  children: React.ReactNode,
+  size: "small" | "normal"
 }) => {
-  const responsive = {
+  const responsive = size === "small" ? {
+    md: {
+      breakpoint: { max: 10000, min: 768 },
+      items: 3
+    },
+    sm: {
+      breakpoint: { max: 768, min: 640 },
+      items: 2
+    },
+    xs: {
+      breakpoint: { max: 640, min: 0 },
+      items: 1
+    }
+  } : {
     lg: {
       breakpoint: { max: 10000, min: 1024 },
       items: 4
@@ -117,6 +134,7 @@ const Wrapper = ({
 
   return (
     <Carousel
+      //@ts-ignore
       responsive={responsive}
       arrows={false}
       draggable={false}

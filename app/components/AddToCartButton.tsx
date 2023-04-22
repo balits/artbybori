@@ -36,8 +36,9 @@ export function AddToCartButton({
       <input type="hidden" name="analytics" value={JSON.stringify(analytics)} />
       <Button
         type="submit"
+        variant={variant}
+        width={width}
         className={clsx(
-          ' font-semibold py-2 px-8 border border-custom-black',
           className,
           disabled || fetcherIsNotIdle
             ? 'cursor-not-allowed opacity-60'

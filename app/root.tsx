@@ -34,6 +34,7 @@ export const links: LinksFunction = () => {
     {rel: 'stylesheet', href: carouselCss},
     {rel: 'stylesheet', href: tailwind},
     {rel: "stylesheet", href: "https://rsms.me/inter/inter.css"},
+    {rel: "preconnect", href: "https://rsms.me/inter/inter.css"},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
