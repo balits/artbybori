@@ -23,6 +23,7 @@ import type {
 } from 'schema-dts';
 
 const DESCRIPTION_FALLBACK = 'Handmade ceramics for your Home';
+const TITLE_TEMPLATE_FALLBACK = "%s | Art by Bori"
 
 function root({
   shop,
@@ -33,7 +34,7 @@ function root({
 }): SeoConfig<Organization> {
   return {
     title: shop?.name,
-    titleTemplate: '%s | Art by Bori',
+    titleTemplate: TITLE_TEMPLATE_FALLBACK,
     description: truncate(shop?.description ?? ''),
     handle: '@shopify',
     url,
@@ -66,7 +67,7 @@ function root({
 function home(): SeoConfig<WebPage> {
   return {
     title: 'Home',
-    titleTemplate: '%s | Art by Bori',
+    titleTemplate: TITLE_TEMPLATE_FALLBACK,
     description: DESCRIPTION_FALLBACK,
     robots: {
       noIndex: false,
@@ -219,6 +220,34 @@ function collectionJsonLd({
   ];
 }
 
+function allProducts({
+  collection,
+  url,
+  title
+}: {
+  collection: Collection,
+  url: Request['url'],
+  title: string
+}) {
+  return {
+    title,
+    description: truncate(
+      collection?.seo?.description ??
+        collection?.description ??
+        DESCRIPTION_FALLBACK,
+    ),
+    titleTemplate: TITLE_TEMPLATE_FALLBACK,
+    media: {
+      type: 'image',
+      url: collection?.image?.url,
+      height: collection?.image?.height,
+      width: collection?.image?.width,
+      altText: collection?.image?.altText,
+    },
+    jsonLd: collectionJsonLd({collection, url}),
+  }
+}
+
 function collection({
   collection,
   url,
@@ -233,7 +262,7 @@ function collection({
         collection?.description ??
         DESCRIPTION_FALLBACK,
     ),
-    titleTemplate: '%s | Collection',
+    titleTemplate: TITLE_TEMPLATE_FALLBACK,
     media: {
       type: 'image',
       url: collection?.image?.url,
@@ -284,7 +313,7 @@ function listCollections({
 }): SeoConfig<CollectionPage> {
   return {
     title: 'Collections',
-    titleTemplate: '%s | Collections',
+    titleTemplate: TITLE_TEMPLATE_FALLBACK,
     description: 'All Art by Bori collections',
     url,
     jsonLd: collectionsJsonLd({collections, url}),
@@ -358,7 +387,7 @@ function page({
   return {
     description: truncate(page?.seo?.description || DESCRIPTION_FALLBACK),
     title: page?.seo?.title,
-    titleTemplate: '%s | Page',
+    titleTemplate: TITLE_TEMPLATE_FALLBACK,
     url,
     jsonLd: {
       '@context': 'https://schema.org',
@@ -380,7 +409,7 @@ function customPage({
   return {
     description: truncate(description),
     title,
-    titleTemplate: "%s | Art by Bori",
+    titleTemplate: TITLE_TEMPLATE_FALLBACK,
     url,
     jsonLd: {
       "@context": "https://schema.org",
@@ -455,6 +484,7 @@ export const seoPayload = {
   policies,
   policy,
   product,
+  allProducts,
   root,
 };
 

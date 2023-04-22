@@ -1,9 +1,10 @@
-import { Link } from '../ui/Link';
+import { Link } from '../ui';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import {SerializeFrom} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import {Container} from '../global/Container';
 import {Image, Money} from '@shopify/hydrogen';
+import { MyHeading } from '../ui';
 
 interface Props {
   data: SerializeFrom<Product>[];
@@ -18,17 +19,12 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
   const products = featuredProductList as Product[];
 
   return (
-    <Container className="mt-[10vh]">
-      <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-8 ">
-        Featured products.
-      </h2>
-
       <ul className="grid w-full h-fit overflow-hidden grid-cols-2 grid-rows-4 gap-2 md:grid-cols-4 md:grid-rows-2 md:gap-3 ">
         {products.map((prod: Product, i: number) => {
           const image = prod.images.nodes[0];
           return (
             <li
-              key={prod.id}
+             key={prod.id}
               className={clsx(
                 i === 0 && 'block row-span-2 col-span-2 ',
                 'relative  group rounded-sm min-w-full w-[20%] min-h-full aspect-square relative cursor-pointer basic-animation delay-0 hover:opacity-90',
@@ -73,17 +69,11 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
           );
         })}
       </ul>
-    </Container>
   );
 };
 export default FeaturedProducts;
 
 export const Skeleton: React.FC = () => (
-  <Container className="mt-[10vh]">
-    <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-4 ">
-      Featured products.
-    </h2>
-
     <ul className="grid w-full h-fit overflow-hidden grid-cols-2 grid-rows-4 gap-2 md:grid-cols-4 md:grid-rows-2 md:gap-3 ">
       {[0, 1, 2, 3, 4].map((num) => {
         return (
@@ -97,5 +87,4 @@ export const Skeleton: React.FC = () => (
         );
       })}
     </ul>
-  </Container>
 );

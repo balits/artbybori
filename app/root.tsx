@@ -107,7 +107,7 @@ function NotFoundError({type}: {type?: string}) {
   return (
     <section className="w-full h-[50vh] grid place-items-center">
       <div>
-        <h1 className="font-semibold tracking-tight text-2xl md:text-3xl lg: text-4 xl:text-5xl mb-8">
+        <h1 className="font-semibold tracking-tight text-2xl md:text-3xl lg:text-4  mb-8">
           Page Not Found
         </h1>
         <p className="text-autoscale-small text-custom-black/60 mb-2">{description}</p>
@@ -165,9 +165,11 @@ export function ErrorBoundary({error}: {error: Error}) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className='overflow-clip'>
         <Layout>
-          <GenericError error={error} />
+          <Container className='scaling-mt-header'>
+            <GenericError error={error} />
+          </Container>
         </Layout>
         <Scripts />
       </body>

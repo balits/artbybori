@@ -148,7 +148,6 @@ export default function ProductPage() {
         </div>
 
         <section className="top-0 sticky h-fit px-6 py-4  md:scaling-pt-header">
-          <Breadcrumbs product={product} />
           <ProductDescription />
 
           <div className="divide-y divide-custom-placeholder-green grid ">
@@ -292,9 +291,9 @@ export function ProductDescription() {
         {selectedVariant && (
           <div className="grid grid-cols-1  items-stretch gap-4 my-8">
             {isOutOfStock ? (
-              <button className='' disabled>
+              <Button isDisabled>
                 Sold&nbsp;out
-              </button>
+              </Button>
             ) : (
                 <>
                   <AddToCartButton
@@ -493,18 +492,18 @@ function ProductDetail({
     <Disclosure key={title} as="div" className="grid w-full gap-2 gap-6 py-4">
       {({open}) => (
         <>
-          <Disclosure.Button className={`text-left ${ open ? "text-custom-black" : "text-custom-black/60"}`}>
+          <Disclosure.Button className={`text-left `}>
             <div className="flex justify-between">
               <h3 className=" lg:text-lg ">
                 {title}
               </h3>
-              {open ? <Minus /> : <Plus / >}
+              {open ? <Minus className='text-custom-grey'/> : <Plus className='text-custom-grey' / >}
             </div>
           </Disclosure.Button>
 
-          <Disclosure.Panel className={' grid gap-2'}>
+          <Disclosure.Panel className={'pl-2 grid gap-2'}>
             <div
-              className="prose text-sm lg:text-md"
+              className="prose text-sm lg:text-md text-custom-grey "
               dangerouslySetInnerHTML={{__html: content}}
             />
             {learnMore && (

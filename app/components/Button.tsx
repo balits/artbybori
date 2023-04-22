@@ -29,7 +29,7 @@ export const Button = forwardRef(
     const variants = {
       primary: `${baseButtonClasses} bg-primary text-contrast`,
       secondary: `${baseButtonClasses} border border-primary/10 bg-contrast text-primary`,
-      inline: 'border-b border-primary/10 leading-none pb-1',
+      inline: 'border-b border-black/20 leading-none pb-1',
     };
 
     const widths = {

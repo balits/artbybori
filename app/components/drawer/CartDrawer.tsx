@@ -1,5 +1,5 @@
 import {Drawer, DrawerProps} from '~/components/Drawer';
-import {Await, Form, useMatches} from '@remix-run/react';
+import {Await, useMatches} from '@remix-run/react';
 import {Cart, CartLine} from '@shopify/hydrogen/storefront-api-types';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen';
 import {Suspense, useMemo} from 'react';
@@ -51,14 +51,14 @@ export default function CartDrawer({
     <Drawer heading={heading} open={open} onClose={onClose} openFrom={openFrom}>
       <Suspense fallback={<Fallback />}>
         <Await resolve={root.data?.cart}>
-          {(cart) => <CartColumnView cart={cart} closeDrawer={onClose} />}
+          {(cart) => <CartSidebarView cart={cart} closeDrawer={onClose} />}
         </Await>
       </Suspense>
     </Drawer>
   );
 }
 
-function CartColumnView({
+function CartSidebarView({
   cart,
   closeDrawer,
 }: {
@@ -82,7 +82,7 @@ function CartColumnView({
       <div className="flex-shink-0 w-full my-2 flex flex-col mb-4">
         <Button
           onClick={closeDrawer}
-          to="/cart"
+          withLink
           variant="signature"
         >
           View cart

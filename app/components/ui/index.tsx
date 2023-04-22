@@ -5,6 +5,7 @@ export {Skeleton}  from "./Skeleton"
 export {Heading, PageHeader, Section, Text} from "./Text"
 export {Button} from "./Button"
 export {MyMoney} from "./MyMoney"
+export {MyHeading} from "./Heading"
 
 export { Link } from "./Link"
 export * from "./Icon"

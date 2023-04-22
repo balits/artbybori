@@ -1,11 +1,10 @@
-import {PageHeader, Text, Button} from './ui';
+import {Text, Button} from './ui';
 
 export function GenericError({
   error,
 }: {
   error?: {message: string; stack?: string};
 }) {
-  const heading = `Something’s wrong here.`;
   let description = `We found an error while loading this page.`;
 
   // TODO hide error in prod?
@@ -16,9 +15,11 @@ export function GenericError({
   }
 
   return (
-    <>
-      <PageHeader heading={heading}>
-        <Text width="narrow" as="p">
+    <section className="w-full min-h-[50vh] grid place-items-center gap-4">
+        <h1 className="text-left font-semibold tracking-tight text-2xl md:text-3xl lg:text-4  mb-8">
+          Somethings wrong here.
+        </h1>
+        <Text width="narrow" as="p" className='text-left'>
           {description}
         </Text>
         {error?.stack && (
@@ -35,11 +36,10 @@ export function GenericError({
             }}
           />
         )}
-        <Button width="auto" variant="white" to={'/'}>
+        <Button variant="light" width="auto" to={'/'}>
           Take me to the home page
         </Button>
-      </PageHeader>
-    </>
+    </section>
   );
 }
 

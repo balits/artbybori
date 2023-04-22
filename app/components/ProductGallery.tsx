@@ -79,7 +79,7 @@ export function ProductGallery({
           mediaProps.loading = ATTR_LOADING_EAGER;
         }
 
-        const style = 'w-full aspect-square snap-center card-image bg-custom-placeholder-green fadeIn '
+        const style = 'w-full aspect-square snap-center card-image bg-gray-100 '
 
         return (
           <div
@@ -91,7 +91,7 @@ export function ProductGallery({
             {(med as MediaImage).image && (
               <MediaFile
                 tabIndex={0}
-                className={`w-full h-full aspect-square fadeIn object-cover`}
+                className={`w-full h-full aspect-square fadeIn object-cover `}
                 data={data}
                 // @ts-ignore
                 options={{

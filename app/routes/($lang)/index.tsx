@@ -25,6 +25,7 @@ import {
 import invariant from 'tiny-invariant';
 import { flattenConnection } from '@shopify/hydrogen';
 import {Container, NoWrapContainer} from '~/components/global/Container';
+import { MyHeading } from '~/components/ui';
 
 export const headers = routeHeaders;
 
@@ -139,29 +140,34 @@ export default function Homepage() {
   return (
     <>
       <Banner image={homepage.hero.image} />
-      {collectionsPromise && (
-        <Suspense fallback={<FeaturedSkeleton />}>
-          <Await resolve={collectionsPromise}>
-            {(data) => {
-              const featuredProducts = data.collections.nodes.find(
-                (collection) => collection.handle === 'featured-products',
-              );
-              return featuredProducts ? (
-                <FeaturedProducts data={featuredProducts.products.nodes} />
-              ) : (
-                <FeaturedSkeleton />
-              );
-            }}
-          </Await>
-        </Suspense>
-      )}
+      <Container className="mt-[10vh]">
+        <MyHeading>
+          Featured products.
+        </MyHeading>
+        {collectionsPromise && (
+          <Suspense fallback={<FeaturedSkeleton />}>
+            <Await resolve={collectionsPromise}>
+              {(data) => {
+                const featuredProducts = data.collections.nodes.find(
+                  (collection) => collection.handle === 'featured-products',
+                );
+                return featuredProducts ? (
+                  <FeaturedProducts data={featuredProducts.products.nodes} />
+                ) : (
+                    <FeaturedSkeleton />
+                  );
+              }}
+            </Await>
+          </Suspense>
+        )}
+      </Container>
       <SplitView />
 
       <Container className="h-fit my-20">
         <div className="">
-          <h2 className="tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl font-serif mb-4 lg:mb-8 ">
+          <MyHeading>
             Shop by categories.
-          </h2>
+          </MyHeading>
           <Suspense fallback={<CarouselSkeleton />}>
             <Await resolve={collectionsPromise}>
               {({ collections }) => {
