@@ -4,6 +4,7 @@ import { Container } from '~/components/global/Container';
 import { SiFacebook, SiGmail, SiInstagram, SiTiktok } from 'react-icons/si';
 
 import { CountrySelector } from '../CountrySelector';
+import { Text } from "../ui";
 
 export default function Footer() {
   const routeLinks = [
@@ -53,14 +54,14 @@ export default function Footer() {
 
             <div className="h-fit row-start-1 col-span-2 md:row-start-auto md:col-span-1">
               <Strong text="Art by Bori" />
-              <p className="text-xs md:text-sm mb-2 lg:text-md">
+              <Text size="md" className="lg:text-md">
                 I make one of a kind ceramics in small batches that I sell in my
                 online shop or sometimes on local art markets.
-              </p>
-              <p className="text-xs md:text-sm lg:text-md">
+              </Text>
+              <Text size="md" className="lg:text-md">
                 With the pieces I sell and create, I hope to brighten your
                 spaces and everyday rituals.
-              </p>
+              </Text>
             </div>
           </div>
 
@@ -112,9 +113,9 @@ export default function Footer() {
 
 const Strong = ({ text }: { text: string }) => {
   return (
-    <p className="font-bold capitalize md:mb-4 mb-6 font-semibold">
+    <Text as={"h4"} bold size="lg" className="capitalize md:mb-4 mb-6">
       {text}
-    </p>
+    </Text>
   );
 };
 

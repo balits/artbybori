@@ -1,5 +1,6 @@
 import {Image} from '@shopify/hydrogen';
 import {Image as ImageType} from '@shopify/hydrogen/storefront-api-types';
+import { Heading } from '../ui';
 
 type Props = {
   image: ImageType;
@@ -22,13 +23,13 @@ export default function Banner({image}: Props) {
       />
       <div className="absolute inset-0 w-full h-full grid place-items-center">
         <div className="lg:p-4 z-[2] text-custom-white grid place-items-center">
-          <h1 className="mb-12 text-5xl md:text-6xl lg:text-7xl xl:text-8xl  font-cantata ">
+          <Heading size='lg' as="h1">
           Ceramics&nbsp;
           <br className="lg:hidden" />
           for&nbsp;your&nbsp;
           <br className="lg:hidden" />
           home.
-          </h1>
+          </Heading>
         </div>
       </div>
     </section>

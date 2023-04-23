@@ -15,6 +15,7 @@ module.exports = {
           black: 'var(--custom-black)',
           orange: '#fe670c',
           grey: '#374151',
+          lightgrey: '#6b7280',
           'darker-green': '#828770',
           'signature-green': 'var(--custom-signature)',
           'placeholder-green': 'var(--custom-placeholder)',

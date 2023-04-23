@@ -20,6 +20,7 @@ import { seoPayload } from '~/lib/seo.server';
 import { HiSearch } from 'react-icons/hi';
 import { NoWrapContainer } from '~/components/global/Container';
 import { CollectionCarousel, ProductCarousel } from '~/components/global/Carousel';
+import { Heading } from '~/components/ui';
 
 export async function loader({ request, context: { storefront } }: LoaderArgs) {
   const searchParams = new URL(request.url).searchParams;
@@ -80,8 +81,7 @@ export default function Search() {
   return (
     <NoWrapContainer className='scaling-mt-header mb-8 lg:mb-16'>
       <div className='mb-6 md:mb-8 lg:mb-12 xl:mb-16'>
-        <h1 className='text-3xl font-cantata font-semibold capitalize'>
-        </h1>
+        <h1 className='text-3xl font-cantata font-semibold capitalize'>Search</h1>
         <Form method="get" className="relative flex w-full text-lg ">
           <button className="p-2" type="submit">
             <HiSearch className='h-4 w-4 md:w-5 md:h-5  cursor-pointer focus:ring-custom-black' />
@@ -114,9 +114,9 @@ export default function Search() {
                   <div className='space-y-16 lg:space-y-20'>
                     {data?.featuredCollections && (
                       <article>
-                        <h3 className='text-lg sm:text-xl md:text-2xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
+                        <Heading size='sm'>
                           Trending Collections.
-                        </h3>
+                        </Heading>
                         <CollectionCarousel
                           size='normal'
                           collections={
@@ -130,9 +130,9 @@ export default function Search() {
                     {data?.featuredProducts &&
                       (
                         <article>
-                          <h3 className='text-lg sm:text-xl md:text-2xl lg:text-3xl  font-cantata mb-4 lg:mb-8'>
+                          <Heading size='sm'>
                             Trending Products.
-                          </h3>
+                          </Heading>
                           <ProductCarousel
                             size='normal'
                             products={

@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react"
 import {IconBaseProps} from "react-icons"
 import { BiShoppingBag } from "react-icons/bi";
-import { HiMinus, HiPlus, HiSearch, HiX } from "react-icons/hi";
+import { HiCheck, HiMinus, HiPlus, HiSearch, HiX, HiXCircle } from "react-icons/hi";
 import { HiBars2, HiBars3BottomLeft } from "react-icons/hi2";
 
 type IconProps = IconBaseProps & {
@@ -61,5 +61,17 @@ export function Plus(props: IconProps) {
 export function FilterDropDown(props: IconProps) {
   return <IconWrapper {...props}>
     <HiBars3BottomLeft />
+  </IconWrapper>
+}
+
+export function Check(props: IconProps) {
+  return <IconWrapper {...props}>
+    <HiCheck />
+  </IconWrapper>
+}
+
+export function XCirlce(props: IconProps) {
+  return <IconWrapper {...props}>
+    <HiXCircle />
   </IconWrapper>
 }

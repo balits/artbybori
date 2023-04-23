@@ -4,6 +4,7 @@ import {useActionData, useFetcher, Form, useNavigation} from '@remix-run/react';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {useState} from 'react';
 import { seoPayload } from '~/lib/seo.server';
+import { Heading } from '~/components/ui';
 
 export async function action({request, params, context}: ActionArgs) {
   const body = await request.formData();
@@ -23,6 +24,37 @@ export async function loader() {
   return json({
     seo
   })
+}
+
+export default function ContactPage() {
+  return (
+    <>
+      <div className="min-h-screen max-h-fit w-full grid place-items-center scaling-mt-header">
+        <Container className="  grid grid-cols-1 grid-flow-row gap-20 md:gap-32 lg:gap-40">
+          <div className="mt-12 grid grid-cols-1 gap-y-16 md:gap-y-0 md:grid-cols-2 lg:gap-16">
+            <Heading as="h1" size='lg' font='font-sans' className="font-bold">
+              Get in touch.
+            </Heading>
+
+            <div className="flex flex-col justify-center">
+              <strong className="mb-1">Need help?</strong>
+              <p className="text-sm">
+                {' '}
+                If you have questions or need any general information, please
+                feel free to contact us!{' '}
+              </p>
+            </div>
+          </div>
+
+          <ContactForm />
+        </Container>
+      </div>
+
+      <FAQ />
+
+      <InstagramGallery />
+    </>
+  );
 }
 
 function ContactForm() {
@@ -78,9 +110,8 @@ function ContactForm() {
         <label className="block font-bold" htmlFor="message">
           Message
         </label>
-        <input
+        <textarea
           className="contact-input"
-          type={'text'}
           id="message"
           name="message"
           required
@@ -176,33 +207,3 @@ function FAQ() {
   );
 }
 
-export default function ContactPage() {
-  return (
-    <>
-      <div className="min-h-screen max-h-fit w-full grid place-items-center scaling-mt-header">
-        <Container className="  grid grid-cols-1 grid-flow-row gap-20 md:gap-32 lg:gap-40">
-          <div className="mt-12 grid grid-cols-1 gap-y-16 md:gap-y-0 md:grid-cols-2 lg:gap-16">
-            <h1 className="text-custom-black tracking-tight font-bold text-5xl md:text-6xl lg:text-8xl ">
-              Get in touch.
-            </h1>
-
-            <div className="flex flex-col justify-center">
-              <strong className="mb-1">Need help?</strong>
-              <p className="text-sm">
-                {' '}
-                If you have questions or need any general information, please
-                feel free to contact us!{' '}
-              </p>
-            </div>
-          </div>
-
-          <ContactForm />
-        </Container>
-      </div>
-
-      <FAQ />
-
-      <InstagramGallery />
-    </>
-  );
-}

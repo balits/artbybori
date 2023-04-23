@@ -3,23 +3,26 @@ import {Await, useMatches} from '@remix-run/react';
 import {Cart, CartLine} from '@shopify/hydrogen/storefront-api-types';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen';
 import {Suspense, useMemo} from 'react';
-import { Link } from '../ui/Link';
+import { Link, Button } from '../ui';
 import { HiArrowPath } from 'react-icons/hi2';
 import { useIsHydrated } from '~/hooks/useIsHydrated';
-import { Button } from '../ui';
 
-function Empty() {
+function Empty({
+  closeDrawer
+}: {
+  closeDrawer: () => void;
+}) {
   return (
     <div className='flex flex-col items-center justify-center'>
       <p className='text-center text-lg mb-2'>
         Your cart seems empty.
       </p>
       <div>
-        <Link to="/shop" className="underline decoration-offset-2">
+        <Link onClick={closeDrawer} prefetch="intent" to="/shop" className="underline decoration-offset-2">
           Browse our products
         </Link>
         &nbsp;or<br/>
-        <Link to="/search" className="underline decoration-offset-2">
+        <Link onClick={closeDrawer} prefetch="intent" to="/search" className="underline decoration-offset-2">
           Search up on our catalog.
         </Link>
       </div>
@@ -82,8 +85,8 @@ function CartSidebarView({
       <div className="flex-shink-0 w-full my-2 flex flex-col mb-4">
         <Button
           onClick={closeDrawer}
-          withLink
           variant="signature"
+          to="/cart"
         >
           View cart
         </Button>
@@ -91,7 +94,7 @@ function CartSidebarView({
     </section>
   ) : (
       <section className='w-full h-full px-4 flex items-center justify-center'>
-        <Empty />
+        <Empty closeDrawer={closeDrawer}/>
       </section>
     )
 }
@@ -114,9 +117,9 @@ function CartLineItem({cartLine}: {cartLine: CartLine}) {
         )}
       </div>
 
-        <div className="flex flex-col items-start justify-start gap-2">
-          <h3 className="text-lg lg:text-xl font-bold text-left font-cantata ">{product.title}</h3>
-          <div className='flex w-full justify-start'>
+      <div className="w-full flex flex-col items-start justify-start gap-2">
+        <h3 className="text-lg lg:text-xl font-bold text-left font-cantata ">{product.title}</h3>
+        <div className='flex w-full justify-start'>
           {cartLine.cost.totalAmount && (
             <Money
               data={cartLine.cost.totalAmount}
@@ -125,17 +128,17 @@ function CartLineItem({cartLine}: {cartLine: CartLine}) {
               withoutTrailingZeros
             />
           )}
-          </div>
-          <ul className="flex flex-col gap-y-2">
-            {variant.selectedOptions.filter(o => o.name != "Title").map((option) => (
-              <li key={option.name} >
-                <p className='opacity-80 text-sm md:text-base'>
-                  <span className=''>{option.name}</span>:&nbsp;{option.value}
-                </p>
-              </li>
-            ))}
-          </ul>
         </div>
+        <ul className="flex flex-col gap-y-2">
+          {variant.selectedOptions.filter(o => o.name != "Title").map((option) => (
+            <li key={option.name} >
+              <p className='opacity-80 text-sm md:text-base'>
+                <span className=''>{option.name}</span>:&nbsp;{option.value}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

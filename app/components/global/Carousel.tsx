@@ -1,5 +1,5 @@
 import { Collection, Product } from '@shopify/hydrogen/storefront-api-types';
-import { Link } from '../ui/Link';
+import { Link, Heading} from '../ui';
 import SmartImage from '~/components/global/SmartImage';
 import { SerializeFrom } from '@shopify/remix-oxygen';
 import ProductCard from '~/components/shop/ProductCard';
@@ -39,9 +39,9 @@ export function CollectionCarousel({
               />
               {textOnTop ?  (
                 <div className="absolute z-[5] inset-0 w-full h-full grid place-items-center basic-animation group-hover:bg-black/10">
-                  <h3 className="z-[10] text-xl md:text-2xl lg:text-3xl text-custom-white font-semibold uppercase  basic-animation opacity-0 group-hover:opacity-100">
+                  <Heading as="h3" bold size='sm' color="white" className="z-[10] uppercase basic-animation opacity-0 group-hover:opacity-100">
                     {coll.title}
-                  </h3>
+                  </Heading>
                 </div>
               ): (
                 <h3 className='mt-2 lg:mt-3 xl:mt-4 font-medium text-sm md:text-md xl:text-lg '>{coll.title}</h3>

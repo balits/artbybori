@@ -333,6 +333,7 @@ function ProductOptions({
   }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const realOptions = options.filter((o) => o.values.length >1)
+
   return realOptions.length > 0 ? (
     <div className="grid grid-cols-1 gap-8">
       {realOptions

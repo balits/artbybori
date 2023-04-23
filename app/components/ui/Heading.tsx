@@ -20,7 +20,7 @@ export function MyHeading({
   bold?: boolean
 } & React.HTMLAttributes<HTMLHeadingElement>) {
   const sizes = {
-    small: "",
+    small: "tracking-tight text-custom-black",
     medium: "tracking-tight text-custom-black text-3xl md:text-4xl lg:text-5xl mb-4 lg:mb-8",
     large: ""
   }

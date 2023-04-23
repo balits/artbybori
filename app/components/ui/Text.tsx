@@ -2,37 +2,41 @@ import clsx from 'clsx';
 
 import {missingClass, formatText} from '~/lib/utils';
 
-export function Text({
-  as: Component = 'span',
-  className,
-  color = 'default',
-  format,
-  size = 'copy',
-  width = 'default',
-  children,
-  ...props
-}: {
+export type TextProp = {
   as?: React.ElementType;
   className?: string;
-  color?: 'default' | 'primary' | 'subtle' | 'notice' | 'contrast';
+  color?: 'black' | 'white' | 'grey' | 'lightgrey' | 'signature' ,
   format?: boolean;
-  size?: 'lead' | 'copy' | 'fine';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   width?: 'default' | 'narrow' | 'wide';
   children: React.ReactNode;
+  bold?: boolean
   [key: string]: any;
-}) {
+}
+
+export function Text({
+  as: Component = 'p',
+  className,
+  color = 'black',
+  format,
+  size = 'md',
+  width = 'default',
+  bold = false,
+  children,
+  ...props
+}: TextProp) {
   const colors: Record<string, string> = {
-    default: 'inherit',
-    primary: 'text-primary/90',
-    subtle: 'text-primary/50',
-    notice: 'text-notice',
-    contrast: 'text-contrast/90',
+    default: 'text-custom-black',
+    grey: 'text-custom-grey',
+    white: 'text-custom-white',
+    lightgrey: 'text-custom-lightgrey',
+    signature: 'text-custom-signature',
   };
 
   const sizes: Record<string, string> = {
-    lead: 'text-lead font-medium',
-    copy: 'text-copy',
-    fine: 'text-fine subpixel-antialiased',
+    sm: 'text-xs md:text-sm antialiased',
+    md: 'text-sm md:text-md antialiased',
+    lg: 'text-md md:text-lg antialiased',
   };
 
   const widths: Record<string, string> = {
@@ -46,6 +50,7 @@ export function Text({
     missingClass(className, 'whitespace-') && 'whitespace-pre-wrap',
     missingClass(className, 'text-') && colors[color],
     sizes[size],
+    bold && "font-semibold",
     className,
   );
 
@@ -56,38 +61,48 @@ export function Text({
   );
 }
 
+type HeadingProp = {
+  as?: React.ElementType;
+  color?: TextProp['color']
+  children?: React.ReactNode;
+  format?: boolean;
+  size?: 'sm' | 'md' | 'lg',
+  font?: "font-sans" | "font-cantata",
+  bold?: boolean
+}& React.HTMLAttributes<HTMLHeadingElement>
+
 export function Heading({
   as: Component = 'h2',
   children,
   className = '',
   format,
-  size = 'heading',
-  width = 'default',
+  font = "font-cantata",
+  size = 'md',
+  color = "black",
+  bold,
   ...props
-}: {
-  as?: React.ElementType;
-  children: React.ReactNode;
-  format?: boolean;
-  size?: 'display' | 'heading' | 'lead' | 'copy';
-  width?: 'default' | 'narrow' | 'wide';
-} & React.HTMLAttributes<HTMLHeadingElement>) {
+}: HeadingProp) {
   const sizes = {
-    display: 'font-bold text-display',
-    heading: 'font-bold text-heading',
-    lead: 'font-bold text-lead',
-    copy: 'font-medium text-copy',
+    sm: "text-lg sm:text-xl md:text-2xl lg:text-3xl mb-2 md:mb-3 lg:mb-4",
+    md: "tracking-tight text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 lg:mb-8",
+    lg: "tacking-tight text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-6 md:mb-8 lg:mb-12",
+  }
+
+  const colors: Record<string, string> = {
+    default: 'text-custom-black',
+    grey: 'text-custom-grey',
+    white: 'text-custom-white',
+    lightgrey: 'text-custom-lightgrey',
+    signature: 'text-custom-signature',
   };
 
-  const widths = {
-    default: 'max-w-prose',
-    narrow: 'max-w-prose-narrow',
-    wide: 'max-w-prose-wide',
-  };
 
   const styles = clsx(
     missingClass(className, 'whitespace-') && 'whitespace-pre-wrap',
-    missingClass(className, 'max-w-') && widths[width],
-    missingClass(className, 'font-') && sizes[size],
+    sizes[size],
+    colors[color],
+    bold && "font-semibold",
+    font,
     className,
   );
 
@@ -147,46 +162,11 @@ export function Section({
   return (
     <Component {...props} className={styles}>
       {heading && (
-        <Heading size="lead" className={padding === 'y' ? paddings['x'] : ''}>
+        <Heading size="md" className={padding === 'y' ? paddings['x'] : ''}>
           {heading}
         </Heading>
       )}
       {children}
     </Component>
-  );
-}
-
-export function PageHeader({
-  children,
-  className,
-  heading,
-  variant = 'default',
-  ...props
-}: {
-  children?: React.ReactNode;
-  className?: string;
-  heading?: string;
-  variant?: 'default' | 'blogPost' | 'allCollections';
-  [key: string]: any;
-}) {
-  const variants: Record<string, string> = {
-    default: 'grid w-full gap-8 p-6 py-8 md:p-8 lg:p-12 justify-items-start',
-    blogPost:
-      'grid md:text-center w-full gap-4 p-6 py-8 md:p-8 lg:p-12 md:justify-items-center',
-    allCollections:
-      'flex justify-between items-baseline gap-8 p-6 md:p-8 lg:p-12',
-  };
-
-  const styles = clsx(variants[variant], className);
-
-  return (
-    <header {...props} className={styles}>
-      {heading && (
-        <Heading as="h1" width="narrow" size="heading" className="inline-block">
-          {heading}
-        </Heading>
-      )}
-      {children}
-    </header>
   );
 }

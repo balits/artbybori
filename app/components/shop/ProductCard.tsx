@@ -1,4 +1,3 @@
-import {Money} from '@shopify/hydrogen';
 import {
   Image as ImageType,
   MoneyV2,
@@ -6,7 +5,7 @@ import {
 import clsx from 'clsx';
 
 import SmartImage from '~/components/global/SmartImage';
-import { MyMoney } from '../ui';
+import { MyMoney, Text, TextProp } from '../ui';
 
 export type ExtraLabel = "sale" | "new" | "sold out :(" | ""
 
@@ -48,11 +47,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         )}
         {textOnTop && (
             <div className="p-2 md:p-3 lg:p-4  transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
-              <Details title={title} money={money} variant="light"/>
+              <Details title={title} money={money} variant="white"/>
             </div>
           )}
       </div>
-      {!textOnTop && <Details title={title} money={money} variant="dark"/>}
+      {!textOnTop && <Details title={title} money={money} variant="black"/>}
     </>
   );
 };
@@ -65,16 +64,18 @@ function Details({
 }: {
     title: string
     money?: MoneyV2
-    variant: "dark" | "light"
+    variant: TextProp['color']
   }) {
   return (
     <div className="grid gap-y-1 grid-cols-1 mt-2 lg:mt-4">
-      <h3 className={clsx("text-sm md:text-md ", variant === "dark" ? "text-custom-grey" : "text-custom-white")}>{title}</h3>
+      <Text as="h3" color={variant}>{title}</Text>
       {money &&  (
-        <MyMoney
-          className={clsx("text-xs md:text-sm lg:text-md xl:text-lg font-semibold", variant === "dark" ? "text-custom-black" : "text-custom-white")}
-          data={money}
-        />
+        <Text size='lg' as={"p"} color={variant} bold>
+          <MyMoney
+            as={"span"}
+            data={money}
+          />
+        </Text>
       )}
     </div>
 

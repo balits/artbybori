@@ -1,20 +1,13 @@
-import { Link } from '../ui';
+import { Link, MyMoney, Text } from '../ui';
 import type {Product} from '@shopify/hydrogen/storefront-api-types';
 import {SerializeFrom} from '@shopify/remix-oxygen';
 import clsx from 'clsx';
-import {Container} from '../global/Container';
 import {Image, Money} from '@shopify/hydrogen';
-import { MyHeading } from '../ui';
 
 interface Props {
   data: SerializeFrom<Product>[];
 }
 
-/**
- * Grid display of the fetured products, wrapped in a `ContentWrapper` (set an arbitrary max-width and centers content).
- *
- *
- */
 const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
   const products = featuredProductList as Product[];
 
@@ -54,15 +47,14 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
                     i === 0 ? 'p-4 lg:p-8' : 'p-2 lg:p-4',
                   ])}
                 >
-                  <p className=" font-semibold text-sm md:text-md">
+                  <Text>
                     {prod.title}
-                  </p>
-                  <div className="uppercase text-xs sm:text-sm lg:text-md">
-                    <Money
-                      withoutTrailingZeros
+                  </Text>
+                  <Text bold>
+                    <MyMoney
                       data={prod.variants.nodes[0].price}
                     />
-                  </div>
+                  </Text>
                 </div>
               </Link>
             </li>

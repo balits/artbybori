@@ -40,7 +40,7 @@
     - [ ] filter ???
     - [ ] telon cim textOnTop
 - DEPLOYMENT
-  - [ ] download fonts
+  - [x] download fonts
   - [ ] analytics + userConsent
   - [ ] remix/oxygen --> remix/vercel
 

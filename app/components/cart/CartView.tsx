@@ -2,29 +2,30 @@ import {useFetcher} from '@remix-run/react';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen';
 import {Cart, CartLine} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
-import {HiX} from 'react-icons/hi';
 import {CartAction} from '~/lib/type';
 import {HiPlus, HiMinus} from 'react-icons/hi';
+import SmartImage from '../global/SmartImage';
+import { Button, Heading, MyMoney, Text } from '../ui';
+import { Check, X, XCirlce } from '../global/Icon';
+import Container, { NoWrapContainer } from '../global/Container';
+import { readConfig } from '@remix-run/dev/dist/config';
 
 export function Fallback() {
   return (
-    <section aria-labelledby="cart-contents">
-      <h1 className="text-5xl font-cantata mb-8">Your cart.</h1>
-    </section>
+    <Container className='scaling-mt-header'>
+      <Heading font='font-sans' bold size='md'>Your cart.</Heading>
+    </Container>
   );
 }
 
-type CartViewProps = {
-  cart: Cart | null;
-};
-export default function CartView({cart}: CartViewProps) {
-  const isEmpty = cart?.lines.edges.length || false;
+export default function CartView({cart}: {cart: Cart | null}) {
+  const isEmpty = cart?.lines.edges.length === 0
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
-  return isEmpty ? (
-    <>
-      <section aria-labelledby="cart-contents">
-        <h1 className="text-5xl font-cantata mb-8">Your cart.</h1>
-        <ul className="border-t-2 border-t-custom-black py-8 grid grid-cols-1 gap-y-12">
+  return !isEmpty ? (
+    <Container className='scaling-mt-header overflow-auto'>
+      <Heading font='font-sans' bold size='md'>Your cart.</Heading>
+      <div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-5 lg:gap-x-6'>
+        <ul aria-labelledby="cart-contents" className="col-span-3 py-4 grid grid-cols-1">
           {lines.map(
             (l) =>
               l.id && (
@@ -34,12 +35,15 @@ export default function CartView({cart}: CartViewProps) {
               ),
           )}
         </ul>
-      </section>
-      {cart && <CartSummary cart={cart} />}
-    </>
+
+        {cart && <CartSummary cart={cart} className="col-span-2 max-w-[600px] lg:ml-4"/>}
+      </div>
+    </Container>
   ) : (
-    <h1 className="text-5xl font-cantata mb-4">Your cart is empty.</h1>
-  );
+      <Container className='scaling-mt-header'>
+        <Heading font='font-sans' bold size='md'>Your cart is empty.</Heading>
+      </Container>
+    );
 }
 
 type CartLineItemProps = {
@@ -47,142 +51,139 @@ type CartLineItemProps = {
   comparePrice?: boolean;
 };
 function CartLineItem({cartLine, comparePrice = false}: CartLineItemProps) {
-  const fetcher = useFetcher();
-
   const {id, quantity: qty, merchandise: variant} = cartLine;
   const product = variant.product;
 
   const prevQuantity = Number(Math.max(0, qty - 1).toFixed(0));
   const nextQuantity = Number((qty + 1).toFixed(0));
 
+  const realOptions = variant.selectedOptions.filter((o) => o.name !== "Title" && o.name !== "title")
+
   return (
-    <div className="flex gap-x-16 h-fit w-full ">
+    <section className="flex w-full py-10 border-t border-t-custom-placeholder-green">
       {variant.image && (
-        //TODO: if image does not exits, render the `Art by Bori` square logo with the same resolutions
-        //eventough every product should have an image, its a nice fallback
-        <Image
-          data={variant.image}
-          className="object-center object-cover flex-shrink-0 h-80 w-80  rounded-sm"
-          alt={product.title}
+        <SmartImage
+          image={variant.image}
+          alt={variant.image.altText ?? product.title}
+          loading="eager"
+          defaultWidth={180}
+          className="rounded-md shrink"
         />
       )}
-      <div className="w-full h-80 py-4 border-b-2 border-b-custom-black grid grid-rows-1 grid-cols-4">
-        <div className="flex flex-col">
-          <h3 className="font-semibold tracking-tight tracking-tight text-3xl">
+
+      <div className='ml-4 lg:ml-8 h-full w-full '>
+      <div className="w-full grid grid-cols-2 gap-x-4 ">
+        <div className="flex flex-col gap-y-1 ">
+          <Text as="h2" size='sm' color='grey' bold>
             {product.title}
-          </h3>
-          <ul className="mt-6 flex flex-col gap-y-2">
-            {variant.selectedOptions.map((option) => (
-              <li key={option.name} className="text-custom-black/70">
-                {option.name}:&nbsp;{option.value}
+          </Text>
+          <ul className=" flex gap-4">
+            {realOptions.map((option) => (
+              <li key={option.name} >
+                <Text size='sm' color='lightgrey' className='capitalize'>
+                  {option.value}
+                </Text>
               </li>
             ))}
           </ul>
+          <MyMoney data={cartLine.cost.totalAmount} className="text-xs md:text-sm font-semibold" />
+
+        {variant.availableForSale ? (
+          <div className='mt-12 flex items-center gap-x-3'>
+            <Check className='text-green-400' />
+            <Text size='sm'>In stock</Text>
+          </div>
+        ) :(
+            <div className='mt-12 flex items-center gap-x-3'>
+              <XCirlce className='text-red-400' />
+              <Text size='sm'>Out of stock</Text>
+            </div>
+          )}
         </div>
 
-        <div className="flex items-start justify-center">
+        <div className="flex items-start justify-between">
           <label htmlFor={`quantity-${id}`} className="sr-only">
             Quantity, {qty}
           </label>
+
           <div className="flex items-center justify-center">
             <DecrementQuantity
               id={id}
               quantity={prevQuantity}
               disabled={qty <= 1}
             />
-            <div className="p-2 w-full h-full grid  place-items-center">
+            <Text className="p-2 w-full h-full grid  place-items-center">
               {qty}
-            </div>
+            </Text>
             <IncrementQuantity
               id={id}
               quantity={nextQuantity}
               disabled={false}
             />
           </div>
-        </div>
-        <span></span>
 
-        <div className="flex flex-col items-end justify-between">
-          {cartLine.cost.totalAmount && (
-            <Money
-              data={cartLine.cost.totalAmount}
-              as="span"
-              className="text-xl font-semibold"
-              withoutTrailingZeros
-            ></Money>
-          )}
-          <fetcher.Form action="/cart" method="post">
-            <input
-              type={'hidden'}
-              name="cartAction"
-              value={CartAction.REMOVE_FROM_CART}
-            />
-            <input type="hidden" name="linesIds" value={JSON.stringify([id])} />
-            <span className="sr-only">Remove</span>
-            <button className="p-4" type="submit">
-              <HiX className="h-6 w-6 " />
-            </button>
-          </fetcher.Form>
+          <div className='ml-4'> <RemoveItem itemID={id} /> </div>
         </div>
       </div>
-    </div>
+      </div>
+    </section>
   );
 }
 
 type CartSummaryProps = {
   cart: Cart;
+  className: string;
 };
-function CartSummary({cart}: CartSummaryProps) {
-  const btn =
-    'hover:opacity-80 active:opacity-60 text-center cursor-pointer uppercase text-xl py-3 w-72 font-semibold tracking-tight';
+
+function CartSummary({cart, className}: CartSummaryProps) {
   return (
-    <section className="flex flex-col items-end gap-y-16 mb-16">
-      <h2 id="cart-summary-heading" className="sr-only">
+    <section aria-labelledby='cart-summary' className={clsx("flex flex-col items-start px-4", className)}>
+      <Text id="cart-summary-heading" as={"h2"} font="font-sans" bold size='lg' color='grey' >
         Order summary
-      </h2>
-      <div className="space-y-2">
-        <div className="flex items-end justify-end">
-          <p>Subtotal:&nbsp;</p>
-          <Money
-            className="font-semibold text-xl"
+      </Text>
+
+      <dl className="mt-4 divide-y divide-custom-placeholder-green w-full">
+        <div className="flex items-center justify-between w-full py-4">
+          <Text size='sm' as={"dt"} color="grey">Subtotal:</Text>
+          <MyMoney
             data={cart.cost.subtotalAmount}
-            withoutTrailingZeros
-          ></Money>
+            className="text-xs md:text-sm font-semibold"
+            as={"dd"}
+          />
         </div>
-        <p>Shipping calculated at checkout.</p>
-      </div>
-      <div className="flex gap-x-12">
-        <a
-          className={clsx(
-            btn,
-            'bg-custom-white text-custom-black border border-custom-black',
-          )}
-          href="/shop"
+
+        <div className="flex items-center justify-between w-full py-4">
+          <Text size='sm' as={"dt"} color="grey" >Shipping</Text>
+          <Text size='sm' as={"dd"} color="grey" >Calculated at checkout</Text>
+        </div>
+
+        <div className="flex items-center justify-between w-full py-4">
+          <Text size='md' as={"dt"} color="black" bold>Total:</Text>
+          <MyMoney
+            data={cart.cost.totalAmount}
+            className="text-xs md:text-sm font-semibold"
+            as={"dd"}
+          />
+        </div>
+
+      </dl>
+      <div className="flex w-full flex-col items-start gap-4 mt-4">
+        {cart.checkoutUrl && (
+          <Button
+            to={cart.checkoutUrl}
+            variant="signature"
+            width="full"
+          >
+            Check out
+          </Button>
+        )}
+        <Button
+          variant="light"
+          to="/shop"
+          width="full"
         >
           Continue shopping
-        </a>
-        {cart.checkoutUrl ? (
-          <a
-            className={clsx(
-              btn,
-              'bg-custom-signature-green text-custom-white border border-custom-signature-green',
-              'text-center',
-            )}
-            href={cart.checkoutUrl}
-          >
-            Check out
-          </a>
-        ) : (
-          <button
-            className={clsx(
-              btn,
-              'bg-custom-signature-green text-custom-white border border-custom-signature-green',
-              'cursor-not-allowed opacity-80',
-            )}
-          >
-            Check out
-          </button>
-        )}
+        </Button>
       </div>
     </section>
   );
@@ -214,7 +215,7 @@ function DecrementQuantity({id, quantity, disabled}: QuantityProps) {
         aria-label="Decrease quantity"
         value={quantity}
         disabled={disabled}
-        className="disabled:opacity-40 disabled:cursor-not-allowed"
+        className="disabled:opacity-40 disabled:cursor-not-allowed text-custom-lightgrey hover:text-custom-black"
       >
         <HiMinus className="w-8 h-8 p-2" />
       </button>
@@ -242,9 +243,33 @@ function IncrementQuantity({id, quantity, disabled}: QuantityProps) {
         value={quantity}
         type="submit"
         disabled={disabled}
+        className="text-custom-lightgrey hover:text-custom-black"
       >
         <HiPlus className="w-8 h-8 p-2" />
       </button>
     </fetcher.Form>
   );
+}
+
+function RemoveItem({
+  itemID
+}: {
+    itemID: string
+  }) {
+  const fetcher = useFetcher();
+  return (
+    <fetcher.Form action="/cart" method="post">
+      <input
+        type={'hidden'}
+        name="cartAction"
+        value={CartAction.REMOVE_FROM_CART}
+      />
+      <input type="hidden" name="linesIds" value={JSON.stringify([itemID])} />
+      <span className="sr-only">Remove</span>
+      <button className="p-2 text-custom-lightgrey hover:text-custom-black" type="submit">
+        <X />
+      </button>
+    </fetcher.Form>
+
+  )
 }

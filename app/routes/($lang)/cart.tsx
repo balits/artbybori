@@ -21,7 +21,7 @@ import {CartAction, type CartActions} from '~/lib/type';
 import CartView, {
   Fallback as CartViewSkeleton,
 } from '~/components/cart/CartView';
-import { Container} from '~/components/global/Container';
+import { Container, NoWrapContainer} from '~/components/global/Container';
 import { seoPayload } from '~/lib/seo.server';
 
 export async function action({request, context}: ActionArgs) {
@@ -194,13 +194,11 @@ export default function CartRoute() {
   const [root] = useMatches();
   // @todo: finish on a separate PR
   return (
-    <Container className="scaling-mt-header min-h-minus-header">
       <Suspense fallback={<CartViewSkeleton />}>
         <Await resolve={root.data?.cart}>
           {(cart) => <CartView cart={cart} />}
         </Await>
       </Suspense>
-    </Container>
   );
 }
 
