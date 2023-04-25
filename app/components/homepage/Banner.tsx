@@ -34,9 +34,9 @@ export default function Banner({image}: Props) {
   return (
     <div
       ref={containerRef}
-      className="fixed top-0 -z-10  bg-red-100 h-screen overflow-y-hidden grid place-items-center shadow-md relative"
+      className="sticky top-0 -z-10  bg-red-100 h-screen overflow-y-hidden grid place-items-center shadow-md relative"
         style={{
-          transform: `translateY(${progress * 40}vh)`
+          transform: `translateY(-${progress * 40}vh)`
         }}
     >
       <Image
@@ -50,7 +50,7 @@ export default function Banner({image}: Props) {
       <div
         className="absolute inset-0 w-full h-full grid place-items-center"
         style={{
-          transform: `translateY(-${progress * 20}vh)`
+          transform: `translateY(-${progress * 10}vh)`
         }}
       >
         <div className="lg:p-4 z-[2] text-custom-white grid place-items-center">
