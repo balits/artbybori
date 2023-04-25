@@ -1,12 +1,7 @@
 import Header from '~/components/global/Header';
 import Footer from '~/components/global/Footer';
-import {
-  Drawer,
-} from '~/components';
 import { Link } from '~/components';
-import { Await, useMatches} from '@remix-run/react';
-import {Suspense, useMemo} from 'react';
-import {useIsHydrated} from '~/hooks/useIsHydrated';
+import { useMatches} from '@remix-run/react';
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
@@ -18,7 +13,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
           </a>
         </div>
         <Header />
-        <main role="main" id="mainContent" className="flex-grow">
+        <main role="main" id="mainContent" className="flex-grow ">
           {children}
         </main>
         <Footer />

@@ -9,7 +9,7 @@ import type {
 import {
   AppliedFilter,
   SortParam,
-} from "~/routes/($lang)/collections/$collectionHandle"
+} from "~/routes/($lang)/categories/$categoryHandle"
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { Link } from "@remix-run/react";
 import clsx from "clsx";

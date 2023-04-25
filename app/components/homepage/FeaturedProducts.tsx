@@ -50,7 +50,7 @@ const FeaturedProducts: React.FC<Props> = ({data: featuredProductList}) => {
                   <Text>
                     {prod.title}
                   </Text>
-                  <Text bold>
+                  <Text bold as={"div"}>
                     <MyMoney
                       data={prod.variants.nodes[0].price}
                     />

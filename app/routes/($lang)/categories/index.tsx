@@ -7,7 +7,6 @@ import type {
 import {
   Grid,
   Heading,
-  PageHeader,
   Section,
   Link,
   Button,
@@ -16,6 +15,7 @@ import { getImageLoadingPriority } from '~/lib/const';
 import { seoPayload } from '~/lib/seo.server';
 import { CACHE_SHORT, routeHeaders } from '~/data/cache';
 import { getPaginationVariables, Pagination } from '~/components/ui';
+import Container from '~/components/global/Container';
 
 const PAGINATION_SIZE = 8;
 
@@ -57,9 +57,7 @@ export default function Collections() {
   const { collectionCollections, collections } = useLoaderData<typeof loader>();
 
   return (
-    <>
-      <PageHeader heading="Collections" />
-      <Section>
+      <Container className='scaling-mt-header'>
         <Pagination connection={collectionCollections}>
           {({
             endCursor,
@@ -131,8 +129,7 @@ export default function Collections() {
             </>
           )}
         </Pagination>
-      </Section>
-    </>
+      </Container>
   );
 }
 
@@ -144,7 +141,7 @@ function CollectionCard({
   loading?: HTMLImageElement['loading'];
 }) {
   return (
-    <Link to={`/collections/${collection.handle}`} className="grid gap-4">
+    <Link to={`/ccategories/${collection.handle}`} className="grid gap-4">
       <div className="card-image bg-primary/5 aspect-[3/2]">
         {collection?.image && (
           <img
@@ -157,7 +154,7 @@ function CollectionCard({
           />
         )}
       </div>
-      <Heading as="h3" size="copy">
+      <Heading as="h3">
         {collection.title}
       </Heading>
     </Link>

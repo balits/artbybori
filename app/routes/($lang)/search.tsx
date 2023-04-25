@@ -81,7 +81,7 @@ export default function Search() {
   return (
     <NoWrapContainer className='scaling-mt-header mb-8 lg:mb-16'>
       <div className='mb-6 md:mb-8 lg:mb-12 xl:mb-16'>
-        <h1 className='text-3xl font-cantata font-semibold capitalize'>Search</h1>
+        <Heading as="h1" size='sm'>Search</Heading>
         <Form method="get" className="relative flex w-full text-lg ">
           <button className="p-2" type="submit">
             <HiSearch className='h-4 w-4 md:w-5 md:h-5  cursor-pointer focus:ring-custom-black' />

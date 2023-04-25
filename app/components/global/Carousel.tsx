@@ -28,7 +28,7 @@ export function CollectionCarousel({
     <Wrapper size={size}>
       {collections.filter(c => c.image).map((coll) => {
         return (
-            <Link  key={coll.id} to={`/collections/${coll.handle}`} prefetch="intent" className={clsx("relative group", !textOnTop && "basic-animation hover:opacity-90")}>
+            <Link  key={coll.id} to={`/categories/${coll.handle}`} prefetch="intent" className={clsx("relative group", !textOnTop && "basic-animation hover:opacity-90")}>
               <SmartImage
                 image={coll.image!}
                 widths={[280, 350,450,550, 650]}
@@ -39,7 +39,7 @@ export function CollectionCarousel({
               />
               {textOnTop ?  (
                 <div className="absolute z-[5] inset-0 w-full h-full grid place-items-center basic-animation group-hover:bg-black/10">
-                  <Heading as="h3" bold size='sm' color="white" className="z-[10] uppercase basic-animation opacity-0 group-hover:opacity-100">
+                  <Heading font='font-sans' as="h3" bold size='sm' color="white" className="z-[10] uppercase basic-animation opacity-0 group-hover:opacity-100">
                     {coll.title}
                   </Heading>
                 </div>

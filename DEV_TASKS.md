@@ -27,18 +27,15 @@
 
 ### peti
 - [ ] Insta API + aspect square
+- [ ] email
 - [ ] BUTTONS: focus + aria-label buttons or links
 - [ ] buyerIp
-- PAGES
-  - homepage
-    - [ ] cim animacio
-    - [x] carousel nyilacskák két oldalt / pontocskak
-    - [ ] split view kép és szöveg + jobb oldalon ne szurkuljon
-    - [?] country selector ??
-  - shop page
-    - [ ] product card image change on hover
-    - [ ] filter ???
-    - [ ] telon cim textOnTop
+- [ ] képek
+  - home
+  - about
+- [ ] product card image change on hover
+- [ ] telon cim textOnTop
+
 - DEPLOYMENT
   - [x] download fonts
   - [ ] analytics + userConsent
@@ -50,3 +47,19 @@
 - [ ] insta gallery pagination
 - [ ] compare price strikethrough on Product Card
 - [ ] rpductHandle: image onClick => Modal of Image
+
+
+
+
+### STRUCTURE
+- pages
+  - homepage
+  - about
+  - contact
+  - shop
+    - index
+    - prdocutHandle
+  - category
+    - index
+    - handle
+  - cart

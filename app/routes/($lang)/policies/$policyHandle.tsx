@@ -1,6 +1,6 @@
 import {json, type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
-import {PageHeader, Section, Button} from '~/components';
+import {Section, Button} from '~/components';
 import invariant from 'tiny-invariant';
 import {ShopPolicy} from '@shopify/hydrogen/storefront-api-types';
 import {routeHeaders, CACHE_LONG} from '~/data/cache';
@@ -58,18 +58,6 @@ export default function Policies() {
         display="flex"
         className="flex-col items-baseline w-full gap-8 md:flex-row"
       >
-        <PageHeader
-          heading={policy.title}
-          className="grid items-start flex-grow gap-4 md:sticky top-36 md:w-5/12"
-        >
-          <Button
-            className="justify-self-start"
-            variant="inline"
-            to={'/policies'}
-          >
-            &larr; Back to Policies
-          </Button>
-        </PageHeader>
         <div className="flex-grow w-full md:w-7/12">
           <div
             dangerouslySetInnerHTML={{__html: policy.body}}

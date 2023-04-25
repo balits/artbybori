@@ -90,7 +90,7 @@ function shopSitemap({
   const collectionsData = flattenConnection(data.collections)
     .filter((collection) => collection.onlineStoreUrl)
     .map((collection) => {
-      const url = `${baseUrl}/collections/${collection.handle}`;
+      const url = `${baseUrl}/categories/${collection.handle}`;
 
       return {
         url,

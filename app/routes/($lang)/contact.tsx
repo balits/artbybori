@@ -4,14 +4,27 @@ import {useActionData, useFetcher, Form, useNavigation} from '@remix-run/react';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {useState} from 'react';
 import { seoPayload } from '~/lib/seo.server';
-import { Heading } from '~/components/ui';
+import { Heading, Button } from '~/components/ui';
 
 export async function action({request, params, context}: ActionArgs) {
   const body = await request.formData();
+  const formObject = Object.fromEntries(body);
 
-  const obj = Object.fromEntries(body);
+  const response = await fetch("https://formspree.io/f/mlekaald", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formObject)
+  })
 
-  return json(obj);
+  const status = {
+    error: !response.ok,
+  }
+
+  return json({
+    formObject, status
+  });
 }
 
 export async function loader() {
@@ -30,10 +43,11 @@ export default function ContactPage() {
   return (
     <>
       <div className="min-h-screen max-h-fit w-full grid place-items-center scaling-mt-header">
-        <Container className="  grid grid-cols-1 grid-flow-row gap-20 md:gap-32 lg:gap-40">
-          <div className="mt-12 grid grid-cols-1 gap-y-16 md:gap-y-0 md:grid-cols-2 lg:gap-16">
+        <Container className="grid grid-cols-1 grid-flow-row gap-20 md:gap-32 lg:gap-40">
+          <div className="mt-12 grid grid-cols-1 gap-y-12 md:gap-y-0 md:grid-cols-2 lg:gap-12">
             <Heading as="h1" size='lg' font='font-sans' className="font-bold">
-              Get in touch.
+              <span className='lg:hidden'>Get in touch.</span>
+              <span className='hidden lg:inline-block'>Get&nbsp;in&nbsp;touch.</span>
             </Heading>
 
             <div className="flex flex-col justify-center">
@@ -60,9 +74,11 @@ export default function ContactPage() {
 function ContactForm() {
   const data = useActionData<typeof action>();
 
-  const [fullName, setFullName] = useState((data?.fullName as string) ?? '');
-  const [email, setEmail] = useState((data?.email as string) ?? '');
-  const [message, setMessage] = useState((data?.message as string) ?? '');
+  console.log(data)
+
+  const [fullName, setFullName] = useState((data?.formObject.fullName as string) ?? '');
+  const [email, setEmail] = useState((data?.formObject.email as string) ?? '');
+  const [message, setMessage] = useState((data?.formObject.message as string) ?? '');
 
   const navigation = useNavigation();
 
@@ -72,7 +88,7 @@ function ContactForm() {
       preventScrollReset
       className="grid grid-cols-1 grid-flow-row gap-16 pb-4"
     >
-      <div className="grid grid-cols-1 gap-16 md:grid-cols-2 md:gap-12">
+      <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-12">
         <div>
           <label className="block font-bold " htmlFor="fullname">
             Full name
@@ -110,25 +126,27 @@ function ContactForm() {
         <label className="block font-bold" htmlFor="message">
           Message
         </label>
+        {/*TODO: make this bigger */}
         <textarea
           className="contact-input"
           id="message"
           name="message"
           required
+          maxLength={40000}
           aria-label="Message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
       </div>
 
-      <div>
-        <button
-          className="text-lg font-medium uppercase py-2 px-16 border border-custom-black hover:bg-zinc-100 focus:bg-zinc-200"
+      <div className='w-full flex gap-x-2 items-center'>
+        <Button
+          className="text-lg font-medium uppercase py-2 px-20 rounded-none"
           type="submit"
           disabled={navigation.state === 'submitting'}
         >
-          {navigation.state === 'submitting' ? 'Sending...' : 'Send'}
-        </button>
+          {navigation.state === 'submitting' ? 'Submiting...' : 'Submit'}
+        </Button>
       </div>
     </Form>
   );

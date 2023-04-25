@@ -1,5 +1,5 @@
 export {Drawer, useDrawer} from './Drawer';
-export {Heading, Section, Text, PageHeader} from './ui/Text';
+export {Heading, Section, Text} from './ui/Text';
 export {Input} from './ui/Input';
 export {ProductGallery} from './ProductGallery';
 export {ProductCard} from './ProductCard';

@@ -53,22 +53,21 @@ export const meta: MetaFunction = () => ({
 });
 
 export async function loader({request, context}: LoaderArgs) {
-  const [customerAccessToken, cartId, layout] = await Promise.all([
+  const [customerAccessToken, cartId, shop] = await Promise.all([
     context.session.get('customerAccessToken'),
     context.session.get('cartId'),
     getLayoutData(context),
   ]);
 
-  const seo = seoPayload.root({shop: layout.shop, url: request.url});
+  const seo = seoPayload.root({shop: shop, url: request.url});
 
   return defer({
     isLoggedIn: Boolean(customerAccessToken),
-    layout,
     selectedLocale: context.storefront.i18n,
     cart: cartId ? getCart(context, cartId) : undefined,
     analytics: {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
-      shopId: layout.shop.id,
+      shopId: shop.id,
     },
     seo,
   });
@@ -180,8 +179,6 @@ export function ErrorBoundary({error}: {error: Error}) {
 const LAYOUT_QUERY = `#graphql
   query layoutMenus(
     $language: LanguageCode
-    $headerMenuHandle: String!
-    $footerMenuHandle: String!
   ) @inContext(language: $language) {
     shop {
       id
@@ -198,75 +195,19 @@ const LAYOUT_QUERY = `#graphql
        }
      }
     }
-    headerMenu: menu(handle: $headerMenuHandle) {
-      id
-      items {
-        ...MenuItem
-        items {
-          ...MenuItem
-        }
-      }
-    }
-    footerMenu: menu(handle: $footerMenuHandle) {
-      id
-      items {
-        ...MenuItem
-        items {
-          ...MenuItem
-        }
-      }
-    }
-  }
-  fragment MenuItem on MenuItem {
-    id
-    resourceId
-    tags
-    title
-    type
-    url
   }
 `;
 
-export interface LayoutData {
-  headerMenu: EnhancedMenu;
-  footerMenu: EnhancedMenu;
-  shop: Shop;
-  cart?: Promise<Cart>;
-}
-
 async function getLayoutData({storefront}: AppLoadContext) {
-  const HEADER_MENU_HANDLE = 'main-menu';
-  const FOOTER_MENU_HANDLE = 'footer';
-
-  const data = await storefront.query<LayoutData>(LAYOUT_QUERY, {
+  const data = await storefront.query<{shop: Shop}>(LAYOUT_QUERY, {
     variables: {
-      headerMenuHandle: HEADER_MENU_HANDLE,
-      footerMenuHandle: FOOTER_MENU_HANDLE,
       language: storefront.i18n.language,
     },
   });
 
   invariant(data, 'No data returned from Shopify API');
 
-  /*
-    Modify specific links/routes (optional)
-    @see: https://shopify.dev/api/storefront/unstable/enums/MenuItemType
-    e.g here we map:
-      - /blogs/news -> /news
-      - /blog/news/blog-post -> /news/blog-post
-      - /collections/all -> /products
-  */
-  const customPrefixes = {BLOG: '', CATALOG: 'products'};
-
-  const headerMenu = data?.headerMenu
-    ? parseMenu(data.headerMenu, customPrefixes)
-    : undefined;
-
-  const footerMenu = data?.footerMenu
-    ? parseMenu(data.footerMenu, customPrefixes)
-    : undefined;
-
-  return {shop: data.shop, headerMenu, footerMenu};
+  return data.shop;
 }
 
 const CART_QUERY = `#graphql

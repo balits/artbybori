@@ -35,7 +35,7 @@ export default function SmartImage({
   return (
     <div
       className={clsx(
-        `aspect-[4/5] relative flex items-center justify-center overflow-clip `,
+        `aspect-[4/5] bg-gray-100 relative flex items-center justify-center overflow-clip `,
         className,
       )}
     >

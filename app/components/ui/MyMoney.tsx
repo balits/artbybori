@@ -1,6 +1,7 @@
 import React from "react"
 import {Money, useMoney} from "@shopify/hydrogen"
 import { MoneyV2 } from "@shopify/hydrogen/storefront-api-types"
+import clsx from "clsx"
 
 type Props = {
   as?: React.ElementType
@@ -9,14 +10,14 @@ type Props = {
 }
 
 export function MyMoney({
-  as:Component = "span",
+  as = "div",
   data,
   className,
   ...props
 }: Props) {
   const {currencyNarrowSymbol} = useMoney(data)
-  return <Component {...props} className="inline-flex gap-1">
-   <Money className={className} data={data} withoutCurrency withoutTrailingZeros />
-    <span className={className}>{currencyNarrowSymbol}</span>
-  </Component>
+  return <div className="flex gap-x-1">
+    <Money as={as} className={clsx(className,"inline-flex gap-1")} data={data} withoutCurrency withoutTrailingZeros />
+    <p className={className}>{currencyNarrowSymbol}</p>
+  </div>
 }

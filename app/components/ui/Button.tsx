@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Link } from '@remix-run/react';
+import { Link } from "./Link"
 import clsx from 'clsx';
 
 import { missingClass } from '~/lib/utils';
@@ -61,6 +61,7 @@ export const Button = forwardRef(({
       // @todo: not supported until react-router makes it into Remix.
       // preventScrollReset={true}
       className={styles}
+      role="button"
       {...props}
       ref={ref}
     />

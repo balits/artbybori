@@ -161,7 +161,7 @@ export function ProductGallery({
           }
 
           const style = clsx(
-            'w-full  snap-center card-image bg-custom-placeholder-green fadeIn ',
+            'w-full  snap-center card-image bg-gray-100 fadeIn ',
             isFullWidth ? 'aspect-square col-span-2' : 'col-span-1',
             isFirst || isFourth ? '' : 'aspect-[4/5]',
           );

@@ -1,4 +1,54 @@
-import {Product} from '@shopify/hydrogen/storefront-api-types';
+import {Product, Image} from '@shopify/hydrogen/storefront-api-types';
+
+
+// Art By Bori Placeholders
+const ARTBYBORI_PLACEHOLDERS = {
+  HOMEPAGE: {
+    heroImage: [
+      {
+        __typename: 'MediaImage',
+        mediaContentType: 'IMAGE',
+        id: 'id1',
+        image: {
+          url: 'https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_5080.jpg?v=1681895607',
+          altText: 'Hero image alt text',
+          width: 2500,
+          height: 3155,
+        },
+      },
+    ],
+    splitView: [
+      {
+        __typename: 'MediaImage',
+        mediaContentType: 'IMAGE',
+        alt: 'A vase.',
+        previewImage: {
+          url: 'https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_1825.jpg?v=1679740047',
+        },
+        id: 'id2',
+        image: {
+          url: 'https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_1825.jpg?v=1679740047',
+          width: 2500,
+          height: 3155,
+        },
+      },
+      {
+        __typename: 'MediaImage',
+        mediaContentType: 'IMAGE',
+        alt: 'A slab of black clay.',
+        previewImage: {
+          url: 'https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_6950.jpg?v=1681895145',
+        },
+        id: 'id3',
+        image: {
+          url: 'https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_6950.jpg?v=1681895145',
+          width: 2500,
+          height: 3155,
+        },
+      },
+    ]
+  }
+}
 
 // Demo store placeholders
 const PLACEHOLDERS = {
@@ -213,21 +263,21 @@ export function getHeroPlaceholder(heros: any[]) {
         ? {value: hero.descriptionHtml}
         : placeholder.byline;
 
-    const heading =
-      hero?.heading || hero?.title ? {value: hero.title} : placeholder.heading;
+        const heading =
+          hero?.heading || hero?.title ? {value: hero.title} : placeholder.heading;
 
-    // merge hero placeholder with hero data
-    return {
-      heading,
-      byLine,
-      cta: hero?.cta || placeholder.cta,
-      handle: hero?.handle || placeholder.handle,
-      id: hero?.id || index,
-      spread: hero?.spread || placeholder.spread,
-      spreadSecondary: hero?.spreadSecondary || placeholder.spreadSecondary,
-      height: placeholder?.height || undefined,
-      top: placeholder?.top || undefined,
-    };
+        // merge hero placeholder with hero data
+        return {
+          heading,
+          byLine,
+          cta: hero?.cta || placeholder.cta,
+          handle: hero?.handle || placeholder.handle,
+          id: hero?.id || index,
+          spread: hero?.spread || placeholder.spread,
+          spreadSecondary: hero?.spreadSecondary || placeholder.spreadSecondary,
+          height: placeholder?.height || undefined,
+          top: placeholder?.top || undefined,
+        };
   });
 }
 

@@ -24,7 +24,7 @@ import {
 } from '~/components/global/Carousel';
 import invariant from 'tiny-invariant';
 import { flattenConnection } from '@shopify/hydrogen';
-import {Container, NoWrapContainer} from '~/components/global/Container';
+import { Container } from '~/components/global/Container';
 import { MyHeading } from '~/components/ui';
 
 export const headers = routeHeaders;
@@ -140,27 +140,31 @@ export default function Homepage() {
   return (
     <>
       <Banner image={homepage.hero.image} />
-      <Container className="mt-[10vh]">
-        <MyHeading>
-          Featured products.
-        </MyHeading>
-        {collectionsPromise && (
-          <Suspense fallback={<FeaturedSkeleton />}>
-            <Await resolve={collectionsPromise}>
-              {(data) => {
-                const featuredProducts = data.collections.nodes.find(
-                  (collection) => collection.handle === 'featured-products',
-                );
-                return featuredProducts ? (
-                  <FeaturedProducts data={featuredProducts.products.nodes} />
-                ) : (
+
+      <div className='bg-custom-white'>
+        <Container className="pt-20">
+          <MyHeading>
+            Featured products.
+          </MyHeading>
+          {collectionsPromise && (
+            <Suspense fallback={<FeaturedSkeleton />}>
+              <Await resolve={collectionsPromise}>
+                {(data) => {
+                  const featuredProducts = data.collections.nodes.find(
+                    (collection) => collection.handle === 'featured-products',
+                  );
+                  return featuredProducts ? (
+                    <FeaturedProducts data={featuredProducts.products.nodes} />
+                  ) : (
                     <FeaturedSkeleton />
                   );
-              }}
-            </Await>
-          </Suspense>
-        )}
-      </Container>
+                }}
+              </Await>
+            </Suspense>
+          )}
+        </Container>
+      </div>
+
       <SplitView />
 
       <Container className="h-fit my-20">
@@ -178,7 +182,7 @@ export default function Homepage() {
                     coll.handle !== 'featured-products',
                 );
                 return (
-                  <CollectionCarousel size='small' collections={items} textOnTop={true}/>
+                  <CollectionCarousel size='small' collections={items} textOnTop={true} />
                 );
               }}
             </Await>

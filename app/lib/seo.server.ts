@@ -194,7 +194,7 @@ function collectionJsonLd({
           '@type': 'ListItem',
           position: 1,
           name: 'Collections',
-          item: `${siteUrl.host}/collections`,
+          item: `${siteUrl.host}/categories`,
         },
         {
           '@type': 'ListItem',
@@ -211,7 +211,7 @@ function collectionJsonLd({
         collection?.seo?.description ?? collection?.description ?? '',
       ),
       image: collection?.image?.url,
-      url: `/collections/${collection.handle}`,
+      url: `/categories/${collection.handle}`,
       mainEntity: {
         '@type': 'ItemList',
         itemListElement,
@@ -286,7 +286,7 @@ function collectionsJsonLd({
       return {
         '@type': 'ListItem',
         position: index + 1,
-        url: `/collections/${collection.handle}`,
+        url: `/categories/${collection.handle}`,
       };
     },
   );

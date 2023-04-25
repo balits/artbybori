@@ -8,7 +8,6 @@ import SmartImage from '../global/SmartImage';
 import { Button, Heading, MyMoney, Text } from '../ui';
 import { Check, X, XCirlce } from '../global/Icon';
 import Container, { NoWrapContainer } from '../global/Container';
-import { readConfig } from '@remix-run/dev/dist/config';
 
 export function Fallback() {
   return (
@@ -25,18 +24,21 @@ export default function CartView({cart}: {cart: Cart | null}) {
     <Container className='scaling-mt-header overflow-auto'>
       <Heading font='font-sans' bold size='md'>Your cart.</Heading>
       <div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-5 lg:gap-x-6'>
-        <ul aria-labelledby="cart-contents" className="col-span-3 py-4 grid grid-cols-1">
-          {lines.map(
-            (l) =>
-              l.id && (
-                <li key={l.id}>
-                  <CartLineItem cartLine={l} />
-                </li>
-              ),
-          )}
-        </ul>
-
-        {cart && <CartSummary cart={cart} className="col-span-2 max-w-[600px] lg:ml-4"/>}
+        <section aria-labelledby="cart-contents" className='lg:col-span-3 grid grid-cols-1 '>
+          <ul  className="">
+            {lines.map(
+              (l) =>
+                l.id && (
+                  <li key={l.id}>
+                    <CartLineItem cartLine={l} />
+                  </li>
+                ),
+            )}
+          </ul>
+        </section>
+        <div className='flex items-start justify-center lg:col-span-2'>
+          {cart && <CartSummary cart={cart} className=" w-full max-w-[600px] lg:ml-4"/>}
+        </div>
       </div>
     </Container>
   ) : (
@@ -61,15 +63,17 @@ function CartLineItem({cartLine, comparePrice = false}: CartLineItemProps) {
 
   return (
     <section className="flex w-full py-10 border-t border-t-custom-placeholder-green">
-      {variant.image && (
-        <SmartImage
-          image={variant.image}
-          alt={variant.image.altText ?? product.title}
-          loading="eager"
-          defaultWidth={180}
-          className="rounded-md shrink"
-        />
-      )}
+      <div className='card-image aspect-[4/5] w-[180px] md:w-[200px] lg:w-[300px]'>
+        {variant.image && (
+          <Image
+            data={variant.image}
+            alt={variant.image.altText ?? product.title}
+            widths={[180, 250, 300]}
+            sizes="100%"
+            className="rounded-md shrink"
+          />
+        )}
+      </div>
 
       <div className='ml-4 lg:ml-8 h-full w-full '>
       <div className="w-full grid grid-cols-2 gap-x-4 ">

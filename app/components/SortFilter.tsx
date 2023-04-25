@@ -20,7 +20,7 @@ import type {
 import {
   AppliedFilter,
   SortParam,
-} from '~/routes/($lang)/collections/$collectionHandle';
+} from '~/routes/($lang)/categories/$categoryHandle';
 import { HiAdjustmentsHorizontal } from 'react-icons/hi2';
 import { FilterDropDown } from './global/Icon';
 import { HiX } from 'react-icons/hi';

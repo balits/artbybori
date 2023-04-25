@@ -29,26 +29,26 @@ const Nav: React.FC<Props & ComponentProps<'nav'>> = ({
           'w-fit h-fit flex ',
           flexDirection === 'row'
             ? ' items-center   lg:gap-x-14 xl:gap-x-11 '
-            : ' flex-col items-start justify-center gap-y-12 text-xl ',
+            : ' flex-col items-start justify-center gap-y-12 ',
         )}
       >
         <li className="cursor-pointer text-base hover:opacity-80 active:opacity-80">
-          <Link prefetch="intent" to="/"  onClick={closeSidebarOnClick}>
+          <Link prefetch="intent" to="/"  onClick={closeSidebarOnClick} className={flexDirection === "col" ? "text-xl" : ""}>
             home
           </Link>
         </li>
         <li className="cursor-pointer text-base hover:opacity-80 active:opacity-80">
-          <Link prefetch="intent" to="/shop"  onClick={closeSidebarOnClick}>
+          <Link prefetch="intent" to="/shop"  onClick={closeSidebarOnClick}  className={flexDirection === "col" ? "text-xl" : ""}>
             shop
           </Link>
         </li>
         <li className="cursor-pointer  text-base hover:opacity-80 active:opacity-80">
-          <Link prefetch="intent" to="/about" onClick={closeSidebarOnClick}>
+          <Link prefetch="intent" to="/about" onClick={closeSidebarOnClick} className={flexDirection === "col" ? "text-xl" : ""} >
             about
           </Link>
         </li>
         <li className="cursor-pointer text-base hover:opacity-80 active:opacity-80">
-          <Link prefetch="intent" to="/contact" onClick={closeSidebarOnClick}>
+          <Link prefetch="intent" to="/contact" onClick={closeSidebarOnClick} className={flexDirection === "col" ? "text-xl" : ""}>
             contact
           </Link>
         </li>

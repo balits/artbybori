@@ -13,7 +13,7 @@ export default function NavDrawer({
 }: DrawerProps) {
   return (
     <Drawer heading={heading} open={open} onClose={onClose} openFrom={openFrom}>
-      <div className="h-full w-full">
+      <div className="h-full w-full pt-8">
         <Nav
           flexDirection="col"
           className="px-4"

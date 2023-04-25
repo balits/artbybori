@@ -47,9 +47,9 @@ export type SortParam =
   | 'featured';
 
 export async function loader({params, request, context}: LoaderArgs) {
-  const {collectionHandle} = params;
+  const {categoryHandle} = params;
 
-  invariant(collectionHandle, 'Missing collectionHandle param');
+  invariant(categoryHandle, 'Missing collectionHandle param');
 
   const searchParams = new URL(request.url).searchParams;
   const knownFilters = [ 'productType'];
@@ -113,7 +113,7 @@ export async function loader({params, request, context}: LoaderArgs) {
     collections: CollectionConnection;
   }>(COLLECTION_QUERY, {
     variables: {
-      handle: collectionHandle,
+      handle: categoryHandle,
       pageBy: PAGINATION_SIZE,
       cursor,
       filters,
@@ -138,7 +138,7 @@ export async function loader({params, request, context}: LoaderArgs) {
       collections: collectionNodes,
       analytics: {
         pageType: AnalyticsPageType.collection,
-        collectionHandle,
+        categoryHandle,
         resourceId: collection.id,
       },
       seo,
@@ -151,7 +151,7 @@ export async function loader({params, request, context}: LoaderArgs) {
   );
 }
 
-export default function Collection() {
+export default function Category() {
   const {collection, collections, appliedFilters} =
     useLoaderData<typeof loader>();
 
@@ -171,14 +171,7 @@ export default function Collection() {
           appliedFilters={appliedFilters}
           collections={collections as CollectionType[]}
         >
-          {/* <ProductGrid
-            key={collection.id}
-            collection={collection as CollectionType}
-            url={`/collections/${collection.handle}`}
-            data-test="product-grid"
-          /> */}
           <ProductGrid products={flattenConnection(collection.products)} />
-
         </SortFilter>
       </ul>
     </Container>
