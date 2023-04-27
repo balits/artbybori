@@ -33,7 +33,7 @@ import InstagramGallery from '~/components/homepage/InstagramGallery';
 import { ProductCarousel, Skeleton as CarouselSkeleton } from '~/components/global/Carousel';
 import { useWindowSize } from 'react-use';
 import { AddToCartButton, ProductGallery } from '~/components';
-import { Link } from '~/components/ui/Link';
+import { Link, Text } from '~/components/ui';
 import { IconCaret, IconCheck } from '~/components/ui/Icon';
 import { Button, MyMoney } from '~/components/ui';
 import { Minus, Plus } from '~/components/global/Icon';
@@ -267,17 +267,21 @@ export function ProductDescription() {
     <div className="grid gap-8">
       <div className="grid gap-8">
         <div className='flex items-center justify-between'>
-          <h1 className="tracking-tight font-semibold text-2xl">
+          <Text as="h3" size="xl" bold>
             {product.title}
-          </h1>
-          <div className="text-xl font-semibold tracking-tight flex gap-2 mt-2">
+          </Text>
+          <div className="flex items-center gap-2 mt-2">
             {isOnSale && (
+              <Text as="div" size="lg" bold>
               <MyMoney
                 data={selectedVariant?.compareAtPrice!}
-                className="opacity-50 strike"
+                className="line-through decoration-1 "
               />
+              </Text>
             )}
-            <MyMoney data={selectedVariant.price!} as={"span"} />
+            <Text as="div" size="lg" bold>
+              <MyMoney className='text-red-400' data={selectedVariant.price!} as={"span"} />
+            </Text>
           </div>
         </div>
         <div className=" flex flex-col gap-4 ">{getFirstSentence(product.description)}</div>

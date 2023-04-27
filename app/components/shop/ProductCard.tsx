@@ -1,3 +1,4 @@
+import { isResponse } from '@remix-run/server-runtime/dist/responses';
 import {
   Image as ImageType,
   MoneyV2,
@@ -18,7 +19,9 @@ type ProductCardProps = {
   /** extra info associated with the Variant*/
   extraLabel?: ExtraLabel;
   /** wether to display the details on top of the image or below it*/
-  textOnTop: boolean
+  textOnTop: boolean;
+  /** discounted price*/
+  compareAtPrice?: MoneyV2
 };
 
 /**
@@ -31,7 +34,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   money,
   img,
   extraLabel,
-  textOnTop,
+  textOnTop = true,
+  compareAtPrice,
 }) => {
   return (
     <>
@@ -44,13 +48,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </span>
           </div>
         )}
-        {textOnTop && (
+        {true && (
           <div className="p-2 md:p-3 lg:p-4  transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
-            <Details title={title} money={money} variant="white"/>
+            <Details title={title} money={money} variant="white" onSale={extraLabel === "sale"} compareAtPrice={compareAtPrice}/>
           </div>
         )}
       </div>
-      {!textOnTop && <Details title={title} money={money} variant="black"/>}
+      {!textOnTop && <Details title={title} money={money} variant="black" onSale={extraLabel === "sale"}  compareAtPrice={compareAtPrice}/>}
     </>
   );
 };
@@ -59,23 +63,38 @@ export default ProductCard;
 function Details({
   title,
   money,
-  variant
+  variant,
+  onSale,
+  compareAtPrice
 }: {
     title: string
     money?: MoneyV2
-    variant: TextProp['color']
+    variant: TextProp['color'],
+    onSale: boolean,
+    compareAtPrice?: MoneyV2
   }) {
   return (
     <div className="grid gap-y-1 grid-cols-1 mt-2 lg:mt-4">
       <Text as="h3" color={variant}>{title}</Text>
-      {money &&  (
-        <Text size='lg' as={"div"} color={variant} bold>
-          <MyMoney
-            as={"p"}
-            data={money}
-          />
-        </Text>
-      )}
+      <div className='flex gap-x-4 items-center'>
+
+        {money &&  (
+          <Text size='lg' as={"div"} color={variant} className={onSale ? "text-red-400" : ""} bold>
+            <MyMoney
+              as={"p"}
+              data={money}
+            />
+          </Text>
+        )}
+        {onSale && compareAtPrice && (
+          <Text as="div" size="sm" bold color={variant}>
+            <MyMoney
+              data={compareAtPrice!}
+              className="line-through decoration-1"
+            />
+          </Text>
+        )}
+      </div>
     </div>
 
   )

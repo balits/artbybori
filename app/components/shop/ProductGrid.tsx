@@ -40,6 +40,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
                 <ProductCard
                   title={product.title}
                   money={price}
+                  compareAtPrice={compareAtPrice as MoneyV2}
                   img={image as Image}
                   extraLabel={extraLabel}
                   textOnTop={false}

@@ -6,7 +6,7 @@ import { Link } from '../ui/Link';
 export default function SplitView() {
   return (
     <section className="lg:shadow-sm my-8 md:my-16 lg:mt-20 w-full flex flex-col justify-center items-center">
-      <div className="overflow-hidden relative  w-full grid grid-cols-2 h-[80vh] lg:h-minus-header">
+      <div className="overflow-hidden relative  w-full grid grid-cols-2 min-h-screen max-h-screen lg:h-minus-header">
         <Link
           to="/shop"
           className="relative h-full bg-custom-placeholder-green cursor-pointer group"

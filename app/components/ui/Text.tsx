@@ -37,6 +37,7 @@ export function Text({
     sm: 'text-xs md:text-sm antialiased',
     md: 'text-sm md:text-md antialiased',
     lg: 'text-md md:text-lg antialiased',
+    xl: 'text-lg md:text-2xl antialiased',
   };
 
   const widths: Record<string, string> = {
