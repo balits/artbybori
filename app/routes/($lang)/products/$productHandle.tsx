@@ -1,6 +1,6 @@
 import {type ReactNode, useRef, Suspense, useMemo, useCallback} from 'react';
 import {Disclosure, Listbox} from '@headlessui/react';
-import {defer, SerializeFrom, type LoaderArgs} from '@shopify/remix-oxygen';
+import {defer, json, SerializeFrom, type LoaderArgs} from '@shopify/remix-oxygen';
 import {
   useLoaderData,
   Await,
@@ -37,7 +37,6 @@ import { Link } from '~/components/ui/Link';
 import { IconCaret, IconCheck } from '~/components/ui/Icon';
 import { Button, MyMoney } from '~/components/ui';
 import { Minus, Plus } from '~/components/global/Icon';
-import Breadcrumbs from '~/components/global/Breadcrumbs';
 
 export const headers = routeHeaders;
 
@@ -258,9 +257,10 @@ export function ProductDescription() {
     quantity: 1,
   };
 
-  const firstSentence = useCallback((desc: string) => {
-    return desc.split(/[.!?\s]/)[0];
-  }, [])
+  const getFirstSentence = useCallback((str: string)=>{
+    const match = str.match(/^[^.!?]+[.!?]/);
+    return match ? match[0] : str;
+  },[]);
 
 
   return (
@@ -274,14 +274,13 @@ export function ProductDescription() {
             {isOnSale && (
               <MyMoney
                 data={selectedVariant?.compareAtPrice!}
-                as="span"
                 className="opacity-50 strike"
               />
             )}
             <MyMoney data={selectedVariant.price!} as={"span"} />
           </div>
         </div>
-        <div className=" flex flex-col gap-4 ">{firstSentence(product.description)}</div>
+        <div className=" flex flex-col gap-4 ">{getFirstSentence(product.description)}</div>
 
         <ProductOptions
           options={product.options}

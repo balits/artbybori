@@ -1,11 +1,11 @@
-import type {MediaEdge} from '@shopify/hydrogen/storefront-api-types';
+import type {Image as ImageType, MediaEdge} from '@shopify/hydrogen/storefront-api-types';
 import {ATTR_LOADING_EAGER} from '~/lib/const';
 import type {MediaImage} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 import Carousel from 'react-multi-carousel';
 import { MyDots } from './global/Carousel';
 import { useWindowSize } from 'react-use';
-import { Image, MediaFile } from '@shopify/hydrogen';
+import { Image as ImageComp, MediaFile } from '@shopify/hydrogen';
 
 /**
 * A client component that defines a media gallery for hosting images, 3D models, and videos of products
@@ -161,7 +161,7 @@ export function ProductGallery({
           }
 
           const style = clsx(
-            'w-full  snap-center card-image bg-gray-100 fadeIn ',
+            'w-full  card-image bg-gray-100 fadeIn animate-pulse',
             isFullWidth ? 'aspect-square col-span-2' : 'col-span-1',
             isFirst || isFourth ? '' : 'aspect-[4/5]',
           );
@@ -174,12 +174,18 @@ export function ProductGallery({
             >
               {/* TODO: Replace with MediaFile when it's available */}
               {(med as MediaImage).image && (
-                <img
-                  src={data.image!.url}
-                  alt={data.image!.altText!}
-                  className="w-full h-full aspect-square fadeIn object-cover"
-                />
-              )}
+                <ImageComp
+                  className={`w-full h-full aspect-square fadeIn object-cover `}
+                  data={data.image as ImageType}
+                  // @ts-ignore
+                  options={{
+                    loading:"eager",
+                    crop: 'center',
+                    scale: 2,
+                    sizes: '(min-width: 64em) 60vw, (min-width: 48em) 50vw, 90vw'
+                  }}
+                  {...mediaProps}
+                />)}
             </li>
           );
         })}

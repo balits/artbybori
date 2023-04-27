@@ -31,7 +31,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
               extraLabel = 'new';
             }
           } else {
-            extraLabel = "sold out :("
+            extraLabel = "sold out"
           }
 
           return (

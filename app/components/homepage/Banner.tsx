@@ -1,9 +1,8 @@
 import {Image} from '@shopify/hydrogen';
 import {Image as ImageType} from '@shopify/hydrogen/storefront-api-types';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useScroll, useScrolling } from 'react-use';
-import { ProductGrid } from '../ProductGrid';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Heading } from '../ui';
+import { ScrollContext } from '../utils/ScrollObserver';
 
 type Props = {
   image: ImageType;
@@ -14,16 +13,7 @@ type Props = {
  * Both on Desktop and Phones this Components takes up 100vw with no margin or max-width set
  */
 export default function Banner({image}: Props) {
-  const [scrollY, setScrollY] = useState(0)
-  const handleScroll = useCallback(() => {
-    setScrollY(window.scrollY)
-  },[])
-
-  useEffect(() => {
-    window.document.addEventListener("scroll", handleScroll, {passive: true})
-    return () => window.document.removeEventListener("scroll", handleScroll)
-  }, [scrollY])
-
+  const {scrollY} = useContext(ScrollContext)
 
   const containerRef = useRef<HTMLDivElement>(null)
   let progress = 0;
@@ -34,7 +24,7 @@ export default function Banner({image}: Props) {
   return (
     <div
       ref={containerRef}
-      className="sticky top-0 -z-10  bg-red-100 h-screen overflow-y-hidden grid place-items-center shadow-md relative"
+      className="sticky top-0 -z-10  bg-custom-placeholder-green h-screen overflow-y-hidden grid place-items-center shadow-md relative"
         style={{
           transform: `translateY(-${progress * 40}vh)`
         }}
@@ -50,11 +40,11 @@ export default function Banner({image}: Props) {
       <div
         className="absolute inset-0 w-full h-full grid place-items-center"
         style={{
-          transform: `translateY(-${progress * 10}vh)`
+          transform: `translateY(-${progress * 20}vh)`
         }}
       >
         <div className="lg:p-4 z-[2] text-custom-white grid place-items-center">
-          <Heading size='lg' as="h1">
+          <Heading size='lg' as="h1" className='drop-shadow-md'>
           Ceramics&nbsp;
           <br className="lg:hidden" />
           for&nbsp;your&nbsp;

@@ -19,7 +19,7 @@ function IconWrapper({
   children,
   as = "span",
 }: IconProps & WrapperProps) {
-  return React.createElement(as,{className: clsx("cursor-pointer focus:ring-custom-signature-green " , className)}, children);
+  return React.createElement(as,{className: clsx("cursor-pointer text-custom-black hover:text-custom-grey focus:ring-custom-signature-green " , className)}, children);
 }
 
 export function SearchIcon(props: IconProps) {

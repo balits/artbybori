@@ -16,7 +16,7 @@ export const Container: React.FC<ContainerProps> = ({
 }) => {
   const style = clsx(
     `w-full  max-w-wrapper mx-auto `,
-    padding && 'p-4 sm: px-6 md:px-8 lg:px-12',
+    padding && 'p-4 sm:px-6 md:px-8 lg:px-12',
     className,
   );
 

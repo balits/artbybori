@@ -199,7 +199,7 @@ type QuantityProps = {
   disabled: boolean;
 };
 
-function DecrementQuantity({id, quantity, disabled}: QuantityProps) {
+export function DecrementQuantity({id, quantity, disabled}: QuantityProps) {
   const fetcher = useFetcher();
 
   return (
@@ -227,7 +227,7 @@ function DecrementQuantity({id, quantity, disabled}: QuantityProps) {
   );
 }
 
-function IncrementQuantity({id, quantity, disabled}: QuantityProps) {
+export function IncrementQuantity({id, quantity, disabled}: QuantityProps) {
   const fetcher = useFetcher();
   return (
     <fetcher.Form
@@ -255,7 +255,7 @@ function IncrementQuantity({id, quantity, disabled}: QuantityProps) {
   );
 }
 
-function RemoveItem({
+export function RemoveItem({
   itemID
 }: {
     itemID: string

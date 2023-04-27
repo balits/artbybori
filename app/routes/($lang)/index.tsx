@@ -1,6 +1,5 @@
 import {
   defer,
-  LinksFunction,
   type LoaderArgs,
 } from '@shopify/remix-oxygen';
 import { Suspense } from 'react';
@@ -26,6 +25,7 @@ import invariant from 'tiny-invariant';
 import { flattenConnection } from '@shopify/hydrogen';
 import { Container } from '~/components/global/Container';
 import { MyHeading } from '~/components/ui';
+import { ScrollObserver } from '~/components/utils/ScrollObserver';
 
 export const headers = routeHeaders;
 
@@ -138,7 +138,7 @@ export default function Homepage() {
   const { hero: homepage, collectionsPromise } = useLoaderData<typeof loader>();
 
   return (
-    <>
+    <ScrollObserver>
       <Banner image={homepage.hero.image} />
 
       <div className='bg-custom-white'>
@@ -163,34 +163,34 @@ export default function Homepage() {
             </Suspense>
           )}
         </Container>
+
+        <SplitView />
+
+        <Container className="h-fit my-20">
+          <div className="">
+            <MyHeading>
+              Shop by categories.
+            </MyHeading>
+            <Suspense fallback={<CarouselSkeleton />}>
+              <Await resolve={collectionsPromise}>
+                {({ collections }) => {
+                  if (!collections) return <CarouselSkeleton />;
+                  const items = flattenConnection(collections).filter(
+                    (coll) =>
+                      coll.handle !== 'hero' &&
+                      coll.handle !== 'featured-products',
+                  );
+                  return (
+                    <CollectionCarousel size='small' collections={items} textOnTop={true} />
+                  );
+                }}
+              </Await>
+            </Suspense>
+          </div>
+        </Container>
+
+        <InstagramGallery />
       </div>
-
-      <SplitView />
-
-      <Container className="h-fit my-20">
-        <div className="">
-          <MyHeading>
-            Shop by categories.
-          </MyHeading>
-          <Suspense fallback={<CarouselSkeleton />}>
-            <Await resolve={collectionsPromise}>
-              {({ collections }) => {
-                if (!collections) return <CarouselSkeleton />;
-                const items = flattenConnection(collections).filter(
-                  (coll) =>
-                    coll.handle !== 'hero' &&
-                    coll.handle !== 'featured-products',
-                );
-                return (
-                  <CollectionCarousel size='small' collections={items} textOnTop={true} />
-                );
-              }}
-            </Await>
-          </Suspense>
-        </div>
-      </Container>
-
-      <InstagramGallery />
-    </>
+    </ScrollObserver>
   );
 }

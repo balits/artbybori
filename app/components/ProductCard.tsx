@@ -84,7 +84,7 @@ export function ProductCard({
             )}
             <Text
               as="label"
-              size="fine"
+              size="sm"
               className="absolute top-0 right-0 m-4 text-right text-notice"
             >
               {cardLabel}
@@ -98,7 +98,7 @@ export function ProductCard({
               {product.title}
             </Text>
             <div className="flex gap-4">
-              <Text className="flex gap-4">
+              <Text as={"div"} className="flex gap-4">
                 <Money withoutTrailingZeros data={price!} />
                 {isDiscounted(price as MoneyV2, compareAtPrice as MoneyV2) && (
                   <CompareAtPrice
@@ -148,9 +148,9 @@ function CompareAtPrice({
   const styles = clsx('strike', className);
 
   return (
-    <span className={styles}>
+    <div className={styles}>
       {currencyNarrowSymbol}
       {withoutTrailingZerosAndCurrency}
-    </span>
+    </div>
   );
 }

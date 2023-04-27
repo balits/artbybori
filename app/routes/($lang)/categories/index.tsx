@@ -5,12 +5,10 @@ import type {
   CollectionConnection,
 } from '@shopify/hydrogen/storefront-api-types';
 import {
-  Grid,
   Heading,
-  Section,
   Link,
   Button,
-} from '~/components';
+} from '~/components/ui';
 import { getImageLoadingPriority } from '~/lib/const';
 import { seoPayload } from '~/lib/seo.server';
 import { CACHE_SHORT, routeHeaders } from '~/data/cache';
@@ -39,10 +37,13 @@ export const loader = async ({ request, context: { storefront } }: LoaderArgs) =
   });
 
 
+
+
+
   return json(
     {
       collectionCollections,
-      collections: collectionCollections.nodes.filter(e => e.handle !== "hero" && e.handle !== "featured-products"),
+      collections: collectionCollections.nodes.filter(e => e.handle !== "hero" && e.handle !== "featured-products" && e.products?.nodes?.length !== 0),
       seo
     },
     {
@@ -55,9 +56,10 @@ export const loader = async ({ request, context: { storefront } }: LoaderArgs) =
 
 export default function Collections() {
   const { collectionCollections, collections } = useLoaderData<typeof loader>();
+  console.log(collectionCollections, collections)
 
   return (
-      <Container className='scaling-mt-header'>
+      <Container as={"section"} className='scaling-mt-header'>
         <Pagination connection={collectionCollections}>
           {({
             endCursor,
@@ -92,18 +94,19 @@ export default function Collections() {
                   </Button>
                 </div>
               )}
-              <Grid
-                items={nodes.length === 3 ? 3 : 2}
+
+              <ul
+                className='grid gap-6 md:gap-8 lg:gap-10 place-items-center grid-cols-1 md:grid-cols-2'
                 data-test="collection-grid"
               >
                 {nodes.map((collection, i) => (
-                  <CollectionCard
+                 <CollectionCard
                     collection={collection as Collection}
                     key={collection.id}
                     loading={getImageLoadingPriority(i, 2)}
                   />
                 ))}
-              </Grid>
+              </ul>
               {hasNextPage && (
                 <div className="flex items-center justify-center mt-6">
                   <Button
@@ -140,9 +143,12 @@ function CollectionCard({
   collection: Collection;
   loading?: HTMLImageElement['loading'];
 }) {
+  console.log(collection)
+  if (!collection.image || collection.products.nodes.length == 0) return null
+
   return (
-    <Link to={`/ccategories/${collection.handle}`} className="grid gap-4">
-      <div className="card-image bg-primary/5 aspect-[3/2]">
+    <Link to={`/categories/${collection.handle}`} className="grid gap-4 w-full h-full w-full h-full">
+      <div className="card-image bg-custom-placeholder-green aspect-[3/2]">
         {collection?.image && (
           <img
             alt={collection.title}
@@ -154,11 +160,11 @@ function CollectionCard({
           />
         )}
       </div>
-      <Heading as="h3">
+      <Heading  size='sm' as="h3">
         {collection.title}
       </Heading>
     </Link>
-  );
+  )
 }
 
 const COLLECTIONS_QUERY = `#graphql
@@ -186,6 +192,11 @@ const COLLECTIONS_QUERY = `#graphql
           width
           height
           altText
+        }
+        products(first:2) {
+          nodes {
+            handle
+          }
         }
       }
       pageInfo {

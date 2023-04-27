@@ -16,7 +16,7 @@ import {
   useLoaderData,
   useMatches,
 } from '@remix-run/react';
-import {ShopifySalesChannel, Seo} from '@shopify/hydrogen';
+import {ShopifySalesChannel, Seo, useShopifyCookies, getClientBrowserParameters, sendShopifyAnalytics, AnalyticsEventName, ShopifyPageView, ShopifyPageViewPayload} from '@shopify/hydrogen';
 import Layout from './components/global/Layout';
 import {GenericError} from './components/GenericError';
 import tailwind from './styles/app.css';
@@ -28,6 +28,9 @@ import invariant from 'tiny-invariant';
 import {Shop, Cart} from '@shopify/hydrogen/storefront-api-types';
 import {useAnalytics} from './hooks/useAnalytics';
 import Container from './components/global/Container';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-use';
+import { useAnalyticsFromLoaders } from './lib/analytics';
 
 export const links: LinksFunction = () => {
   return [
@@ -61,6 +64,33 @@ export async function loader({request, context}: LoaderArgs) {
 
   const seo = seoPayload.root({shop: shop, url: request.url});
 
+
+  /*
+   *
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{your-app-id}',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{api-version}'
+    });
+
+    FB.AppEvents.logPageView();
+
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+   * */
+
+
   return defer({
     isLoggedIn: Boolean(customerAccessToken),
     selectedLocale: context.storefront.i18n,
@@ -77,9 +107,27 @@ export default function App() {
   const data = useLoaderData<typeof loader>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
 
-  const hasUserConsent = false;
+  const [userConset, setUserConsent] = useState(false);
+  useShopifyCookies({hasUserConsent: userConset})
 
-  useAnalytics(hasUserConsent, locale);
+  const location = useLocation();
+  const ana = useAnalyticsFromLoaders();
+
+ useEffect(() => {
+    const payload = {
+      ...getClientBrowserParameters(),
+      ...ana,
+      userConset,
+      shopifySalesChannel: ShopifySalesChannel.hydrogen,
+    };
+
+    sendShopifyAnalytics({
+      eventName: AnalyticsEventName.PAGE_VIEW,
+      payload
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+  useAnalytics(userConset, locale);
 
   return (
     <html lang={locale.language}>

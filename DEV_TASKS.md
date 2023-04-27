@@ -26,14 +26,11 @@
     - [x] szoveg rendezés: 1 nagy text bal, 2 kicsi jobb
 
 ### peti
-- [ ] Insta API + aspect square
-- [ ] email
 - [ ] BUTTONS: focus + aria-label buttons or links
 - [ ] buyerIp
 - [ ] képek
   - home
   - about
-- [ ] product card image change on hover
 - [ ] telon cim textOnTop
 
 - DEPLOYMENT
@@ -43,6 +40,9 @@
 
 
 ### to be implemented
+- [ ] newsletter
+- [ ] product card image change on hover
+- [ ] Insta API + aspect square
 - [ ] PAGINATION
 - [ ] insta gallery pagination
 - [ ] compare price strikethrough on Product Card

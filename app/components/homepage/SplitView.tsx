@@ -5,12 +5,16 @@ import { Link } from '../ui/Link';
 
 export default function SplitView() {
   return (
-    <section className="lg:shadow-sm mt-8 md:my-8 lg:mt-20 w-full flex flex-col justify-center items-center">
-      <div className="overflow-y-hidden  w-full grid grid-cols-2 h-[60vh] lg:h-minus-header">
+    <section className="lg:shadow-sm my-8 md:my-16 lg:mt-20 w-full flex flex-col justify-center items-center">
+      <div className="overflow-hidden relative  w-full grid grid-cols-2 h-[80vh] lg:h-minus-header">
         <Link
           to="/shop"
           className="relative h-full bg-custom-placeholder-green cursor-pointer group"
         >
+          <img
+            src='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_1825.jpg?v=1679740047'
+            className='absolute inset-0 w-full h-full object-cover object-center fadeIn'
+          />
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover object-bottom transition-colors ease-in-out group-hover:bg-black/10" />
           <div className="absolute inset-0 w-full h-full grid place-items-center font-medium text-custom-white z-[2] ">
             <Heading size='sm'>
@@ -22,6 +26,11 @@ export default function SplitView() {
         </Link>
 
         <div className="relative  grid place-items-center bg-custom-signature-green group">
+          <img
+            src='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_6950.jpg?v=1681895145'
+            className='absolute inset-0 w-full h-full object-cover object-center fadeIn'
+          />
+
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover" />
 
           <article className="absolute w-full h-full z-[3] hidden md:grid  p-4 place-items-center ">

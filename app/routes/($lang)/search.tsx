@@ -18,7 +18,7 @@ import { PRODUCT_CARD_FRAGMENT } from '~/data/fragments';
 import { PAGINATION_SIZE } from '~/lib/const';
 import { seoPayload } from '~/lib/seo.server';
 import { HiSearch } from 'react-icons/hi';
-import { NoWrapContainer } from '~/components/global/Container';
+import Container, { NoWrapContainer } from '~/components/global/Container';
 import { CollectionCarousel, ProductCarousel } from '~/components/global/Carousel';
 import { Heading } from '~/components/ui';
 
@@ -79,7 +79,7 @@ export default function Search() {
   const noResults = products?.nodes?.length === 0;
 
   return (
-    <NoWrapContainer className='scaling-mt-header mb-8 lg:mb-16'>
+    <Container className='scaling-mt-header mb-8 lg:mb-16'>
       <div className='mb-6 md:mb-8 lg:mb-12 xl:mb-16'>
         <Heading as="h1" size='sm'>Search</Heading>
         <Form method="get" className="relative flex w-full text-lg ">
@@ -118,7 +118,7 @@ export default function Search() {
                           Trending Collections.
                         </Heading>
                         <CollectionCarousel
-                          size='normal'
+                          size='small'
                           collections={
                             data!.featuredCollections.filter(c => c.handle !== "hero" && c.handle !== "featured-products") as SerializeFrom<Collection[]>
                           }
@@ -134,7 +134,7 @@ export default function Search() {
                             Trending Products.
                           </Heading>
                           <ProductCarousel
-                            size='normal'
+                            size='small'
                             products={
                               data?.featuredProducts as SerializeFrom<Product[]>
                             }
@@ -154,7 +154,7 @@ export default function Search() {
         )}
 
       </section>
-    </NoWrapContainer>
+    </Container>
   );
 }
 

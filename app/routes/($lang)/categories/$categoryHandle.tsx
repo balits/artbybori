@@ -14,7 +14,7 @@ import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
 import Container, { NoWrapContainer } from '~/components/global/Container';
-import { MyHeading } from '~/components/ui';
+import { Heading, MyHeading } from '~/components/ui';
 
 export const headers = routeHeaders;
 
@@ -158,7 +158,7 @@ export default function Category() {
   return (
     <Container>
       <div className='scaling-mt-header pb-4 md:pb-8 lg:pb-12'>
-        <MyHeading>{collection.title}</MyHeading>
+        <Heading as={"h1"} size='sm'>{collection.title}</Heading>
         {collection?.description && (
           <div className="flex items-baseline justify-between w-full text-custom-grey">
             <p>{collection.description}</p>

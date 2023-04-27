@@ -1,11 +1,12 @@
-import {Drawer, DrawerProps} from '~/components/Drawer';
-import {Await, useMatches} from '@remix-run/react';
-import {Cart, CartLine} from '@shopify/hydrogen/storefront-api-types';
-import {flattenConnection, Image, Money} from '@shopify/hydrogen';
-import {Suspense, useMemo} from 'react';
-import { Link, Button } from '../ui';
+import { Drawer, DrawerProps } from '~/components/Drawer';
+import { Await, useMatches } from '@remix-run/react';
+import { Cart, CartLine } from '@shopify/hydrogen/storefront-api-types';
+import { flattenConnection, Image } from '@shopify/hydrogen';
+import { Suspense, useMemo } from 'react';
+import { Link, Button, Text, MyMoney } from '../ui';
 import { HiArrowPath } from 'react-icons/hi2';
 import { useIsHydrated } from '~/hooks/useIsHydrated';
+import { RemoveItem, DecrementQuantity, IncrementQuantity } from "~/components/cart/CartView"
 
 function Empty({
   closeDrawer
@@ -21,7 +22,7 @@ function Empty({
         <Link onClick={closeDrawer} prefetch="intent" to="/shop" className="underline decoration-offset-2">
           Browse our products
         </Link>
-        &nbsp;or<br/>
+        &nbsp;or<br />
         <Link onClick={closeDrawer} prefetch="intent" to="/search" className="underline decoration-offset-2">
           Search up on our catalog.
         </Link>
@@ -72,11 +73,11 @@ function CartSidebarView({
 
   return lines.length > 0 ? (
     <section className="h-full px-4 relative flex flex-col items-center justify-between">
-      <ul className="h-full overflow-auto w-full flex flex-col items-start gap-8 pb-8">
+      <ul className="h-full overflow-auto w-full flex flex-col items-start pb-8 divide-y divide-custom-placeholder-green pr-2">
         {lines.map(
           (l) =>
             l.id && (
-              <li key={l.id} className="h-fit">
+              <li key={l.id} className="h-fit w-full py-8">
                 <CartLineItem cartLine={l} />
               </li>
             )
@@ -93,52 +94,85 @@ function CartSidebarView({
       </div>
     </section>
   ) : (
-      <section className='w-full h-full px-4 flex items-center justify-center'>
-        <Empty closeDrawer={closeDrawer}/>
-      </section>
-    )
+    <section className='w-full h-full px-4 flex items-center justify-center'>
+      <Empty closeDrawer={closeDrawer} />
+    </section>
+  )
 }
 
-function CartLineItem({cartLine}: {cartLine: CartLine}) {
-  const {id, quantity: qty, merchandise: variant} = cartLine;
+function CartLineItem({ cartLine }: { cartLine: CartLine }) {
+  const { id, quantity: qty, merchandise: variant } = cartLine;
   const product = variant.product;
+
+  const prevQuantity = Number(Math.max(0, qty - 1).toFixed(0));
+  const nextQuantity = Number((qty + 1).toFixed(0));
+
   return (
-    <div className="w-full flex items-start justify-start gap-4">
-      <div className="max-w-[150px] sm:max-w-[200px] h-fit rounded-sm overflow-hidden">
+    <div className="w-full  grid grid-cols-3 grid-rows-1 gap-x-4">
+      <div className="col-span-1">
         {variant.image && (
           <Image
-            className="w-full h-full aspect-[4/5]  object-cover"
+            className="overflow-hidden card-image object-cover object-center absolute w-full h-full"
             data={variant.image}
             alt={product.title}
             loading="lazy"
-            widths={[100,200,300,400]}
             sizes="100%"
           />
         )}
       </div>
 
-      <div className="w-full flex flex-col items-start justify-start gap-2">
-        <h3 className="text-lg lg:text-xl font-bold text-left font-cantata ">{product.title}</h3>
-        <div className='flex w-full justify-start'>
-          {cartLine.cost.totalAmount && (
-            <Money
-              data={cartLine.cost.totalAmount}
-              as="span"
-              className="text-sm md:text-base h-fit"
-              withoutTrailingZeros
-            />
-          )}
+      <div className="col-span-2 w-full  flex flex-col items-start justify-between">
+        <div className='w-full flex flex-col items-start justify-start gap-y-2'>
+          <div className='w-full flex items-center justify-between'>
+            <Text size='md' bold>{product.title}</Text>
+            {cartLine.cost.totalAmount && (
+              <Text size='md' bold as={"div"}>
+                <MyMoney
+                  data={cartLine.cost.totalAmount}
+                  as="span"
+                />
+              </Text>
+            )}
+          </div>
+
+          <ul className="flex flex-col gap-y-1">
+            {variant.selectedOptions.filter(o => o.name.toLowerCase() != "title").map((option) => (
+              <li key={option.name} >
+                <Text size='sm' color='lightgrey' className='capitalize'>
+                  {option.value}
+                </Text>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="flex flex-col gap-y-2">
-          {variant.selectedOptions.filter(o => o.name != "Title").map((option) => (
-            <li key={option.name} >
-              <p className='opacity-80 text-sm md:text-base'>
-                <span className=''>{option.name}</span>:&nbsp;{option.value}
-              </p>
-            </li>
-          ))}
-        </ul>
+
+        <div className='w-full'>
+          <div className="flex items-start justify-between">
+            <label htmlFor={`quantity-${id}`} className="sr-only">
+              Quantity, {qty}
+            </label>
+            <div className="flex items-center justify-center">
+              <DecrementQuantity
+                id={id}
+                quantity={prevQuantity}
+                disabled={qty <= 1}
+              />
+              <Text className="p-2 w-full h-full grid  place-items-center">
+                {qty}
+              </Text>
+              <IncrementQuantity
+                id={id}
+                quantity={nextQuantity}
+                disabled={false}
+              />
+            </div>
+
+            <RemoveItem itemID={id} />
+
+          </div>
+        </div>
       </div>
+
     </div>
   );
 }
@@ -183,11 +217,10 @@ function Badge({
     () => (
       <>
         <div
-          className={`${
-            dark
-              ? 'text-primary bg-contrast dark:text-contrast dark:bg-primary'
-              : 'text-contrast bg-primary'
-          } absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px`}
+          className={`${dark
+            ? 'text-primary bg-contrast dark:text-contrast dark:bg-primary'
+            : 'text-contrast bg-primary'
+            } absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px`}
         >
           <span>{count || 0}</span>
         </div>

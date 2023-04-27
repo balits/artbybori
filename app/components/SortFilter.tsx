@@ -41,16 +41,11 @@ export function SortFilter({
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <div className="flex items-center justify-between w-full">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={
-            'relative flex items-center justify-center w-8 h-8 focus:ring-custom-signature-green/10'
-          }
-        >
+      <div className="flex items-center justify-between w-full pb-6">
+        <button onClick={() => setIsOpen(!isOpen)}>
           <FilterDropDown/>
         </button>
-        <SortMenu />
+        <SortMenuDropdown />
       </div>
 
       <div className="flex flex-col flex-wrap ">
@@ -141,7 +136,7 @@ export function FiltersDrawer({
                   {({open}) => (
                     <>
                       <Disclosure.Button className="flex gap-x-2 lg:gap-x-4 justify-between w-full py-4">
-                        <Text size="lead">{filter.label}</Text>
+                        <Text size="sm">{filter.label}</Text>
                         <IconCaret direction={open ? 'up' : 'down'} />
                       </Disclosure.Button>
                       <Disclosure.Panel key={filter.id}>
@@ -334,7 +329,7 @@ function filterInputToParams(
   return params;
 }
 
-export default function SortMenu() {
+export default function SortMenuDropdown() {
   const items: {label: string; key: SortParam}[] = [
     {label: 'Featured', key: 'featured'},
     {
@@ -359,14 +354,13 @@ export default function SortMenu() {
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
-    <Menu as="div" className="relative z-30 text-sm">
-      <Menu.Button className="flex items-center bg-custom-signature-green rounded-md p-2  text-custom-white">
-        <span className="px-1 md:px-2">
-          <span className="px-1 md:px-2 font-medium">Sort by:</span>
-          <span>{(activeItem || items[0]).label}</span>
-        </span>
-        <IconCaret />
-      </Menu.Button>
+<Menu as="div" className="relative inline-block text-left">
+      <div className='flex gap-x-2 items-center'>
+        <Text>Sort&nbsp;by</Text>
+        <Menu.Button className="capitalize inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+          {activeItem?.key}
+        </Menu.Button>
+      </div>
 
       <Transition
         as={Fragment}
@@ -377,16 +371,15 @@ export default function SortMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-
         <Menu.Items
           as="nav"
-          className="absolute right-0 flex flex-col text-right rounded-sm mt-2 bg-custom-white shadow-md rounded-sm"
+          className="z-10 absolute right-0 flex flex-col text-right rounded-sm mt-2 bg-custom-white shadow-sm w-full"
         >
           {items.map((item) => (
             <Menu.Item key={item.label}>
               {({active}) => (
                 <Link
-                  className={`block text-sm py-2 px-4  ${ activeItem?.key === item.key ? 'font-bold' : 'font-normal' } ${active ? "bg-custom-signature-green opacity-80 text-custom-white" : ""}`}
+                  className={`block text-sm py-2 px-4 w-full  ${ activeItem?.key === item.key ? 'font-bold' : 'font-normal' } ${active ? "bg-custom-signature-green opacity-80 text-custom-white" : ""}`}
                   to={getSortLink(item.key, params, location)}
                 >
                   {item.label}

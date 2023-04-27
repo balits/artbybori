@@ -143,7 +143,7 @@ function ContactForm() {
         <Button
           className="text-lg font-medium uppercase py-2 px-20 rounded-none"
           type="submit"
-          disabled={navigation.state === 'submitting'}
+          disabled={navigation.state === 'submitting' || message.length < 10}
         >
           {navigation.state === 'submitting' ? 'Submiting...' : 'Submit'}
         </Button>

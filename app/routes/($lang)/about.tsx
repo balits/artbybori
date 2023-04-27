@@ -1,8 +1,9 @@
 import InstagramGallery from '~/components/homepage/InstagramGallery';
-import {Container} from '~/components/global/Container';
+import { Container } from '~/components/global/Container';
 import { HeadersFunction, LinksFunction } from '@shopify/remix-oxygen';
 import { seoPayload } from '~/lib/seo.server';
 import { json } from '@shopify/remix-oxygen';
+import { useInView } from 'react-intersection-observer';
 
 export const link: LinksFunction = () => [
   {
@@ -36,7 +37,7 @@ export default function About() {
       <section className="flex flex-col-reverse md:grid md:grid-cols-2  w-full h-fit md:h-minus-header scaling-mt-header">
         <div className="relative overflow-hidden bg-custom-placeholder-green h-minus-header">
           <img
-            src='/portrait.JPG'
+            src='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_5080.jpg?v=1681895607'
             className='absolute inset-0 w-full h-full object-cover object-center fadeIn'
           />
 
@@ -44,7 +45,7 @@ export default function About() {
 
         <div className="h-minus-header bg-custom-signature-green text-custom-white flex items-end justify-center px-7 md:px-8 md:px-12">
           <div className="py-28 md:pt-0">
-            <h1 className="mb-20  text-6xl md:text-7xl md:text-8xl font-serif">Hi&nbsp;there!</h1>
+            <h1 className="mb-20  text-6xl md:text-7xl lg:text-8xl font-serif">Hi&nbsp;there!</h1>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-xs sm:text-sm md:text-base">
               <p>
                 I always wanted to be an independent artist, I&apos;d thought
@@ -57,12 +58,12 @@ export default function About() {
               </p>
               <p className='flex flex-col space-y-6'>
                 <span>
-                I make one of a kind ceramics in small batches that I sell in my
-                online shop or sometimes on local art markets.
+                  I make one of a kind ceramics in small batches that I sell in my
+                  online shop or sometimes on local art markets.
                 </span>
                 <span>
-                With the pieces I sell and create, I hope to brighten your
-                spaces and everyday rituals.
+                  With the pieces I sell and create, I hope to brighten your
+                  spaces and everyday rituals.
                 </span>
               </p>
             </div>
@@ -70,27 +71,38 @@ export default function About() {
         </div>
       </section>
 
-      <Container as="section" className="grid gap-y-4 md:gap-y-10 lg:gap-y-12 gap-x-16 lg:grid-cols-3 my-20 md:my-28 lg:my-40">
-          {texts.map(txt => (
-            <div key={txt.id} className="grid place-items-center">
-              <div className='flex flex-col items-center justify-center'>
-                <div className='h-44 w-fit grid place-items-center'>
-                <txt.icon />
-              </div>
-                <p className='mt-4 lg:mt-6 text-autoscale-small sm:w-1/2 lg:w-full'>
-                  {txt.body}
-                </p>
-              </div>
-            </div>
-          ))}
-      </Container>
+      <TextGrid />
 
       <InstagramGallery />
     </>
   );
 }
 
-const SVG1= () => (
+const TextGrid = () => {
+  const {ref, inView, entry} = useInView()
+
+  return (
+    <Container as="section" className="grid gap-y-4 md:gap-y-10 lg:gap-y-12 gap-x-16 lg:grid-cols-3 my-20 md:my-28 lg:my-40">
+      {texts.map((txt,idx) => (
+        <div ref={ref} key={txt.id} className="grid place-items-center">
+          <div
+            className='flex flex-col items-center justify-center'
+          >
+            <div className='h-44 w-fit grid place-items-center'>
+              <txt.icon />
+            </div>
+            <p className='mt-4 lg:mt-6 text-autoscale-small sm:w-1/2 lg:w-full'>
+              {txt.body}
+            </p>
+          </div>
+        </div>
+      ))}
+    </Container>
+  )
+}
+
+
+const SVG1 = () => (
   <svg
     width="120"
     height="60"
@@ -150,7 +162,7 @@ const SVG1= () => (
   </svg>
 );
 
-const SVG2= () => (
+const SVG2 = () => (
   <svg
     width="120"
     height="160"
@@ -248,54 +260,62 @@ const SVG2= () => (
 
 const SVG3 = () => (
   <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="96"
-      height="107"
-      fill="none"
-      viewBox="0 0 96 107"
-      className={"h-12 w-12 md:h-16 md:w-16 lg:h-24 lg:h-24"}
-    >
-      <path
-        stroke="#273120"
-        strokeLinecap="round"
-        strokeWidth="3"
-        d="M17.223 83.07c3.154 12.3 11.733 17.817 23.193 21.265 2.942 1.184 7 .531 8.853 0 2.971-.852 8.163-.084 10.668-1.48 3.742-2.085 14.353-6.45 17.218-9.324 6.275-6.294 9.723-19.52 9.723-29.227 0-10.814 1.936-21.906-5.987-29.853-4.696-4.71-20.954.956-20.954-6.482 0-3.586 1.61-23.92-2.015-24.525C54.677 2.9 52.85 2 49.27 2c-.774 0-4.426 0-7.82.514 0 6.286-.738 11.293-.738 16.28 0 5.955.823 8.99-2.065 14.06-5.93 10.41-17.79 6.79-21.985 18.943-2.22 6.434-1.054 24.969.562 31.273z"
-      ></path>
-      <path
-        stroke="#273120"
-        strokeLinecap="round"
-        strokeWidth="3"
-        d="M74.932 32.046c.63-5.716 13.359-9.596 17.872-2.663 1.636 2.513 1.359 5.58 1.189 8.66-.216 3.909-5.063 6.82-7.446 6.82"
-      ></path>
-      <path
-        stroke="#273120"
-        strokeLinecap="round"
-        strokeWidth="3"
-        d="M78.77 32.936c.421-3.646 8.907-6.12 11.916-1.699 1.09 1.603.905 3.559.792 5.524-.144 2.492-4.112 5.543-5.7 5.543M20.553 45.113c-4.101-4.275-13.038-5.596-17.72 2.062-3.359 7.572 4.028 13.042 11.714 13.042"
-      ></path>
-      <path
-        stroke="#273120"
-        strokeLinecap="round"
-        strokeWidth="3"
-        d="M17.994 48.164c-2.121-2.506-6.744-3.28-9.166 1.209-1.737 4.439 2.084 7.646 6.06 7.646"
-      ></path>
-    </svg>
+    xmlns="http://www.w3.org/2000/svg"
+    width="96"
+    height="107"
+    fill="none"
+    viewBox="0 0 96 107"
+    className={"h-12 w-12 md:h-16 md:w-16 lg:h-24 lg:h-24"}
+  >
+    <path
+      stroke="#273120"
+      strokeLinecap="round"
+      strokeWidth="3"
+      d="M17.223 83.07c3.154 12.3 11.733 17.817 23.193 21.265 2.942 1.184 7 .531 8.853 0 2.971-.852 8.163-.084 10.668-1.48 3.742-2.085 14.353-6.45 17.218-9.324 6.275-6.294 9.723-19.52 9.723-29.227 0-10.814 1.936-21.906-5.987-29.853-4.696-4.71-20.954.956-20.954-6.482 0-3.586 1.61-23.92-2.015-24.525C54.677 2.9 52.85 2 49.27 2c-.774 0-4.426 0-7.82.514 0 6.286-.738 11.293-.738 16.28 0 5.955.823 8.99-2.065 14.06-5.93 10.41-17.79 6.79-21.985 18.943-2.22 6.434-1.054 24.969.562 31.273z"
+    ></path>
+    <path
+      stroke="#273120"
+      strokeLinecap="round"
+      strokeWidth="3"
+      d="M74.932 32.046c.63-5.716 13.359-9.596 17.872-2.663 1.636 2.513 1.359 5.58 1.189 8.66-.216 3.909-5.063 6.82-7.446 6.82"
+    ></path>
+    <path
+      stroke="#273120"
+      strokeLinecap="round"
+      strokeWidth="3"
+      d="M78.77 32.936c.421-3.646 8.907-6.12 11.916-1.699 1.09 1.603.905 3.559.792 5.524-.144 2.492-4.112 5.543-5.7 5.543M20.553 45.113c-4.101-4.275-13.038-5.596-17.72 2.062-3.359 7.572 4.028 13.042 11.714 13.042"
+    ></path>
+    <path
+      stroke="#273120"
+      strokeLinecap="round"
+      strokeWidth="3"
+      d="M17.994 48.164c-2.121-2.506-6.744-3.28-9.166 1.209-1.737 4.439 2.084 7.646 6.06 7.646"
+    ></path>
+  </svg>
 );
 
-const texts = [
+
+interface Txt {
+  body: string,
+  icon: () => JSX.Element,
+  id: number
+}
+
+const texts: Txt[] = [
   {
     body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
     icon: SVG1,
-    id:1
+    id: 1
   },
   {
     body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
     icon: SVG2,
-    id:2
+    id: 2
   },
   {
     body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
     icon: SVG3,
-    id:3
+    id: 3
   },
 ]
+
