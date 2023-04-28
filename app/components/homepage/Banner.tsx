@@ -1,33 +1,34 @@
 import {Image} from '@shopify/hydrogen';
 import {Image as ImageType} from '@shopify/hydrogen/storefront-api-types';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion';
+import { useRef } from 'react';
+import { useSearchParam } from 'react-use';
 import { Heading } from '../ui';
-import { ScrollContext } from '../utils/ScrollObserver';
-
-type Props = {
-  image: ImageType;
-};
 
 /***
  * The banner shown first when visiting the homepage.
  * Both on Desktop and Phones this Components takes up 100vw with no margin or max-width set
  */
-export default function Banner({image}: Props) {
-  const {scrollY} = useContext(ScrollContext)
+export default function Banner({image}: {image: ImageType}) {
+  const {scrollYProgress} = useScroll()
 
-  const containerRef = useRef<HTMLDivElement>(null)
-  let progress = 0;
-  if (containerRef.current) {
-    progress = Math.min(1, scrollY / containerRef.current.clientHeight);
-  }
+  const y = useSpring(useTransform(scrollYProgress,[0,0.2], [0, -200]), {
+    stiffness: 280,
+    damping: 30
+  })
+
+  const headingY = useSpring(useTransform(scrollYProgress, [0,0.4], [0, -200]),{
+    stiffness: 280,
+    damping: 30
+  })
+
 
   return (
-    <div
-      ref={containerRef}
+    <motion.div
       className="sticky top-0 -z-10  bg-custom-placeholder-green h-screen overflow-y-hidden grid place-items-center shadow-md relative"
-        style={{
-          transform: `translateY(-${progress * 40}vh)`
-        }}
+      style={{
+        y
+      }}
     >
       <Image
         data={image}
@@ -39,20 +40,24 @@ export default function Banner({image}: Props) {
       />
       <div
         className="absolute inset-0 w-full h-full grid place-items-center"
-        style={{
-          transform: `translateY(-${progress * 20}vh)`
-        }}
       >
         <div className="lg:p-4 z-[2] text-custom-white grid place-items-center">
-          <Heading size='lg' as="h1" className='drop-shadow-md'>
-          Ceramics&nbsp;
-          <br className="lg:hidden" />
-          for&nbsp;your&nbsp;
-          <br className="lg:hidden" />
-          home.
-          </Heading>
+          <motion.div
+            style={{
+              y: headingY
+            }}
+          >
+
+            <Heading size='lg' as="h1" className='drop-shadow-md'>
+              Ceramics&nbsp;
+              <br className="lg:hidden" />
+              for&nbsp;your&nbsp;
+              <br className="lg:hidden" />
+              home.
+            </Heading>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

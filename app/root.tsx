@@ -23,7 +23,7 @@ import tailwind from './styles/app.css';
 import carouselCss from "react-multi-carousel/lib/styles.css";
 import favicon from '../public/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
-import {DEFAULT_LOCALE, parseMenu, type EnhancedMenu} from './lib/utils';
+import {DEFAULT_LOCALE} from './lib/utils';
 import invariant from 'tiny-invariant';
 import {Shop, Cart} from '@shopify/hydrogen/storefront-api-types';
 import {useAnalytics} from './hooks/useAnalytics';
@@ -65,30 +65,6 @@ export async function loader({request, context}: LoaderArgs) {
   const seo = seoPayload.root({shop: shop, url: request.url});
 
 
-  /*
-   *
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '{your-app-id}',
-      cookie     : true,
-      xfbml      : true,
-      version    : '{api-version}'
-    });
-
-    FB.AppEvents.logPageView();
-
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-   * */
 
 
   return defer({
@@ -137,7 +113,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className='selection:bg-custom-brighter-green'>
+      <body  className='selection:bg-custom-brighter-green'>
         <Layout>
           <Outlet />
         </Layout>
