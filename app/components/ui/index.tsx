@@ -3,7 +3,7 @@ export { Modal } from "./Modal"
 export {Pagination, getPaginationVariables, usePagination} from "./Pagination"
 export {Skeleton}  from "./Skeleton"
 export {Heading, PageHeader, Section, Text,type TextProp} from "./Text"
-export {Button} from "./Button"
+export {Button, ButtonProps} from "./Button"
 export {MyMoney} from "./MyMoney"
 export {MyHeading} from "./Heading"
 

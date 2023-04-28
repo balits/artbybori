@@ -1,5 +1,5 @@
 import {forwardRef} from 'react';
-import {Link} from '@remix-run/react';
+import {Link} from '~/components/ui';
 import clsx from 'clsx';
 
 import {missingClass} from '~/lib/utils';
@@ -21,7 +21,6 @@ export const Button = forwardRef(
     },
     ref,
   ) => {
-    const Component = props?.to ? Link : as;
 
     const baseButtonClasses =
       'inline-block rounded font-medium text-center py-3 px-6';
@@ -43,7 +42,14 @@ export const Button = forwardRef(
       className,
     );
 
-    return (
+    const Component = props?.to ? Link : as;
+
+    return props?.to ? (
+      <Link to={props.to} prefetch="intent">
+
+      </Link>
+
+    ) : (
       <Component
         // @todo: not supported until react-router makes it into Remix.
         // preventScrollReset={true}

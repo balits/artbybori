@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { missingClass } from '~/lib/utils';
 
-type Props = {
+export type ButtonProps = {
   as?: React.ElementType;
   to: string | undefined | null,
   className?: string;
@@ -22,7 +22,7 @@ export const Button = forwardRef(({
   width = 'auto',
   isDisabled = false,
   ...props
-}: Props,
+}: ButtonProps,
   ref
 ) => {
   const baseButtonClasses =

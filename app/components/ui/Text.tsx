@@ -5,7 +5,7 @@ import {missingClass, formatText} from '~/lib/utils';
 export type TextProp = {
   as?: React.ElementType;
   className?: string;
-  color?: 'black' | 'white' | 'grey' | 'lightgrey' | 'signature' ,
+  color?: 'black' | 'white' | 'grey' | 'lightgrey' | 'signature' | "red" ,
   format?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   width?: 'default' | 'narrow' | 'wide';
@@ -31,6 +31,7 @@ export function Text({
     white: 'text-custom-white',
     lightgrey: 'text-custom-lightgrey',
     signature: 'text-custom-signature',
+    red: 'text-red-400'
   };
 
   const sizes: Record<string, string> = {
@@ -49,7 +50,7 @@ export function Text({
   const styles = clsx(
     missingClass(className, 'max-w-') && widths[width],
     missingClass(className, 'whitespace-') && 'whitespace-pre-wrap',
-    missingClass(className, 'text-') && colors[color],
+    colors[color],
     sizes[size],
     bold && "font-semibold",
     className,

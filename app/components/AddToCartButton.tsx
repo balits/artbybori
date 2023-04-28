@@ -2,10 +2,10 @@ import type {CartLineInput} from '@shopify/hydrogen/storefront-api-types';
 import {useFetcher, useMatches} from '@remix-run/react';
 import {CartAction} from '~/lib/type';
 import clsx from 'clsx';
-import {Button} from "~/components/ui"
+import {Button, ButtonProps} from "~/components/ui"
 
 export function AddToCartButton({
-  variant = "white",
+  variant = "light",
   children,
   lines,
   className = '',
@@ -14,7 +14,7 @@ export function AddToCartButton({
   analytics,
   ...props
 }: {
-  variant?: "white" | "black" | "signature"
+  variant?: ButtonProps['variant']
   children: React.ReactNode;
   lines: CartLineInput[];
   className?: string;

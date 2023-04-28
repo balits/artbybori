@@ -28,10 +28,8 @@
 ### peti
 - [ ] BUTTONS: focus + aria-label buttons or links
 - [ ] buyerIp
-- [ ] képek
-  - home
-  - about
-- [ ] telon cim textOnTop
+- [ ] fast image load ?
+- [ ] checkout button
 
 - DEPLOYMENT
   - [x] download fonts
@@ -40,6 +38,7 @@
 
 
 ### to be implemented
+- [ ] account
 - [ ] newsletter
 - [ ] product card image change on hover
 - [ ] Insta API + aspect square

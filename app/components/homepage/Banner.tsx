@@ -1,8 +1,6 @@
 import {Image} from '@shopify/hydrogen';
 import {Image as ImageType} from '@shopify/hydrogen/storefront-api-types';
 import {motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion';
-import { useRef } from 'react';
-import { useSearchParam } from 'react-use';
 import { Heading } from '../ui';
 
 /***
@@ -17,8 +15,8 @@ export default function Banner({image}: {image: ImageType}) {
     damping: 30
   })
 
-  const headingY = useSpring(useTransform(scrollYProgress, [0,0.4], [0, -200]),{
-    stiffness: 280,
+  const headingY = useSpring(useTransform(scrollYProgress, [0,0.4], [0, -100]),{
+    stiffness: 320,
     damping: 30
   })
 

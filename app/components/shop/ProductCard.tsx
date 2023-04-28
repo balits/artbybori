@@ -1,11 +1,10 @@
-import { isResponse } from '@remix-run/server-runtime/dist/responses';
 import {
   Image as ImageType,
   MoneyV2,
 } from '@shopify/hydrogen/storefront-api-types';
 
 import SmartImage from '~/components/global/SmartImage';
-import { Button, MyMoney, Text, TextProp } from '../ui';
+import { MyMoney, Text, TextProp } from '../ui';
 
 export type ExtraLabel = "sale" | "new" | "sold out" | ""
 
@@ -48,13 +47,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </span>
           </div>
         )}
-        {true && (
+        {textOnTop && (
           <div className="p-2 md:p-3 lg:p-4  transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
-            <Details title={title} money={money} variant="white" onSale={extraLabel === "sale"} compareAtPrice={compareAtPrice}/>
+            <Details title={title} money={money} color="white" onSale={extraLabel === "sale"} compareAtPrice={compareAtPrice}/>
           </div>
         )}
       </div>
-      {!textOnTop && <Details title={title} money={money} variant="black" onSale={extraLabel === "sale"}  compareAtPrice={compareAtPrice}/>}
+      {!textOnTop && <Details title={title} money={money} color="black" onSale={extraLabel === "sale"}  compareAtPrice={compareAtPrice}/>}
     </>
   );
 };
@@ -63,38 +62,27 @@ export default ProductCard;
 function Details({
   title,
   money,
-  variant,
+  color,
   onSale,
   compareAtPrice
 }: {
     title: string
     money?: MoneyV2
-    variant: TextProp['color'],
+    color: TextProp['color'],
     onSale: boolean,
     compareAtPrice?: MoneyV2
-  }) {
+}) {
+
   return (
     <div className="grid gap-y-1 grid-cols-1 mt-2 lg:mt-4">
-      <Text as="h3" color={variant}>{title}</Text>
-      <div className='flex gap-x-4 items-center'>
-
-        {money &&  (
-          <Text size='lg' as={"div"} color={variant} className={onSale ? "text-red-400" : ""} bold>
-            <MyMoney
-              as={"p"}
-              data={money}
-            />
-          </Text>
-        )}
-        {onSale && compareAtPrice && (
-          <Text as="div" size="sm" bold color={variant}>
-            <MyMoney
-              data={compareAtPrice!}
-              className="line-through decoration-1"
-            />
-          </Text>
-        )}
-      </div>
+      <Text as="h3" color={color}>{title}</Text>
+      {money && (
+        <MyMoney
+          data={money}
+          compareAtPrice={compareAtPrice}
+          color={color}
+        />
+      )}
     </div>
 
   )

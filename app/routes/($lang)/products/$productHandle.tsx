@@ -12,6 +12,7 @@ import {
 import {
   AnalyticsPageType,
   ShopifyAnalyticsProduct,
+  ShopPayButton,
 } from '@shopify/hydrogen';
 import {getExcerpt} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
@@ -37,6 +38,7 @@ import { Link, Text } from '~/components/ui';
 import { IconCaret, IconCheck } from '~/components/ui/Icon';
 import { Button, MyMoney } from '~/components/ui';
 import { Minus, Plus } from '~/components/global/Icon';
+import CheckoutButton from '~/components/global/CheckoutButton';
 
 export const headers = routeHeaders;
 
@@ -271,18 +273,13 @@ export function ProductDescription() {
             {product.title}
           </Text>
           <div className="flex items-center gap-2 mt-2">
-            {isOnSale && (
-              <Text as="div" size="lg" bold>
-              <MyMoney
-                data={selectedVariant?.compareAtPrice!}
-                className="line-through decoration-1 "
-              />
-              </Text>
-            )}
-            <Text as="div" size="lg" bold>
-              <MyMoney className='text-red-400' data={selectedVariant.price!} as={"span"} />
-            </Text>
-          </div>
+          {selectedVariant.price && (
+            <MyMoney
+              data={selectedVariant.price}
+              compareAtPrice={selectedVariant.compareAtPrice}
+            />
+          )}
+        </div>
         </div>
         <div className=" flex flex-col gap-4 ">{getFirstSentence(product.description)}</div>
 
@@ -317,7 +314,8 @@ export function ProductDescription() {
                   >
                     Add&nbsp;to&nbsp;Cart
                   </AddToCartButton>
-                  <Button>Checkout</Button>
+                  {/* <Button to="/" >Checkout</Button> */}
+                  <CheckoutButton variantIds={[selectedVariant.id!]} storeDomain={storeDomain} />
                 </>
               )}
           </div>

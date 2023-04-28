@@ -122,7 +122,7 @@ export default function Search() {
                           collections={
                             data!.featuredCollections.filter(c => c.handle !== "hero" && c.handle !== "featured-products") as SerializeFrom<Collection[]>
                           }
-                          textOnTop={false}
+                          textOnTop={true}
                         />
                       </article>
                     )
@@ -138,7 +138,7 @@ export default function Search() {
                             products={
                               data?.featuredProducts as SerializeFrom<Product[]>
                             }
-                            textOnTop={false}
+                            textOnTop={true}
                           />
                         </article>
                       )
