@@ -5,6 +5,7 @@ import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {useState} from 'react';
 import { seoPayload } from '~/lib/seo.server';
 import { Heading, Button } from '~/components/ui';
+import { motion } from "framer-motion"
 
 export async function action({request, params, context}: ActionArgs) {
   const body = await request.formData();
@@ -45,19 +46,47 @@ export default function ContactPage() {
       <div className="min-h-screen max-h-fit w-full grid place-items-center scaling-mt-header">
         <Container className="grid grid-cols-1 grid-flow-row gap-20 md:gap-32 lg:gap-40">
           <div className="mt-12 grid grid-cols-1 gap-y-12 md:gap-y-0 md:grid-cols-2 lg:gap-12">
-            <Heading as="h1" size='lg' font='font-sans' className="font-bold">
-              <span className='lg:hidden'>Get in touch.</span>
-              <span className='hidden lg:inline-block'>Get&nbsp;in&nbsp;touch.</span>
-            </Heading>
+            <motion.div
+              initial={{
+                y:20,
+                opacity:0
+              }}
+              animate={{
+                y:0,
+                opacity:1
+              }}
+              transition={{
+                duration:.2
+              }}
+            >
+              <Heading as="h1" size='lg' font='font-sans' className="font-bold">
+                <span className='lg:hidden'>Get in touch.</span>
+                <span className='hidden lg:inline-block'>Get&nbsp;in&nbsp;touch.</span>
+              </Heading>
+            </motion.div>
 
-            <div className="flex flex-col justify-center">
+            <motion.div
+              className="flex flex-col justify-center md:pb-4"
+              initial={{
+                y:20,
+                opacity:0
+              }}
+              animate={{
+                y:0,
+                opacity:1
+              }}
+              transition={{
+                duration:.2,
+                delay:0.4
+              }}
+            >
               <strong className="mb-1">Need help?</strong>
               <p className="text-sm">
                 {' '}
                 If you have questions or need any general information, please
                 feel free to contact us!{' '}
               </p>
-            </div>
+            </motion.div>
           </div>
 
           <ContactForm />
