@@ -70,7 +70,8 @@ type HeadingProp = {
   format?: boolean;
   size?: 'sm' | 'md' | 'lg',
   font?: "font-sans" | "font-cantata",
-  bold?: boolean
+  bold?: boolean,
+  spacing?:boolean
 }& React.HTMLAttributes<HTMLHeadingElement>
 
 export function Heading({
@@ -82,6 +83,7 @@ export function Heading({
   size = 'md',
   color = "black",
   bold,
+  spacing = false,
   ...props
 }: HeadingProp) {
   const sizes = {
@@ -105,6 +107,7 @@ export function Heading({
     colors[color],
     bold && "font-semibold",
     font,
+    spacing ? "my-6 md:my-10 lg:my-12 " : "",
     className,
   );
 

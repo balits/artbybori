@@ -11,7 +11,7 @@ import {flattenConnection} from '@shopify/hydrogen';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import {Collection, CollectionConnection} from '@shopify/hydrogen/storefront-api-types';
 import Container from '~/components/global/Container';
-import { MyHeading } from '~/components/ui';
+import { Heading } from '~/components/ui';
 const PAGE_BY = 8;
 
 export const headers = routeHeaders;
@@ -70,9 +70,7 @@ export default function AllProducts() {
 
   return (
     <Container as={"section"} className="scaling-mt-header mb-8">
-      <div className='pt-6 md:pt-10 lg:pt-12 mb-8 md:mg-12 lg:mb-16'>
-        <MyHeading>Shop all products.</MyHeading>
-      </div>
+        <Heading as={"h1"} spacing>Shop all products.</Heading>
        {products && (
         <ProductGrid products={flattenConnection(products) as SerializeFrom<Product[]>} />
       ) }

@@ -7,6 +7,7 @@ import { Link, Button, Text, MyMoney } from '../ui';
 import { HiArrowPath } from 'react-icons/hi2';
 import { useIsHydrated } from '~/hooks/useIsHydrated';
 import { RemoveItem, DecrementQuantity, IncrementQuantity } from "~/components/cart/CartView"
+import { Check, XCirlce } from '../global/Icon';
 
 function Empty({
   closeDrawer
@@ -78,7 +79,7 @@ function CartSidebarView({
           (l) =>
             l.id && (
               <li key={l.id} className="h-fit w-full py-8">
-                <CartLineItem cartLine={l} />
+                <CartLineItem cartLine={l} closeDrawer={closeDrawer}/>
               </li>
             )
         )}
@@ -100,7 +101,7 @@ function CartSidebarView({
   )
 }
 
-function CartLineItem({ cartLine }: { cartLine: CartLine }) {
+function CartLineItem({ cartLine, closeDrawer }: { cartLine: CartLine, closeDrawer: () => void }) {
   const { id, quantity: qty, merchandise: variant } = cartLine;
   const product = variant.product;
 
@@ -109,7 +110,7 @@ function CartLineItem({ cartLine }: { cartLine: CartLine }) {
 
   return (
     <div className="w-full  grid grid-cols-3 grid-rows-1 gap-x-4">
-      <div className="col-span-1">
+      <Link to={`/products/${product.handle}`} prefetch="intent" onClick={closeDrawer} className="col-span-1">
         {variant.image && (
           <Image
             className="overflow-hidden card-image object-cover object-center absolute w-full h-full"
@@ -119,19 +120,20 @@ function CartLineItem({ cartLine }: { cartLine: CartLine }) {
             sizes="100%"
           />
         )}
-      </div>
+      </Link>
 
       <div className="col-span-2 w-full  flex flex-col items-start justify-between">
         <div className='w-full flex flex-col items-start justify-start gap-y-2'>
           <div className='w-full flex items-center justify-between'>
-            <Text size='md' bold>{product.title}</Text>
+            <Link to={`/products/${product.handle}`} prefetch="intent" onClick={closeDrawer}>
+              <Text size='md' bold>{product.title}</Text>
+            </Link>
             {cartLine.cost.totalAmount && (
-              <Text size='md' bold as={"div"}>
                 <MyMoney
                   data={cartLine.cost.totalAmount}
                   as="span"
+                  size='md'
                 />
-              </Text>
             )}
           </div>
 
@@ -144,6 +146,18 @@ function CartLineItem({ cartLine }: { cartLine: CartLine }) {
               </li>
             ))}
           </ul>
+
+            {variant.availableForSale ? (
+              <div className='mt-4 flex items-center gap-x-3'>
+                <Check className='text-green-400' />
+                <Text size='sm'>In stock</Text>
+              </div>
+            ) : (
+              <div className='mt-4 flex items-center gap-x-3'>
+                <XCirlce className='text-red-400' />
+                <Text size='sm'>Out of stock</Text>
+              </div>
+            )}
         </div>
 
         <div className='w-full'>

@@ -81,6 +81,7 @@ function Details({
           data={money}
           compareAtPrice={compareAtPrice}
           color={color}
+          size="lg"
         />
       )}
     </div>

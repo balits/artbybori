@@ -275,6 +275,7 @@ export function ProductDescription() {
           <div className="flex items-center gap-2 mt-2">
           {selectedVariant.price && (
             <MyMoney
+              size='lg'
               data={selectedVariant.price}
               compareAtPrice={selectedVariant.compareAtPrice}
             />
