@@ -1,10 +1,12 @@
 import {useFetcher, useLocation, useMatches} from '@remix-run/react';
-import {IconCheck} from '~/components/ui';
+import {Heading, Button} from '~/components';
 import {useCallback, useEffect, useRef} from 'react';
 import {useInView} from 'react-intersection-observer';
 import {Localizations, Locale, CartAction} from '~/lib/type';
 import {DEFAULT_LOCALE} from '~/lib/utils';
+import clsx from 'clsx';
 import {CartBuyerIdentityInput} from '@shopify/hydrogen/storefront-api-types';
+import { IconCheck, Text } from './ui';
 
 export function CountrySelector() {
   const [root] = useMatches();
@@ -46,18 +48,20 @@ export function CountrySelector() {
   return (
     <section
       ref={observerRef}
-      className="grid w-fit gap-1 text-xs sm:text-sm md:text-base"
+      className="grid w-full max-w-[40%] gap-4"
+      onMouseLeave={closeDropdown}
     >
       <div className="relative">
         <details
-          className="absolute w-full border border-custom-white/40 rounded open:round-b-none overflow-clip"
+          className="absolute w-full border rounded border-white open:round-b-none overflow-clip"
           ref={closeRef}
-          id="country-selector"
         >
-          <summary className="flex items-center justify-between w-full p-2 cursor-pointer">
+          <summary className="flex items-center justify-between w-full px-4 py-3 cursor-pointer">
+            <Text as={"span"} >
             {selectedLocale.label}
+            </Text>
           </summary>
-          <div className="w-full overflow-auto border-t max-h-36 flex-reverse">
+          <div className="w-full overflow-auto border-t border-custom-white dark:border-white bg-custom-white max-h-36">
             {countries &&
               Object.keys(countries).map((countryPath) => {
                 const countryLocale = countries[countryPath];
@@ -107,18 +111,22 @@ function Country({
         countryCode: countryLocale.country,
       }}
     >
-      <button
-        className='w-full p-1 transition rounded flex justify-start items-center text-left cursor-pointer py-2 px-4'
+      <Button
+        className={clsx([
+          'bg-custom-signature-green w-full p-2 transition rounded flex justify-start',
+          'items-center text-left cursor-pointer py-2 px-4',
+        ])}
         type="submit"
+        variant="primary"
         onClick={closeDropdown}
       >
-        {JSON.stringify(countryLocale)}
+        {countryLocale.label}
         {isSelected ? (
           <span className="ml-2">
             <IconCheck />
           </span>
         ) : null}
-      </button>
+      </Button>
     </ChangeLocaleForm>
   );
 }

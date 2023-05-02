@@ -38,7 +38,7 @@ const Nav: React.FC<Props & ComponentProps<'nav'>> = ({
           </Link>
         </li>
         <li className="cursor-pointer text-base hover:opacity-80 active:opacity-80">
-          <Link prefetch="intent" to="/shop"  onClick={closeSidebarOnClick}  className={flexDirection === "col" ? "text-xl" : ""}>
+          <Link prefetch="intent" to="/shop?sort=best-selling"  onClick={closeSidebarOnClick}  className={flexDirection === "col" ? "text-xl" : ""}>
             shop
           </Link>
         </li>

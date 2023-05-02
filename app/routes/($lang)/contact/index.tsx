@@ -1,13 +1,13 @@
-import {Container} from '~/components/global/Container';
-import {json, type ActionArgs} from '@shopify/remix-oxygen';
-import {useActionData, useFetcher, Form, useNavigation} from '@remix-run/react';
+import { Container } from '~/components/global/Container';
+import { json, type ActionArgs } from '@shopify/remix-oxygen';
+import { useActionData, useFetcher, Form, useNavigation } from '@remix-run/react';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
-import {useState} from 'react';
+import { useRef, useState } from 'react';
 import { seoPayload } from '~/lib/seo.server';
 import { Heading, Button } from '~/components/ui';
-import { motion } from "framer-motion"
+import { motion, Variants, useInView } from "framer-motion"
 
-export async function action({request, params, context}: ActionArgs) {
+export async function action({ request, params, context }: ActionArgs) {
   const body = await request.formData();
   const formObject = Object.fromEntries(body);
 
@@ -39,6 +39,21 @@ export async function loader() {
     seo
   })
 }
+  const lastVariant: Variants = {
+    hidden: {
+      y: 40,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "tween",
+        duration: .8,
+        delay: 1.4
+      }
+    }
+  }
 
 export default function ContactPage() {
   return (
@@ -48,15 +63,17 @@ export default function ContactPage() {
           <div className="mt-12 grid grid-cols-1 gap-y-12 md:gap-y-0 md:grid-cols-2 lg:gap-12">
             <motion.div
               initial={{
-                y:20,
-                opacity:0
+                y: "100%",
+                opacity: .0,
               }}
               animate={{
-                y:0,
-                opacity:1
+                y: 0,
+                opacity: 1,
               }}
               transition={{
-                duration:.2
+                delay: .3,
+                ease: "easeIn",
+                type: "tween"
               }}
             >
               <Heading as="h1" size='lg' font='font-sans' className="font-bold">
@@ -67,18 +84,9 @@ export default function ContactPage() {
 
             <motion.div
               className="flex flex-col justify-center md:pb-4"
-              initial={{
-                y:20,
-                opacity:0
-              }}
-              animate={{
-                y:0,
-                opacity:1
-              }}
-              transition={{
-                duration:.2,
-                delay:0.4
-              }}
+              variants={lastVariant}
+              initial="hidden"
+              animate="visible"
             >
               <strong className="mb-1">Need help?</strong>
               <p className="text-sm">
@@ -111,6 +119,39 @@ function ContactForm() {
 
   const navigation = useNavigation();
 
+  const line: Variants = {
+    hidden: {
+      width: "0px",
+      borderColor: "rgba(39,49,32, 0)"
+    },
+    visible: {
+      width: "100%",
+      borderColor: "rgba(39,49,32, 1)",
+      transition: {
+        type: "tween",
+        duration: .8,
+        delay: 1
+      }
+    }
+  }
+
+  const label: Variants = {
+    hidden: {
+      y: 40,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "tween",
+        duration: .8,
+        delay: 1
+      }
+    }
+  }
+
+
   return (
     <Form
       method="post"
@@ -118,11 +159,18 @@ function ContactForm() {
       className="grid grid-cols-1 grid-flow-row gap-16 pb-4"
     >
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-12">
-        <div>
-          <label className="block font-bold " htmlFor="fullname">
+        <div className='flex flex-col items-start justify-start'>
+          <motion.label
+            variants={label}
+            initial="hidden"
+            animate="visible"
+            className="block font-bold" htmlFor="fullname">
             Full name
-          </label>
-          <input
+          </motion.label>
+          <motion.input
+            variants={line}
+            initial="hidden"
+            animate="visible"
             className="contact-input"
             type={'text'}
             id="fullName"
@@ -133,11 +181,18 @@ function ContactForm() {
             required
           />
         </div>
-        <div>
-          <label className="block font-bold" htmlFor="email">
+        <div className='flex flex-col items-start justify-start'>
+          <motion.label
+            variants={label}
+            initial="hidden"
+            animate="visible"
+            className="block font-bold" htmlFor="email">
             Email Address
-          </label>
-          <input
+          </motion.label>
+          <motion.input
+            variants={line}
+            initial="hidden"
+            animate="visible"
             className="contact-input"
             type={'email'}
             id="email"
@@ -150,13 +205,18 @@ function ContactForm() {
           />
         </div>
       </div>
-
-      <div>
-        <label className="block font-bold" htmlFor="message">
+      <div className='flex flex-col items-start justify-start'>
+        <motion.label
+          variants={label}
+          initial="hidden"
+          animate="visible"
+          className="block font-bold" htmlFor="message">
           Message
-        </label>
-        {/*TODO: make this bigger */}
-        <textarea
+        </motion.label>
+        <motion.textarea
+          variants={line}
+          initial="hidden"
+          animate="visible"
           className="contact-input"
           id="message"
           name="message"
@@ -168,36 +228,98 @@ function ContactForm() {
         />
       </div>
 
-      <div className='w-full flex gap-x-2 items-center'>
+      <motion.button
+        className='w-full flex gap-x-2 items-center'
+        variants={lastVariant}
+        initial="hidden"
+        animate="visible"
+      >
         <Button
+          as="span"
           className="text-lg font-medium uppercase py-2 px-20 rounded-none"
           type="submit"
           disabled={navigation.state === 'submitting' || message.length < 10}
         >
           {navigation.state === 'submitting' ? 'Submiting...' : 'Submit'}
         </Button>
-      </div>
+      </motion.button>
     </Form>
   );
 }
 
 function FAQ() {
+  const list = {
+    visible: {
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.5
+      },
+    },
+  };
+
+  const item = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
+  const heading: Variants = {
+    hidden: {
+      x: -50,
+      opacity: 0
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 40,
+        stiffness: 300
+      }
+    }
+  }
+
+  const ref = useRef<HTMLDivElement>(null)
+
+  const inView = useInView(ref, {
+    once: true,
+    amount: .5,
+  })
+
   return (
-    <section
+    <div
+      ref={ref}
       id="faq"
       className="w-full bg-custom-signature-green text-custom-white flex items-center justify-center py-[30vh] -scroll-m-12"
     >
-      <Container className="grid grid-cols-1 gap-28 lg:grid-cols-2 lg:gap-8">
-        <h2 className="text-6xl md:text-7xl lg:text-8xl  font-cantata">
+      <Container as={"section"} className="grid grid-cols-1 gap-28 lg:grid-cols-2 lg:gap-8">
+        <motion.h2
+          variants={heading}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="text-6xl md:text-7xl lg:text-8xl  font-cantata"
+        >
           Frequently
           <br />
           asked
           <br />
           questions.
-        </h2>
+        </motion.h2>
 
-        <div className="space-y-4 md:space-y-6 lg:space-y-4 text-custom-white ">
-          <details className="contact-details">
+        <motion.div
+          variants={list}
+          animate={inView ? "visible" : "hidden"}
+          className="space-y-4 md:space-y-6 lg:space-y-4 text-custom-white "
+        >
+          <motion.details variants={item} className="contact-details">
             <summary className="contact-summary">
               Are pieces microwave/dishwasher safe?
             </summary>
@@ -206,27 +328,27 @@ function FAQ() {
               ensure the longevity of your new hand-made ceramics, is strongly
               recommended hand-washing them.
             </p>
-          </details>
+          </motion.details>
 
-          <details className="contact-details">
+          <motion.details variants={item} className="contact-details">
             <summary className="contact-summary">
               Do you accept custom orders or wholesales?
             </summary>
             <p className="p-2 mb-2 ">
               Email me your idea at artbybori@gmail.com and we will talk!
             </p>
-          </details>
+          </motion.details>
 
-          <details className="contact-details">
+          <motion.details variants={item} className="contact-details">
             <summary className="contact-summary">
               Do you have Workshops?
             </summary>
             <p className="p-2 mb-2">
               Not at the moment, but in the future I want to do classes.
             </p>
-          </details>
+          </motion.details>
 
-          <details className="contact-details">
+          <motion.details variants={item} className="contact-details">
             <summary className="contact-summary">
               Is international shipping available?
             </summary>
@@ -234,9 +356,10 @@ function FAQ() {
               Unfortunately we only ship inside the European Union, but in the
               future we want to extend to international shipping.
             </p>
-          </details>
+          </motion.details>
 
-          <details className="contact-details">
+
+          <motion.details variants={item} className="contact-details">
             <summary className="contact-summary">
               Do you accept returns or refunds?
             </summary>
@@ -247,10 +370,10 @@ function FAQ() {
               with pictures of the product and we will work out the best
               solution for you!
             </p>
-          </details>
-        </div>
+          </motion.details>
+        </motion.div>
       </Container>
-    </section>
+    </div>
   );
 }
 

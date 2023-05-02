@@ -25,6 +25,7 @@ import invariant from 'tiny-invariant';
 import { flattenConnection } from '@shopify/hydrogen';
 import { Container, NoWrapContainer } from '~/components/global/Container';
 import { MyHeading } from '~/components/ui';
+import { filterInvalidCollections } from '~/lib/utils';
 
 export const headers = routeHeaders;
 
@@ -174,11 +175,7 @@ export default function Homepage() {
             <Await resolve={collectionsPromise}>
               {({ collections }) => {
                 if (!collections) return <CarouselSkeleton />;
-                const items = flattenConnection(collections).filter(
-                  (coll) =>
-                    coll.handle !== 'hero' &&
-                      coll.handle !== 'featured-products',
-                );
+                const items = filterInvalidCollections(flattenConnection(collections));
                 return (
                   <CollectionCarousel size="normal" collections={items} textOnTop={true} />
                 );

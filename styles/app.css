@@ -178,7 +178,8 @@
   }
 
   .contact-details {
-    @apply py-2 open:border-b-2 open:border-b-custom-grey cursor-pointer;
+    @apply   py-2 open:border-b-[1px] open:border-b-custom-white cursor-pointer;
+
   }
 
   .fadeIn {

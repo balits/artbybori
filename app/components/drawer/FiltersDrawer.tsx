@@ -240,11 +240,11 @@ function AppliedFilters({ filters = [] }: { filters: AppliedFilter[] }) {
           return (
             <Link
               to={getAppliedFilterLink(filter, params, location)}
-              className="flex items-center px-2 border rounded-full gap-x-2"
+              className="flex items-center px-3 py-1 border rounded-full gap-x-2 bg-custom-signature-green"
               key={`${filter.label}-${filter.urlParam}`}
             >
-              <Text as={"span"} className="flex-grow">{filter.label}</Text>
-              <X />
+              <Text as={"span"} color="white" className="flex-grow ">{filter.label}</Text>
+              <X className="text-custom-white hover:text-custom-white"/>
             </Link>
           );
         })}

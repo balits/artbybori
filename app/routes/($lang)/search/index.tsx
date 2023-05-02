@@ -21,6 +21,7 @@ import { HiSearch } from 'react-icons/hi';
 import Container from '~/components/global/Container';
 import { CollectionCarousel, ProductCarousel } from '~/components/global/Carousel';
 import { Heading } from '~/components/ui';
+import { filterInvalidCollections } from '~/lib/utils';
 
 export async function loader({ request, context: { storefront } }: LoaderArgs) {
   const searchParams = new URL(request.url).searchParams;
@@ -121,7 +122,7 @@ export default function Search() {
                         <CollectionCarousel
                           size='small'
                           collections={
-                            data!.featuredCollections.filter(c => c.handle !== "hero" && c.handle !== "featured-products") as SerializeFrom<Collection[]>
+                            data!.featuredCollections as SerializeFrom<Collection[]>
                           }
                           textOnTop={true}
                         />
@@ -204,7 +205,7 @@ export async function getNoResultRecommendations(
   invariant(data, 'No data returned from Shopify API');
 
   return {
-    featuredCollections: flattenConnection(data.featuredCollections),
+    featuredCollections: filterInvalidCollections(flattenConnection(data.featuredCollections)),
     featuredProducts: flattenConnection(data.featuredProducts),
   };
 }

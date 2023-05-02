@@ -3,7 +3,9 @@ import type {
   MenuItem,
   Menu,
   MoneyV2,
+  Collection as CollectionType
 } from '@shopify/hydrogen/storefront-api-types';
+import { Collection } from 'schema-dts';
 
 // @ts-expect-error types not available
 import typographicBase from 'typographic-base';
@@ -305,4 +307,8 @@ export function isLocalPath(url: string) {
   }
 
   return false;
+}
+
+export function filterInvalidCollections(colls: CollectionType[]): CollectionType[] {
+  return colls.filter(c => c.handle !== "hero" && c.handle !== "featured-products" && c.handle !== "shop-all-products")
 }
