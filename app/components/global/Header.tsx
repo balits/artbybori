@@ -9,7 +9,8 @@ import { useCartFetchers } from '~/hooks/useCartFetchers';
 import CartDrawer from '~/components/drawer/CartDrawer';
 import NavDrawer from '~/components/drawer/NavDrawer';
 import { Link } from '../ui/Link';
-import { Bars, SearchIcon, ShoppingBag } from './Icon';
+import { Bars, SearchIcon } from './Icon';
+import { CartCount } from "~/components/drawer/CartDrawer"
 
 export default function Header() {
   const {
@@ -31,6 +32,7 @@ export default function Header() {
     if (isCartOpen || !addToCartFetchers.length) return;
     openCart();
   }, [addToCartFetchers, isCartOpen, openCart]);
+
 
   const scrollDirection = useScroll();
 
@@ -66,7 +68,7 @@ export default function Header() {
               className="p-2 md:p-3 lg:p-4 pr-0"
               aria-label="Open cart panel from the right side."
             >
-              <ShoppingBag />
+              <CartCount />
             </button>
           </div>
         </Container>

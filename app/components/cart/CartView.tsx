@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { CartAction } from '~/lib/type';
 import { HiPlus, HiMinus } from 'react-icons/hi';
 import { Link, Button, Heading, MyMoney, Text } from '../ui';
-import { Check, X, XCirlce } from '../global/Icon';
+import { Check, Spinner, X, XCirlce } from '../global/Icon';
 import Container from '../global/Container';
 
 export function Fallback() {
@@ -272,7 +272,7 @@ export function RemoveItem({
       <input type="hidden" name="linesIds" value={JSON.stringify([itemID])} />
       <span className="sr-only">Remove</span>
       <button className="p-2 text-custom-lightgrey hover:text-custom-black" type="submit">
-        <X />
+        {fetcher.state === "submitting" ? <Spinner /> : <X />}
       </button>
     </fetcher.Form>
 

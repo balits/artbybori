@@ -3,7 +3,7 @@ import React from "react"
 import {IconBaseProps} from "react-icons"
 import { BiShoppingBag } from "react-icons/bi";
 import { HiCheck, HiFilter, HiMinus, HiPlus, HiSearch, HiX, HiXCircle } from "react-icons/hi";
-import { HiBars2, HiBars3BottomLeft, HiListBullet } from "react-icons/hi2";
+import { HiBars2, HiBars3BottomLeft, HiListBullet, HiOutlineArrowPath } from "react-icons/hi2";
 
 type IconProps = IconBaseProps & {
   className?: string,
@@ -89,3 +89,8 @@ export function Filter(props: IconProps) {
   </IconWrapper>
 }
 
+export function Spinner(props: IconProps) {
+  return <IconWrapper {...props}>
+    <HiOutlineArrowPath className="animate-spin" />
+  </IconWrapper>
+}

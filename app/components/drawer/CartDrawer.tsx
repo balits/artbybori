@@ -7,7 +7,7 @@ import { Link, Button, Text, MyMoney } from '../ui';
 import { HiArrowPath } from 'react-icons/hi2';
 import { useIsHydrated } from '~/hooks/useIsHydrated';
 import { RemoveItem, DecrementQuantity, IncrementQuantity } from "~/components/cart/CartView"
-import { Check, XCirlce } from '../global/Icon';
+import { Check, ShoppingBag, Spinner, XCirlce } from '../global/Icon';
 
 function Empty({
   closeDrawer
@@ -35,7 +35,7 @@ function Empty({
 function Fallback() {
   return (
     <div className="w-full h-full grid place-items-center">
-      <HiArrowPath className="w-5 h-5 animate-spin" />
+      <Spinner />
     </div>
   );
 }
@@ -73,18 +73,18 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <section className="h-minus-header ">
+    <section className="h-full relative">
       <ul className="h-fit overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green pr-2">
         {lines.map(
           (l) =>
             l.id && (
-              <li key={l.id} className="h-fit w-full ">
+              <li key={l.id} className="h-fit w-full py-8 ">
                 <CartLineItem cartLine={l} closeDrawer={closeDrawer}/>
               </li>
             )
         )}
       </ul>
-      <div className="bottom-0 sticky z-[52] w-full flex flex-col pb-4 ">
+      <div className="sticky bottom-0  z-[52] w-full flex flex-col pb-8 bg-custom-white rounded-t-md">
         <Button
           onClick={closeDrawer}
           variant="signature"
@@ -112,15 +112,17 @@ function CartLineItem({ cartLine, closeDrawer }: { cartLine: CartLine, closeDraw
   return (
     <div className="w-full  grid grid-cols-3 grid-rows-1 gap-x-4">
       <Link to={`/products/${product.handle}`} prefetch="intent" onClick={closeDrawer} className="col-span-1">
+        <div className='relative bg-custom-placeholder-grey'>
         {variant.image && (
           <Image
-            className="overflow-hidden card-image object-cover object-center absolute w-full h-full"
+            className="overflow-hidden card-image object-cover object-center absolute w-full h-full aspect-square bg-custom-placeholder-grey"
             data={variant.image}
             alt={product.title}
             loading="lazy"
             sizes="100%"
           />
         )}
+        </div>
       </Link>
 
       <div className="col-span-2 w-full  flex flex-col items-start justify-between">
@@ -193,22 +195,14 @@ function CartLineItem({ cartLine, closeDrawer }: { cartLine: CartLine, closeDraw
 }
 
 
-function CartCount({
-  isHome,
-  openCart,
-}: {
-  isHome: boolean;
-  openCart: () => void;
-}) {
+export function CartCount() {
   const [root] = useMatches();
 
   return (
-    <Suspense fallback={<Badge count={0} dark={isHome} openCart={openCart} />}>
+    <Suspense fallback={<Badge count={0}/>}>
       <Await resolve={root.data?.cart}>
         {(cart) => (
           <Badge
-            dark={isHome}
-            openCart={openCart}
             count={cart?.totalQuantity || 0}
           />
         )}
@@ -217,46 +211,44 @@ function CartCount({
   );
 }
 
+
+
+
+
 function Badge({
-  openCart,
-  dark,
   count,
 }: {
   count: number;
-  dark: boolean;
-  openCart: () => void;
 }) {
   const isHydrated = useIsHydrated();
 
   const BadgeCounter = useMemo(
     () => (
       <>
+        <ShoppingBag />
         <div
-          className={`${dark
-            ? 'text-primary bg-contrast dark:text-contrast dark:bg-primary'
-            : 'text-contrast bg-primary'
-            } absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px`}
+          className='text-custom-white bg-custom-black absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px'
         >
           <span>{count || 0}</span>
         </div>
       </>
     ),
-    [count, dark],
+    [count],
   );
 
   return isHydrated ? (
-    <button
-      onClick={openCart}
-      className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
+    <div
+      className="relative flex items-center justify-center w-8 h-8 focus:ring-custom-lightgrey/5"
     >
       {BadgeCounter}
-    </button>
+    </div>
   ) : (
     <Link
       to="/cart"
-      className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
+      className="relative flex items-center justify-center w-8 h-8 focus:ring-custom-lightgrey/5"
     >
       {BadgeCounter}
     </Link>
   );
 }
+

@@ -1,6 +1,6 @@
 import { Container } from '~/components/global/Container';
 import { json, type ActionArgs } from '@shopify/remix-oxygen';
-import { useActionData, useFetcher, Form, useNavigation } from '@remix-run/react';
+import { useActionData, useFetcher, Form, useNavigation, useTransition } from '@remix-run/react';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import { useRef, useState } from 'react';
 import { seoPayload } from '~/lib/seo.server';
@@ -58,7 +58,7 @@ export async function loader() {
 export default function ContactPage() {
   return (
     <>
-      <div className="min-h-screen max-h-fit w-full grid place-items-center scaling-mt-header">
+      <div className="h-screen max-h-fit w-full grid place-items-center scaling-mt-header">
         <Container className="grid grid-cols-1 grid-flow-row gap-20 md:gap-32 lg:gap-40">
           <div className="mt-12 grid grid-cols-1 gap-y-12 md:gap-y-0 md:grid-cols-2 lg:gap-12">
             <motion.div
