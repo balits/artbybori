@@ -15,10 +15,10 @@ function Empty({
   closeDrawer: () => void;
 }) {
   return (
-    <div className='flex flex-col items-center justify-center'>
-      <p className='text-center text-lg mb-2'>
+    <div className='flex flex-col items-center justify-center mb-8'>
+      <Text size='lg' bold className='text-center text-lg mb-4'>
         Your cart seems empty.
-      </p>
+      </Text>
       <div>
         <Link onClick={closeDrawer} prefetch="intent" to="/shop" className="underline decoration-offset-2">
           Browse our products
@@ -73,18 +73,18 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <section className="h-full px-4 relative flex flex-col items-center justify-between">
-      <ul className="h-full overflow-auto w-full flex flex-col items-start pb-8 divide-y divide-custom-placeholder-green pr-2">
+    <section className="h-minus-header ">
+      <ul className="h-fit overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green pr-2">
         {lines.map(
           (l) =>
             l.id && (
-              <li key={l.id} className="h-fit w-full py-8">
+              <li key={l.id} className="h-fit w-full ">
                 <CartLineItem cartLine={l} closeDrawer={closeDrawer}/>
               </li>
             )
         )}
       </ul>
-      <div className="flex-shink-0 w-full my-2 flex flex-col mb-4">
+      <div className="bottom-0 sticky z-[52] w-full flex flex-col pb-4 ">
         <Button
           onClick={closeDrawer}
           variant="signature"
@@ -93,6 +93,7 @@ function CartSidebarView({
           View cart
         </Button>
       </div>
+
     </section>
   ) : (
     <section className='w-full h-full px-4 flex items-center justify-center'>

@@ -299,7 +299,7 @@
     margin-top: var(--header-md);
   }
   .scaling-pt-header {
-    margin-top: var(--header-md);
+    padding-top: var(--header-md);
   }
   .my-dot-list {
     position: static;
@@ -327,6 +327,6 @@
     margin-top: var(--header-lg);
   }
   .scaling-pt-header {
-    margin-top: var(--header-lg);
+    padding-top: var(--header-lg);
   }
 }

@@ -37,7 +37,6 @@ export function SortFilter({
 }: Props) {
   const [open, setOpen] = useState(false);
 
-  useEffect(() =>setOpen(true), [])
   const toggle = () => setOpen(!open)
 
   return (

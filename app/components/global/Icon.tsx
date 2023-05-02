@@ -3,7 +3,7 @@ import React from "react"
 import {IconBaseProps} from "react-icons"
 import { BiShoppingBag } from "react-icons/bi";
 import { HiCheck, HiFilter, HiMinus, HiPlus, HiSearch, HiX, HiXCircle } from "react-icons/hi";
-import { HiBars2, HiBars3BottomLeft } from "react-icons/hi2";
+import { HiBars2, HiBars3BottomLeft, HiListBullet } from "react-icons/hi2";
 
 type IconProps = IconBaseProps & {
   className?: string,
@@ -85,7 +85,7 @@ export function XCirlce(props: IconProps) {
 
 export function Filter(props: IconProps) {
   return <IconWrapper {...props}>
-    <HiFilter />
+    <HiListBullet  className="w-6 h-6"/>
   </IconWrapper>
 }
 

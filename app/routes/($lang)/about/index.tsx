@@ -4,7 +4,8 @@ import { HeadersFunction, LinksFunction } from '@shopify/remix-oxygen';
 import { seoPayload } from '~/lib/seo.server';
 import { json } from '@shopify/remix-oxygen';
 import { Text } from '~/components/ui';
-import {motion, Variants} from 'framer-motion'
+import { delay, motion, Variants } from 'framer-motion'
+import { useInView } from 'react-intersection-observer';
 
 export const link: LinksFunction = () => [
   {
@@ -36,7 +37,7 @@ export default function About() {
   return (
     <>
       <section className="flex flex-col-reverse md:grid md:grid-cols-2  w-full h-fit md:h-minus-header scaling-mt-header">
-        <div className="relative overflow-hidden bg-custom-placeholder-green h-minus-header">
+        <div className="relative overflow-hidden bg-custom-signature-green h-minus-header">
           <img
             src='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_5080.jpg?v=1681895607'
             className='absolute inset-0 w-full h-full object-cover object-center fadeIn'
@@ -80,65 +81,64 @@ export default function About() {
 }
 
 const TextGrid = () => {
+  const item: Variants = {
+    hidden: {
+      opacity: 0,
+      y: 40,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition:{
+        duration:0.3
+      }
+    }
+  }
+
+  const list: Variants = {
+    visible: {
+      transition: {
+        staggerChildren: .4,
+      }
+    }
+  }
+
+
+  const [ref, inView] = useInView({
+    threshold:1,
+    triggerOnce: true
+  })
   return (
     <Container as="section" className="">
-      <ul
+      <motion.ul
+        ref={ref}
         className='grid gap-y-4 md:gap-y-10 lg:gap-y-12 gap-x-16 lg:grid-cols-3 my-20 md:my-28 lg:my-40'
+        variants={list}
+        animate={inView ? "visible" : "hidden"}
       >
-      {texts.map((txt,idx) => (
-        <li key={txt.id} className="grid place-items-center">
-          <div
-            className='flex flex-col items-center justify-center'
+        {texts.map((txt, idx) => (
+          <motion.li
+            key={txt.id}
+            className="grid place-items-center"
+            variants={item}
           >
-            <motion.div variants={svgVariants} initial="hidden" whileInView="visible" className='h-44 w-fit grid place-items-center'>
-              <txt.icon />
-            </motion.div>
-            <motion.p variants={textVariant} initial="hidden" whileInView="visible"  className='mt-4 lg:mt-6 text-autoscale-small sm:w-1/2 lg:w-full'>
-              {txt.body}
-            </motion.p>
-          </div>
-        </li>
-      ))}
-      </ul>
+            <div
+              className='flex flex-col items-center justify-center'
+            >
+              <div className='h-44 w-fit grid place-items-center'>
+                <txt.icon />
+              </div>
+              <p  className='mt-4 lg:mt-6 text-autoscale-small sm:w-1/2 lg:w-full'>
+                {txt.body}
+              </p>
+            </div>
+          </motion.li>
+        ))}
+      </motion.ul>
     </Container>
   )
 }
 
-const textVariant: Variants = {
-  hidden: {
-    opacity: 0,
-    y: "50%",
-  },
-  visible: {
-    opacity: 1,
-    y:0,
-    transition: {
-      type:"spring",
-      stiffness:300,
-      damping:30,
-      delay: .4
-    }
-  }
-}
-
-const svgVariants: Variants = {
-  hidden: {
-    pathLength: 0,
-    opacity: 0,
-    y: "50%",
-  },
-  visible: {
-    pathLength: 1,
-    opacity: 1,
-    y:0,
-    transition: {
-      type:"spring",
-      stiffness:300,
-      damping:30,
-      delay: .2
-    }
-  }
-}
 
 const SVG1 = () => (
   <svg

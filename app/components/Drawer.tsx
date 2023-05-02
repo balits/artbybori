@@ -49,7 +49,7 @@ export function Drawer({
         <aside aria-roledescription="sidebar" className="fixed inset-0">
           <div className="absolute inset-0 overflow-hidden ">
             <div
-              className={`fixed flex  ${openFrom === 'right' ? 'right-0' : ''
+              className={`fixed h-screen flex  ${openFrom === 'right' ? 'right-0' : ''
                 }`}
             >
               <Transition.Child
@@ -61,8 +61,8 @@ export function Drawer({
                 leaveFrom="translate-x-0"
                 leaveTo={offScreen[openFrom]}
               >
-                <Dialog.Panel className="overflow-auto w-screen md:w-[55vw] lg:w-[25vw]  w-sidebar text-left align-middle transition-all transform shadow-md h-screen-dynamic bg-custom-white p-4">
-                  <header className="bg-custom-white w-full header-height flex  items-center justify-between sticky top-0 justify-between" >
+                <Dialog.Panel className="overflow-auto w-screen md:w-[55vw] lg:w-[30vw]  w-sidebar text-left align-middle transition-all transform shadow-md h-screen-dynamic bg-custom-white px-4 ">
+                  <header className="bg-custom-white w-full header-height flex  items-center justify-between sticky top-0 justify-between z-[52]" >
                     <Dialog.Title>
                       <Heading
                         as="span"
@@ -83,7 +83,7 @@ export function Drawer({
                         <X aria-label="Close panel" className="w-5 h-5" />
                       </button>
                   </header>
-                  <div className='h-minus-header'>
+                  <div className='h-full z-[51]'>
                     {children}
                   </div>
                 </Dialog.Panel>

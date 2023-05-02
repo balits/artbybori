@@ -157,7 +157,7 @@ export default function Category() {
 
   console.log(collection)
   return (
-    <Container className='scaling-mt-header'>
+    <Container className='scaling-mt-header mb-6 md:mb-8 lg:mb-12'>
       <div className='mb-6'>
         <Heading as={"h1"} spacing>{collection.title}</Heading>
         {collection?.descriptionHtml ? (

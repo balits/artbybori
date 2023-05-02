@@ -1,13 +1,22 @@
 import Header from '~/components/global/Header';
 import Footer from '~/components/global/Footer';
+import {motion, MotionConfig, useMotionValueEvent, useScroll, useTransform} from "framer-motion"
 import { useLocation } from 'react-use';
-import {motion} from "framer-motion"
 
 export default function Layout({children}: {children: React.ReactNode}) {
-  const location = useLocation()
-
+  const loc = useLocation();
   return (
-      <motion.div  className="flex flex-col min-h-screen">
+    <MotionConfig reducedMotion='user'>
+      <motion.div
+        className="flex flex-col min-h-screen"
+        initial={{
+          opacity:0
+        }}
+        animate={{
+          opacity:1
+        }}
+        key={loc.pathname}
+      >
         <div className="">
           <a href="#mainContent" className="sr-only">
             Skip to content
@@ -20,5 +29,6 @@ export default function Layout({children}: {children: React.ReactNode}) {
         </main>
         <Footer />
       </motion.div>
+    </MotionConfig>
   );
 }
