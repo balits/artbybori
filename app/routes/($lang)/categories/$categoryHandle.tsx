@@ -155,13 +155,21 @@ export default function Category() {
   const {collection, collections, appliedFilters} =
     useLoaderData<typeof loader>();
 
+  console.log(collection)
   return (
     <Container className='scaling-mt-header'>
       <div className='mb-6'>
         <Heading as={"h1"} spacing>{collection.title}</Heading>
-        {collection?.description && (
-          <div className="flex items-baseline justify-between w-full text-custom-grey">
-            <p>{collection.description}</p>
+        {collection?.descriptionHtml ? (
+          <div
+            className="prose w-full text-custom-grey"
+            dangerouslySetInnerHTML={{__html: collection.descriptionHtml}}
+          />
+        ) : (
+          <div
+            className="prose w-full text-custom-grey"
+          >
+            {collection.description}
           </div>
         )}
       </div>
@@ -195,6 +203,7 @@ const COLLECTION_QUERY = `#graphql
       handle
       title
       description
+      descriptionHtml
       seo {
         description
         title

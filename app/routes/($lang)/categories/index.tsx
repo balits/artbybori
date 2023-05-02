@@ -181,6 +181,7 @@ const COLLECTIONS_QUERY = `#graphql
         id
         title
         description
+        descriptionHtml
         handle
         seo {
           description

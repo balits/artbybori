@@ -5,7 +5,7 @@ import { Link } from '../ui/Link';
 
 export default function SplitView() {
   return (
-    <section className="py-8 md:py-16 lg:pt-20 w-full flex flex-col justify-center items-center">
+    <section className="pt-8 md:py-16 lg:py-20 w-full flex flex-col justify-center items-center">
       <div className="overflow-hidden relative  w-full grid grid-cols-2 h-[65vh] lg:h-screen">
         <Link
           to="/shop"
@@ -74,9 +74,11 @@ function TextBlock({
       <Link
         prefetch="intent"
         to="/about"
-        className={clsx("mt-4 transition-colors ease-in-out hover:bg-zinc-200/20 focus:bg-zinc-200/30 border  font-semibold py-1 lg:py-2 px-8 lg:px-14 w-fit", color === "black" ? "border-custom-black" : "border-custom-white")}
+        className={clsx("mt-4 transition-colors ease-in-out hover:bg-zinc-200/20 focus:bg-zinc-200/30 border py-1 lg:py-2 px-8 lg:px-14 w-fit", color === "black" ? "border-custom-black" : "border-custom-white")}
       >
-        Learn&nbsp;more.
+        <Text as="span" bold>
+          Learn&nbsp;more.
+        </Text>
       </Link>
     </div>
   )

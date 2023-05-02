@@ -2,12 +2,13 @@ import clsx from "clsx";
 import React from "react"
 import {IconBaseProps} from "react-icons"
 import { BiShoppingBag } from "react-icons/bi";
-import { HiCheck, HiMinus, HiPlus, HiSearch, HiX, HiXCircle } from "react-icons/hi";
+import { HiCheck, HiFilter, HiMinus, HiPlus, HiSearch, HiX, HiXCircle } from "react-icons/hi";
 import { HiBars2, HiBars3BottomLeft } from "react-icons/hi2";
 
 type IconProps = IconBaseProps & {
   className?: string,
-  as?: React.ElementType
+  as?: React.ElementType,
+  soft?: boolean
 }
 
 type WrapperProps = {
@@ -17,9 +18,15 @@ type WrapperProps = {
 function IconWrapper({
   className,
   children,
-  as = "span",
+  as:Component = "span",
+  soft = false,
+  ...props
 }: IconProps & WrapperProps) {
-  return React.createElement(as,{className: clsx("cursor-pointer text-custom-black hover:text-custom-grey focus:ring-custom-signature-green " , className)}, children);
+  return (
+    <Component {...props} className={clsx("cursor-pointer  focus:ring-custom-signature-green", soft ? "text-custom-lightgrey hover:text-custom-grey" : "text-custom-grey hover:text-custom-black" , className)}>
+      {children}
+    </Component>
+  )
 }
 
 export function SearchIcon(props: IconProps) {
@@ -58,7 +65,7 @@ export function Plus(props: IconProps) {
   </IconWrapper>
 }
 
-export function FilterDropDown(props: IconProps) {
+export function FilterIcon(props: IconProps) {
   return <IconWrapper {...props}>
     <HiBars3BottomLeft />
   </IconWrapper>
@@ -75,3 +82,10 @@ export function XCirlce(props: IconProps) {
     <HiXCircle />
   </IconWrapper>
 }
+
+export function Filter(props: IconProps) {
+  return <IconWrapper {...props}>
+    <HiFilter />
+  </IconWrapper>
+}
+

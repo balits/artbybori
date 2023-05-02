@@ -18,7 +18,7 @@ import { PRODUCT_CARD_FRAGMENT } from '~/data/fragments';
 import { PAGINATION_SIZE } from '~/lib/const';
 import { seoPayload } from '~/lib/seo.server';
 import { HiSearch } from 'react-icons/hi';
-import Container, { NoWrapContainer } from '~/components/global/Container';
+import Container from '~/components/global/Container';
 import { CollectionCarousel, ProductCarousel } from '~/components/global/Carousel';
 import { Heading } from '~/components/ui';
 
@@ -78,10 +78,11 @@ export default function Search() {
     useLoaderData<typeof loader>();
   const noResults = products?.nodes?.length === 0;
 
+
   return (
     <Container className='scaling-mt-header mb-8 lg:mb-16'>
       <div className='mb-6 md:mb-8 lg:mb-12 xl:mb-16'>
-        <Heading as="h1" size='sm'>Search</Heading>
+        <Heading as="h1" size='sm' spacing>Search</Heading>
         <Form method="get" className="relative flex w-full text-lg ">
           <button className="p-2" type="submit">
             <HiSearch className='h-4 w-4 md:w-5 md:h-5  cursor-pointer focus:ring-custom-black' />
@@ -215,7 +216,7 @@ $country: CountryCode
 $language: LanguageCode
 $pageBy: Int!
 ) @inContext(country: $country, language: $language) {
-featuredCollections: collections(first: 5, sortKey: UPDATED_AT) {
+featuredCollections: collections(first: 8, sortKey: UPDATED_AT) {
 nodes {
 id
 title

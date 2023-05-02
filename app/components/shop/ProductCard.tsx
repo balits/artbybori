@@ -49,11 +49,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         )}
         {textOnTop && (
           <div className="p-2 md:p-3 lg:p-4  transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
-            <Details title={title} money={money} color="white" onSale={extraLabel === "sale"} compareAtPrice={compareAtPrice}/>
+            <Details title={title} money={money} color="white" compareAtPrice={compareAtPrice}/>
           </div>
         )}
       </div>
-      {!textOnTop && <Details title={title} money={money} color="black" onSale={extraLabel === "sale"}  compareAtPrice={compareAtPrice}/>}
+      {!textOnTop && <Details title={title} money={money} color="black"  compareAtPrice={compareAtPrice}/>}
     </>
   );
 };
@@ -63,13 +63,11 @@ function Details({
   title,
   money,
   color,
-  onSale,
   compareAtPrice
 }: {
     title: string
     money?: MoneyV2
     color: TextProp['color'],
-    onSale: boolean,
     compareAtPrice?: MoneyV2
 }) {
 

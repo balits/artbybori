@@ -1,5 +1,5 @@
 import { Link } from "../ui/Link";
-import {Link as RemixLink} from "@remix-run/react"
+import { Link as RemixLink } from "@remix-run/react"
 import { Container } from '~/components/global/Container';
 import { SiFacebook, SiGmail, SiInstagram, SiTiktok } from 'react-icons/si';
 
@@ -39,26 +39,26 @@ export default function Footer() {
               <Strong text="Quick links" />
               <ul className="grid grid-cols-1 gap-y-3">
                 {routeLinks.map((link) => (
-                  <li key={link.text}>
+                  <Text as="li" key={link.text}>
                     <Link
                       to={link.url}
                       prefetch="intent"
-                      className="cursor-pointer hover:opacity-80 hover:underline text-xs md:text-sm lg:text-md"
+                      className="cursor-pointer hover:opacity-80 hover:underline"
                     >
                       {link.text}
                     </Link>
-                  </li>
+                  </Text>
                 ))}
               </ul>
             </div>
 
             <div className="h-fit row-start-1 col-span-2 md:row-start-auto md:col-span-1">
               <Strong text="Art by Bori" />
-              <Text size="md" className="lg:text-md">
+              <Text size="md">
                 I make one of a kind ceramics in small batches that I sell in my
                 online shop or sometimes on local art markets.
               </Text>
-              <Text size="md" className="lg:text-md">
+              <Text size="md">
                 With the pieces I sell and create, I hope to brighten your
                 spaces and everyday rituals.
               </Text>
@@ -86,25 +86,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t-2 border-gray-100/20 py-6 my-12 text-custom-white/60 w-full flex items-start justify-between">
-          <div className="w-fit sm:w-1/3">
-            <CountrySelector />
-          </div>
-          <div className="flex flex-col gap-y-2">
-            <PaymentOptionsList/>
-            <div className="flex flex-col md:flex-row gap-x-4 ">
-              <Link to="/" className="hover:underline text-xs" reloadDocument>
-                &#169; 2023 ART BY BORI,
-              </Link>
-              <Link
-                target={'_blank'}
-                to="https://www.shopify.com"
-                className="hover:underline text-xs "
-              >
-                Powered&nbsp;by&nbsp;Shopify
-              </Link>
-            </div>
-          </div>
+        <div className="border-t-2 border-gray-100/20 py-4 my-10 text-custom-white/60 w-full flex items-start justify-between">
+          <CountrySelector />
+          <PaymentOptionsList />
         </div>
       </Container>
     </footer>
@@ -129,30 +113,46 @@ const PaymentOptionsList = () => {
 
   const paymentOptionSVGs = [
     {
-     title: "American Express",
-     svg: Amex
+      title: "American Express",
+      svg: Amex
     },
     {
-     title: "Apple Pay",
-     svg: ApplePay
+      title: "Apple Pay",
+      svg: ApplePay
     },
     {
-     title: "Master Card",
-     svg: MasterCard
+      title: "Master Card",
+      svg: MasterCard
     },
     {
-     title: "Visa",
-     svg: Visa
+      title: "Visa",
+      svg: Visa
     },
   ]
 
   return (
-    <ul className="grid gap-y-2 sm:gap-x-2 sm:gap-y-0 grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-1">
-      {paymentOptionSVGs.map(option => (
-        <li key={option.title} className="p-0 m-0 w-fit h-fit">
-          {option.svg}
-        </li>
-      ))}
-    </ul>
+    <div className="grid grid-rows-2 gap-y-2">
+      <ul className="flex items-center justify-end gap-x-2 ">
+        {paymentOptionSVGs.map(option => (
+          <li key={option.title} className="p-0 m-0 w-fit h-fit">
+            {option.svg}
+          </li>
+        ))}
+      </ul>
+      <div className="flex justify-end">
+        <div className="flex flex-col md:flex-row gap-x-4 ">
+          <Link to="/" className="hover:underline text-xs" >
+            &#169; 2023 ART BY BORI,
+          </Link>
+          <Link
+            target={'_blank'}
+            to="https://www.shopify.com"
+            className="hover:underline text-xs "
+          >
+            Powered&nbsp;by&nbsp;Shopify
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }

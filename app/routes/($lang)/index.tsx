@@ -23,7 +23,7 @@ import {
 } from '~/components/global/Carousel';
 import invariant from 'tiny-invariant';
 import { flattenConnection } from '@shopify/hydrogen';
-import { Container } from '~/components/global/Container';
+import { Container, NoWrapContainer } from '~/components/global/Container';
 import { MyHeading } from '~/components/ui';
 
 export const headers = routeHeaders;
@@ -165,7 +165,7 @@ export default function Homepage() {
 
       <SplitView />
 
-      <Container as={"section"} className="h-fit py-20">
+      <NoWrapContainer as={"section"} className="h-fit py-8 md:py-12 lg:py-20">
         <div className="">
           <MyHeading>
             Shop by categories.
@@ -180,13 +180,13 @@ export default function Homepage() {
                       coll.handle !== 'featured-products',
                 );
                 return (
-                  <CollectionCarousel size='small' collections={items} textOnTop={true} />
+                  <CollectionCarousel size="normal" collections={items} textOnTop={true} />
                 );
               }}
             </Await>
           </Suspense>
         </div>
-      </Container>
+      </NoWrapContainer>
 
       <InstagramGallery />
 

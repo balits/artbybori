@@ -10,14 +10,14 @@ import { Heading } from '../ui';
 export default function Banner({image}: {image: ImageType}) {
   const {scrollYProgress} = useScroll()
 
-  const y = useSpring(useTransform(scrollYProgress,[0,0.2], [0, -200]), {
-    stiffness: 280,
-    damping: 30
+  const imageY = useSpring(useTransform(scrollYProgress,[0,0.2], [0, -200]), {
+    stiffness: 200,
+    damping: 20
   })
 
   const headingY = useSpring(useTransform(scrollYProgress, [0,0.4], [0, -100]),{
-    stiffness: 320,
-    damping: 30
+    stiffness: 100,
+    damping: 20
   })
 
 
@@ -25,7 +25,7 @@ export default function Banner({image}: {image: ImageType}) {
     <motion.div
       className="sticky top-0 -z-10  bg-custom-placeholder-green h-screen overflow-y-hidden grid place-items-center shadow-md relative"
       style={{
-        y
+        y: imageY
       }}
     >
       <Image
@@ -43,6 +43,17 @@ export default function Banner({image}: {image: ImageType}) {
           <motion.div
             style={{
               y: headingY
+            }}
+            initial={{
+              y:40,
+              opacity:0,
+            }}
+            animate={{
+              y:0,
+              opacity:1,
+            }}
+            transition={{
+              delay: .3,
             }}
           >
 

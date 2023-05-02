@@ -34,7 +34,7 @@ import InstagramGallery from '~/components/homepage/InstagramGallery';
 import { ProductCarousel, Skeleton as CarouselSkeleton } from '~/components/global/Carousel';
 import { useWindowSize } from 'react-use';
 import { AddToCartButton, ProductGallery } from '~/components';
-import { Link, Text } from '~/components/ui';
+import { Heading, Link, Text } from '~/components/ui';
 import { IconCaret, IconCheck } from '~/components/ui/Icon';
 import { Button, MyMoney } from '~/components/ui';
 import { Minus, Plus } from '~/components/global/Icon';
@@ -134,7 +134,6 @@ export default function ProductPage() {
   const {media, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
 
-
   return (
     <>
       <ContainerSwitch
@@ -177,10 +176,10 @@ export default function ProductPage() {
 
       </ContainerSwitch>
 
-      <NoWrapContainer className="h-fit my-32">
-        <h2 className="tracking-tight text-custom-black text-2xl md:text-2xl lg:text-4xl font-serif mb-12 ">
+      <NoWrapContainer className="h-fit my-36">
+        <Heading size='md'>
           You might also like.
-        </h2>
+        </Heading>
         <Suspense fallback={<CarouselSkeleton />}>
           <Await
             errorElement="There was a problem loading recomended products"
@@ -282,7 +281,7 @@ export function ProductDescription() {
           )}
         </div>
         </div>
-        <div className=" flex flex-col gap-4 ">{getFirstSentence(product.description)}</div>
+        <div className="flex flex-col gap-4 ">{getFirstSentence(product.description)}</div>
 
         <ProductOptions
           options={product.options}
@@ -315,8 +314,7 @@ export function ProductDescription() {
                   >
                     Add&nbsp;to&nbsp;Cart
                   </AddToCartButton>
-                  {/* <Button to="/" >Checkout</Button> */}
-                  <CheckoutButton variantIds={[selectedVariant.id!]} storeDomain={storeDomain} />
+                  <ShopPayButton storeDomain={storeDomain} variantIds={[selectedVariant.id]} className="w-full"/>
                 </>
               )}
           </div>
@@ -497,16 +495,16 @@ function ProductDetail({
         <>
           <Disclosure.Button className={`text-left `}>
             <div className="flex justify-between">
-              <h3 className=" lg:text-lg ">
+              <Text as="h3" size='lg' className=" lg:text-lg ">
                 {title}
-              </h3>
-              {open ? <Minus className='text-custom-grey'/> : <Plus className='text-custom-grey' / >}
+              </Text>
+              {open ? <Minus soft/> : <Plus soft/>}
             </div>
           </Disclosure.Button>
 
           <Disclosure.Panel className={'pl-2 grid gap-2'}>
             <div
-              className="prose text-sm lg:text-md text-custom-grey "
+              className="prose text-sm lg:text-md text-custom-grey space-y-3"
               dangerouslySetInnerHTML={{__html: content}}
             />
             {learnMore && (

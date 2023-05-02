@@ -46,7 +46,7 @@ export function CountrySelector() {
   return (
     <section
       ref={observerRef}
-      className="grid w-full gap-1 text-xs sm:text-sm md:text-base"
+      className="grid w-fit gap-1 text-xs sm:text-sm md:text-base"
     >
       <div className="relative">
         <details
@@ -112,7 +112,7 @@ function Country({
         type="submit"
         onClick={closeDropdown}
       >
-        {countryLocale.label}
+        {JSON.stringify(countryLocale)}
         {isSelected ? (
           <span className="ml-2">
             <IconCheck />

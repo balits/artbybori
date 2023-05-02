@@ -1,15 +1,13 @@
-import {Fragment, SyntheticEvent, useMemo, useState} from 'react';
+import {Fragment,  useEffect,  useState} from 'react';
 import {Menu, Transition} from '@headlessui/react';
 
-import {Heading, IconFilters, IconCaret, IconXMark, Text} from '~/components/ui';
+import { Text} from '~/components/ui';
 import {
   Link,
   useLocation,
   useSearchParams,
   Location,
-  useNavigate,
 } from '@remix-run/react';
-import {useDebounce} from 'react-use';
 import {Disclosure} from '@headlessui/react';
 
 import type {
@@ -21,9 +19,8 @@ import {
   AppliedFilter,
   SortParam,
 } from '~/routes/($lang)/categories/$categoryHandle';
-import { HiAdjustmentsHorizontal } from 'react-icons/hi2';
-import { FilterDropDown } from './global/Icon';
-import { HiX } from 'react-icons/hi';
+import FiltersDrawer from '~/components/drawer/FiltersDrawer';
+import { Filter as FilterIcon } from './global/Icon';
 
 type Props = {
   filters: Filter[];
@@ -38,174 +35,43 @@ export function SortFilter({
   children,
   collections = [],
 }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() =>setOpen(true), [])
+  const toggle = () => setOpen(!open)
+
   return (
     <>
-      <div className="flex items-center justify-between w-full pb-6">
-        <button onClick={() => setIsOpen(!isOpen)}>
-          <FilterDropDown/>
+      <div className="flex items-center justify-between w-full mb-4">
+        <button
+          onClick={toggle}
+          className={
+            'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5'
+          }
+        >
+          <FilterIcon />
         </button>
         <SortMenuDropdown />
       </div>
-
-      <div className="flex flex-col flex-wrap ">
-        <div
-          className={`basic-animation transform-gpu delay-150 ${
-            isOpen
-              ? 'opacity-100  max-h-full top-12'
-              : 'opacity-50 min-h-[0px]  h-[0px] max-w-full'
-          }`}
-        >
+      <div className="flex flex-col flex-wrap md:flex-row">
           <FiltersDrawer
             collections={collections}
             filters={filters}
             appliedFilters={appliedFilters}
+            open={open}
+            openFrom="left"
+            onClose={toggle}
+            heading="Filters"
           />
         </div>
-
-        <>
+        <div className="flex-1">
           {children}
-        </>
-      </div>
-    </>
-  );
-}
-
-export function FiltersDrawer({
-  filters = [],
-  appliedFilters = [],
-  collections = [],
-}: {
-  filters: Filter[];
-  appliedFilters: AppliedFilter[];
-  collections: Collection[];
-}) {
-  const [params] = useSearchParams();
-  const location = useLocation();
-
-  const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
-    switch (filter.type) {
-      case 'PRICE_RANGE':
-        const min =
-          params.has('minPrice') && !isNaN(Number(params.get('minPrice')))
-            ? Number(params.get('minPrice'))
-            : undefined;
-
-        const max =
-          params.has('maxPrice') && !isNaN(Number(params.get('maxPrice')))
-            ? Number(params.get('maxPrice'))
-            : undefined;
-
-        return <PriceRangeFilter min={min} max={max} />;
-
-      default:
-        const to = getFilterLink(
-          filter,
-          option.input as string,
-          params,
-          location,
-        );
-        return (
-          <Link
-            className="focus:underline hover:underline"
-            prefetch="intent"
-            to={to}
-          >
-            {option.label}
-          </Link>
-        );
-    }
-  };
-
-  return (
-      <nav className="py-6 lg:py-10 space-y-4 w-full">
-        {appliedFilters.length > 0 ? (
-          <div className="">
-            <AppliedFilters filters={appliedFilters} />
-          </div>
-        ) : null}
-
-        <h4 className="pb-4 text-base md:text-lg font-semibold">
-          Filter By
-        </h4>
-        <div className=" flex gap-8 overflow-auto">
-          {filters.map(
-            (filter: Filter) =>
-              filter.values.length > 1 && (
-                <Disclosure as="div" key={filter.id} className="w-fit px-2">
-                  {({open}) => (
-                    <>
-                      <Disclosure.Button className="flex gap-x-2 lg:gap-x-4 justify-between w-full py-4">
-                        <Text size="sm">{filter.label}</Text>
-                        <IconCaret direction={open ? 'up' : 'down'} />
-                      </Disclosure.Button>
-                      <Disclosure.Panel key={filter.id}>
-                        <ul key={filter.id} className="py-2">
-                          {filter.values?.map((option) => {
-                            return (
-                              <li key={option.id} className="pb-4">
-                                {filterMarkup(filter, option)}
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </Disclosure.Panel>
-                    </>
-                  )}
-                </Disclosure>
-              ),
-          )}
         </div>
-      </nav>
-  );
-}
-
-function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
-  const [params] = useSearchParams();
-  const location = useLocation();
-  return (
-    <>
-        <h4 className="pb-4 text-base md:text-lg font-semibold">
-          Applied&nbsp;filters
-        </h4>
-      <div className="flex flex-wrap gap-2">
-        {filters.map((filter: AppliedFilter) => {
-          return (
-            <Link
-              to={getAppliedFilterLink(filter, params, location)}
-              className="flex items-center px-2 border rounded-full gap-x-2"
-              key={`${filter.label}-${filter.urlParam}`}
-            >
-              <span className="flex-grow">{filter.label}</span>
-                <HiX />
-            </Link>
-          );
-        })}
-      </div>
     </>
-  );
+  )
+
 }
 
-function getAppliedFilterLink(
-  filter: AppliedFilter,
-  params: URLSearchParams,
-  location: Location,
-) {
-  const paramsClone = new URLSearchParams(params);
-  if (filter.urlParam.key === 'variantOption') {
-    const variantOptions = paramsClone.getAll('variantOption');
-    const filteredVariantOptions = variantOptions.filter(
-      (options) => !options.includes(filter.urlParam.value),
-    );
-    paramsClone.delete(filter.urlParam.key);
-    for (const filteredVariantOption of filteredVariantOptions) {
-      paramsClone.append(filter.urlParam.key, filteredVariantOption);
-    }
-  } else {
-    paramsClone.delete(filter.urlParam.key);
-  }
-  return `${location.pathname}?${paramsClone.toString()}`;
-}
 
 function getSortLink(
   sort: SortParam,
@@ -216,118 +82,8 @@ function getSortLink(
   return `${location.pathname}?${params.toString()}`;
 }
 
-function getFilterLink(
-  filter: Filter,
-  rawInput: string | Record<string, any>,
-  params: URLSearchParams,
-  location: ReturnType<typeof useLocation>,
-) {
-  const paramsClone = new URLSearchParams(params);
-  const newParams = filterInputToParams(filter.type, rawInput, paramsClone);
-  return `${location.pathname}?${newParams.toString()}`;
-}
 
-const PRICE_RANGE_FILTER_DEBOUNCE = 500;
 
-function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
-  const location = useLocation();
-  const params = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search],
-  );
-  const navigate = useNavigate();
-
-  const [minPrice, setMinPrice] = useState(min ? String(min) : '');
-  const [maxPrice, setMaxPrice] = useState(max ? String(max) : '');
-
-  useDebounce(
-    () => {
-      if (
-        (minPrice === '' || minPrice === String(min)) &&
-        (maxPrice === '' || maxPrice === String(max))
-      )
-        return;
-
-      const price: {min?: string; max?: string} = {};
-      if (minPrice !== '') price.min = minPrice;
-      if (maxPrice !== '') price.max = maxPrice;
-
-      const newParams = filterInputToParams('PRICE_RANGE', {price}, params);
-      navigate(`${location.pathname}?${newParams.toString()}`);
-    },
-    PRICE_RANGE_FILTER_DEBOUNCE,
-    [minPrice, maxPrice],
-  );
-
-  const onChangeMax = (event: SyntheticEvent) => {
-    const newMaxPrice = (event.target as HTMLInputElement).value;
-    setMaxPrice(newMaxPrice);
-  };
-
-  const onChangeMin = (event: SyntheticEvent) => {
-    const newMinPrice = (event.target as HTMLInputElement).value;
-    setMinPrice(newMinPrice);
-  };
-
-  return (
-    <div className="flex flex-col">
-      <label className="mb-4">
-        <span>from</span>
-        <input
-          name="maxPrice"
-          className="text-black"
-          type="text"
-          defaultValue={min}
-          placeholder={'$'}
-          onChange={onChangeMin}
-        />
-      </label>
-      <label>
-        <span>to</span>
-        <input
-          name="minPrice"
-          className="text-black"
-          type="number"
-          defaultValue={max}
-          placeholder={'$'}
-          onChange={onChangeMax}
-        />
-      </label>
-    </div>
-  );
-}
-
-function filterInputToParams(
-  type: FilterType,
-  rawInput: string | Record<string, any>,
-  params: URLSearchParams,
-) {
-  const input = typeof rawInput === 'string' ? JSON.parse(rawInput) : rawInput;
-  switch (type) {
-    case 'PRICE_RANGE':
-      if (input.price.min) params.set('minPrice', input.price.min);
-      if (input.price.max) params.set('maxPrice', input.price.max);
-      break;
-    case 'LIST':
-      Object.entries(input).forEach(([key, value]) => {
-        if (typeof value === 'string') {
-          params.set(key, value);
-        } else if (typeof value === 'boolean') {
-          params.set(key, value.toString());
-        } else {
-          const {name, value: val} = value as {name: string; value: string};
-          const allVariants = params.getAll(`variantOption`);
-          const newVariant = `${name}:${val}`;
-          if (!allVariants.includes(newVariant)) {
-            params.append('variantOption', newVariant);
-          }
-        }
-      });
-      break;
-  }
-
-  return params;
-}
 
 export default function SortMenuDropdown() {
   const items: {label: string; key: SortParam}[] = [
@@ -354,11 +110,10 @@ export default function SortMenuDropdown() {
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
-<Menu as="div" className="relative inline-block text-left">
-      <div className='flex gap-x-2 items-center'>
-        <Text>Sort&nbsp;by</Text>
-        <Menu.Button className="capitalize inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          {activeItem?.key}
+    <Menu as="div" className="relative inline-block text-left ">
+      <div className='flex gap-x-2 items-center w-fit'>
+        <Menu.Button className="capitalize inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+          <Text as="span" bold color='grey' className='hover:text-custom-lightgrey'>Options</Text>
         </Menu.Button>
       </div>
 
@@ -373,13 +128,13 @@ export default function SortMenuDropdown() {
       >
         <Menu.Items
           as="nav"
-          className="z-10 absolute right-0 flex flex-col text-right rounded-sm mt-2 bg-custom-white shadow-sm w-full"
+          className="w-40 z-10 absolute right-0 flex flex-col text-right rounded-sm mt-2 bg-custom-white shadow-sm"
         >
           {items.map((item) => (
             <Menu.Item key={item.label}>
               {({active}) => (
                 <Link
-                  className={`block text-sm py-2 px-4 w-full  ${ activeItem?.key === item.key ? 'font-bold' : 'font-normal' } ${active ? "bg-custom-signature-green opacity-80 text-custom-white" : ""}`}
+                  className={`block text-sm py-2 px-4 w-full  ${ activeItem?.key === item.key ? 'font-bold' : '' } ${active ? "bg-custom-signature-green opacity-80 text-custom-white" : ""}`}
                   to={getSortLink(item.key, params, location)}
                 >
                   {item.label}

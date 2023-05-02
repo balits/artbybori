@@ -1,6 +1,7 @@
-import {Fragment, useState} from 'react';
-import {Dialog, Transition} from '@headlessui/react';
+import { Fragment, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 import { X } from './global/Icon';
+import { Heading } from './ui';
 
 export type DrawerProps = {
   heading: string | JSX.Element;
@@ -48,9 +49,8 @@ export function Drawer({
         <aside aria-roledescription="sidebar" className="fixed inset-0">
           <div className="absolute inset-0 overflow-hidden ">
             <div
-              className={`fixed flex  ${
-                openFrom === 'right' ? 'right-0' : ''
-              }`}
+              className={`fixed flex  ${openFrom === 'right' ? 'right-0' : ''
+                }`}
             >
               <Transition.Child
                 as={Fragment}
@@ -61,28 +61,27 @@ export function Drawer({
                 leaveFrom="translate-x-0"
                 leaveTo={offScreen[openFrom]}
               >
-                <Dialog.Panel className="overflow-auto w-screen md:w-[55vw] lg:w-[30vw]  w-sidebar text-left align-middle transition-all transform shadow-md h-screen-dynamic bg-custom-white">
-                  <header
-                    className={`bg-custom-white w-full header-height flex ${
-                      openFrom === 'left' ? 'flex-row-reverse' : 'flex-row'
-                    } items-center justify-between sticky top-0 justify-between`}
-                  >
-                    <button
-                      type="button"
-                      className="p-4 transition"
-                      onClick={onClose}
-                      data-test="close-cart"
-                    >
-                      <X aria-label="Close panel" className="w-5 h-5" />
-                    </button>
+                <Dialog.Panel className="overflow-auto w-screen md:w-[55vw] lg:w-[25vw]  w-sidebar text-left align-middle transition-all transform shadow-md h-screen-dynamic bg-custom-white p-4">
+                  <header className="bg-custom-white w-full header-height flex  items-center justify-between sticky top-0 justify-between" >
                     <Dialog.Title>
-                      <div
-                        className="p-4 text-2xl font-medium"
+                      <Heading
+                        as="span"
+                        size='sm'
+                        font='font-sans'
+                        bold
                         id="cart-contents"
                       >
                         {heading}
-                      </div>
+                      </Heading>
                     </Dialog.Title>
+                      <button
+                        type="button"
+                        className="p-4 transition"
+                        onClick={onClose}
+                        data-test="close-cart"
+                      >
+                        <X aria-label="Close panel" className="w-5 h-5" />
+                      </button>
                   </header>
                   <div className='h-minus-header'>
                     {children}

@@ -87,9 +87,9 @@ export function Heading({
   ...props
 }: HeadingProp) {
   const sizes = {
-    sm: "text-lg sm:text-xl md:text-2xl lg:text-3xl mb-2 md:mb-3 lg:mb-4",
-    md: "tracking-tight text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 lg:mb-8",
-    lg: "tacking-tight text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-6 md:mb-8 lg:mb-12",
+    sm: "text-lg sm:text-xl md:text-2xl lg:text-3xl mb-2 md:mb-3 lg:mb-4" + " " + (spacing ? "py-4 md:py-6 lg:py-8 "  : ""),
+    md: "tracking-tight text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-5 lg:mb-6" + " " + (spacing ? "py-6 md:py-8 lg:py-12" : ""),
+    lg: "tacking-tight text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-6 md:mb-8 lg:mb-12" + " " + (spacing ? " py-8 md:py-12 lg:py-16" : ""),
   }
 
   const colors: Record<string, string> = {
@@ -107,7 +107,6 @@ export function Heading({
     colors[color],
     bold && "font-semibold",
     font,
-    spacing ? "my-6 md:my-10 lg:my-12 " : "",
     className,
   );
 
