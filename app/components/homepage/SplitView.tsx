@@ -5,7 +5,7 @@ import { Link } from '../ui/Link';
 
 export default function SplitView() {
   return (
-    <section className="pt-8 md:py-16 lg:py-20 w-full flex flex-col justify-center items-center">
+    <section className=" py-8 md:py-16 lg:py-20 pt-20 w-full flex flex-col justify-center items-center">
       <div className="overflow-hidden relative  w-full grid grid-cols-2 h-[65vh] lg:h-screen">
         <Link
           to="/shop"
@@ -17,7 +17,7 @@ export default function SplitView() {
           />
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover object-bottom transition-colors ease-in-out group-hover:bg-black/10" />
           <div className="absolute inset-0 w-full h-full grid place-items-center font-medium text-custom-white z-[2] ">
-            <Heading size='md'>
+            <Heading size='sm'>
               Surround yourself
               <br />
               with beautiful things.

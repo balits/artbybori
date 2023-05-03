@@ -20,7 +20,8 @@ import {
   SortParam,
 } from '~/routes/($lang)/categories/$categoryHandle';
 import FiltersDrawer from '~/components/drawer/FiltersDrawer';
-import { Filter as FilterIcon } from './global/Icon';
+import { Bars, Filter as FilterIcon } from './global/Icon';
+import { HiChevronDown } from 'react-icons/hi';
 
 type Props = {
   filters: Filter[];
@@ -48,7 +49,7 @@ export function SortFilter({
             'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5'
           }
         >
-          <FilterIcon />
+          <Bars />
         </button>
         <SortMenuDropdown />
       </div>
@@ -111,8 +112,13 @@ export default function SortMenuDropdown() {
   return (
     <Menu as="div" className="relative inline-block text-left ">
       <div className='flex gap-x-2 items-center w-fit'>
-        <Menu.Button className="capitalize inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          <Text as="span" bold color='grey' className='hover:text-custom-lightgrey'>Options</Text>
+        <Menu.Button className="group capitalize inline-flex items-center justify-center gap-x-1.5 bg-white px-3 py-2 text-gray-900">
+
+          <Text as="span" color='grey' className='group-hover:text-custom-lightgrey'>
+            Sort by: <span>{activeItem?.label}
+            </span>
+          </Text>
+          <HiChevronDown className='group-hover:text-custom-lightgrey'/>
         </Menu.Button>
       </div>
 
