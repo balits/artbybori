@@ -22,8 +22,8 @@ export default function CartView({ cart }: { cart: Cart | null }) {
   return !isEmpty ? (
     <Container className='scaling-mt-header overflow-auto'>
       <Heading spacing>Your cart.</Heading>
-      <div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-5 lg:gap-x-6'>
-        <section aria-labelledby="cart-contents" className='lg:col-span-3 grid grid-cols-1 '>
+      <div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-5 lg:gap-x-6 lg:grid-rows-1'>
+        <section aria-labelledby="cart-contents" className='lg:col-span-3 flex flex-col items-start justify-start'>
           <ul className="">
             {lines.map(
               (l) =>
