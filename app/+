@@ -73,31 +73,31 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <div className='h-full grid grid-rows-8 grid-cols-1 '>
-      <section className="h-full relative row-span-7">
-        <ul className="h-full overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green">
+    <>
+      <section className="h-full relative">
+        <ul className="h-fit overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green pr-2">
           {lines.map(
             (l) =>
               l.id && (
-                <li key={l.id} className="h-fit w-full py-6 ">
+                <li key={l.id} className="h-fit w-full py-8 ">
                   <CartLineItem cartLine={l} closeDrawer={closeDrawer} />
                 </li>
               )
           )}
         </ul>
+
       </section>
 
-      <div className="w-full flex items-center justify-center ">
+      <div className="sticky bottom-0  z-[52] w-full flex flex-col pb-8 bg-custom-white rounded-t-md">
         <Button
           onClick={closeDrawer}
           variant="signature"
           to="/cart"
-          className="w-full"
         >
           View cart
         </Button>
       </div>
-    </div>
+    </>
   ) : (
     <section className='w-full h-full px-4 flex items-center justify-center'>
       <Empty closeDrawer={closeDrawer} />
@@ -227,14 +227,14 @@ function Badge({
 
   const BadgeCounter = useMemo(
     () => (
-      <div className='relative'>
+      <>
         <ShoppingBag />
         <div
-          className=' absolute -bottom-3 -right-3 text-custom-white bg-black w-5 h-5 rounded-full flex items-center justify-center'
+          className='text-custom-white bg-custom-black absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px'
         >
-          <span className='text-xs'>{count || 0}</span>
+          <span>{count || 0}</span>
         </div>
-      </div>
+      </>
     ),
     [count],
   );

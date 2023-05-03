@@ -71,9 +71,9 @@ export default function ContactPage() {
                 opacity: 1,
               }}
               transition={{
-                delay: .3,
-                ease: "easeIn",
-                type: "tween"
+                delay: .5,
+                stiffness:300,
+                damping:20
               }}
             >
               <Heading as="h1" size='lg' font='font-sans' className="font-bold">
@@ -236,7 +236,7 @@ function ContactForm() {
       >
         <Button
           as="span"
-          className="text-lg font-medium uppercase py-2 px-20 rounded-none"
+          className="text-lg font-medium uppercase py-2 px-20 "
           type="submit"
           disabled={navigation.state === 'submitting' || message.length < 10}
         >
@@ -252,7 +252,7 @@ function FAQ() {
     visible: {
       transition: {
         staggerChildren: 0.3,
-        delayChildren: 0.5
+        delayChildren: 0.3
       },
     },
   };

@@ -3,7 +3,7 @@ import { Container } from '~/components/global/Container';
 import { HeadersFunction, LinksFunction } from '@shopify/remix-oxygen';
 import { seoPayload } from '~/lib/seo.server';
 import { json } from '@shopify/remix-oxygen';
-import { Text } from '~/components/ui';
+import { Heading, Text } from '~/components/ui';
 import { delay, motion, Variants } from 'framer-motion'
 import { useInView } from 'react-intersection-observer';
 
@@ -36,7 +36,7 @@ export async function loader() {
 export default function About() {
   return (
     <>
-      <section className="flex flex-col-reverse md:grid md:grid-cols-2  w-full h-fit md:h-minus-header scaling-mt-header">
+      <section className="flex flex-col md:grid md:grid-cols-2  w-full h-fit md:h-minus-header scaling-mt-header">
         <div className="relative overflow-hidden bg-custom-signature-green h-minus-header">
           <img
             src='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_5080.jpg?v=1681895607'
@@ -45,11 +45,11 @@ export default function About() {
 
         </div>
 
-        <div className="h-minus-header bg-custom-signature-green text-custom-white flex items-end justify-center px-7 md:px-8 md:px-12">
-          <div className="py-28 md:pt-0">
-            <h1 className="mb-20  text-6xl md:text-7xl lg:text-8xl font-serif">Hi&nbsp;there!</h1>
+        <div className="md:h-minus-header bg-custom-signature-green text-custom-white flex items-end justify-center px-6 md:px-8 lg:px-12  ">
+          <div className="py-12 md:py-20 lg:py-28 md:pt-0">
+            <Heading as="h1" size="md" className="mb-8 md:mb-16 lg:mb-20">Hi&nbsp;there!</Heading>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <Text size="md">
+              <Text >
                 I always wanted to be an independent artist, I&apos;d thought
                 about it since I was a little girl. In 2017 I got accepted in
                 the Secondary School of Visual Arts. Here I learned all the

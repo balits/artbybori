@@ -58,7 +58,7 @@ id
 title
 description
 handle
-images(first: 1) {
+images(first: 2) {
 nodes {
 altText
 url

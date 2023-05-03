@@ -214,6 +214,17 @@
     }
   }
 
+  .card-image-rounded-none {
+    @apply relative flex items-center justify-center overflow-clip rounded-none;
+    &::before {
+      content: ' ';
+      @apply absolute top-0 left-0 z-10 block h-full w-full shadow-border;
+    }
+    img {
+      @apply aspect-[inherit] w-full object-cover;
+    }
+  }
+
   .card-image {
     @apply relative flex items-center justify-center overflow-clip rounded-md;
     &::before {

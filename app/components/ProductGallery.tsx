@@ -31,7 +31,7 @@ export function ProductGallery({
   const {width} = useWindowSize();
 
   return width <= 768 ? (
-    <Carousel responsive={repsonsive} arrows={false} draggable showDots customDot={<MyDots />}>
+    <Carousel className='' responsive={repsonsive} arrows={false} draggable showDots customDot={<MyDots />}>
       {media.map((med, i) => {
         let mediaProps: Record<string, any> = {};
 
@@ -79,7 +79,7 @@ export function ProductGallery({
           mediaProps.loading = ATTR_LOADING_EAGER;
         }
 
-        const style = 'w-full aspect-square snap-center card-image bg-gray-100 '
+        const style = 'w-full h-[60vh] aspect-square snap-center card-image-rounded-none bg-gray-100 '
 
         return (
           <div
@@ -91,7 +91,7 @@ export function ProductGallery({
             {(med as MediaImage).image && (
               <MediaFile
                 tabIndex={0}
-                className={`w-full h-full aspect-square fadeIn object-cover `}
+                className={`w-full aspect-square fadeIn object-cover `}
                 data={data}
                 // @ts-ignore
                 options={{

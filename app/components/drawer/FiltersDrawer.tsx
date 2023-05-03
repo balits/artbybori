@@ -75,7 +75,7 @@ export default function FiltersDrawer({
       heading={heading}
     >
 
-      <div className="mt-4 space-y-4 h-full w-full">
+      <div className="space-y-4 h-full w-full">
         {appliedFilters.length > 0 && <AppliedFilters filters={appliedFilters} />}
 
         <ul className="flex flex-col divide-y divide-custom-placeholder-green overflow-auto">

@@ -41,6 +41,7 @@ module.exports = {
       },
       gridRow: {
         'span-4': 'span 4 / span 4',
+        'span-7': 'span 7 / span 7',
       },
       maxWidth: {
         '8xl': '1920px',

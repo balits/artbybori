@@ -91,7 +91,7 @@ function CartLineItem({ cartLine, comparePrice = false }: CartLineItemProps) {
                 </li>
               ))}
             </ul>
-            <MyMoney data={cartLine.cost.totalAmount} className="text-xs md:text-sm font-semibold" />
+            <MyMoney data={cartLine.cost.totalAmount} size="sm"/>
 
             {variant.availableForSale ? (
               <div className='mt-12 flex items-center gap-x-3'>
