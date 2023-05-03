@@ -112,7 +112,7 @@ export default function SortMenuDropdown() {
   return (
     <Menu as="div" className="relative inline-block text-left ">
       <div className='flex gap-x-2 items-center w-fit'>
-        <Menu.Button className="group capitalize inline-flex items-center justify-center gap-x-1.5 bg-white px-3 py-2 text-gray-900">
+        <Menu.Button className="group capitalize inline-flex items-center justify-center gap-x-1.5 bg-custom-white px-3 py-2 text-gray-900">
 
           <Text as="span" color='grey' className='group-hover:text-custom-lightgrey'>
             Sort by: <span>{activeItem?.label}
