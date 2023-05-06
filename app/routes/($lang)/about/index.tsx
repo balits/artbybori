@@ -109,7 +109,7 @@ const TextGrid = () => {
 
 
   const [ref, inView] = useInView({
-    threshold:1,
+    threshold:.3,
     triggerOnce: true
   })
   return (

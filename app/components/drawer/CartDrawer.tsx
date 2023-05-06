@@ -73,7 +73,7 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <div className='pb-4 h-full grid grid-rows-8 grid-cols-1'>
+    <div className='relative h-full grid grid-rows-8 grid-cols-1'>
       <section className="h-full relative row-span-7 ">
         <ul className="h-full overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green">
           {lines.map(
@@ -87,7 +87,9 @@ function CartSidebarView({
         </ul>
       </section>
 
-      <div className="z-[52] bg-custom-white  w-full flex flex-col gap-4 items-center justify-center ">
+      <div className='bg-red-500 w-full h-32'>kutyí</div>
+
+      {/* <div className="bottom-0 z-[52] bg-custom-white  w-full flex flex-col gap-4 items-center justify-center ">
         {cart.checkoutUrl && (
           <Button
             to={cart.checkoutUrl}
@@ -104,7 +106,8 @@ function CartSidebarView({
         >
           View cart
         </Button>
-      </div>
+      </div> */}
+
     </div>
   ) : (
     <section className='w-full h-full px-4 flex items-center justify-center'>
