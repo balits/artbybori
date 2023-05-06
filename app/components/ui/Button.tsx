@@ -6,15 +6,15 @@ import { missingClass } from '~/lib/utils';
 
 export type ButtonProps = {
   as?: React.ElementType;
-  to: string | undefined | null,
+  to?: string
   className?: string;
   variant?: 'signature' | 'light' | 'dark' | "inline"
   width?: 'auto' | 'full';
-  isDisabled: boolean
+  isDisabled?: boolean
   [key: string]: any;
 };
 
-export const Button = forwardRef(({
+export const Button = ({
   as: Component = 'button',
   className = '',
   to,
@@ -22,9 +22,7 @@ export const Button = forwardRef(({
   width = 'auto',
   isDisabled = false,
   ...props
-}: ButtonProps,
-  ref
-) => {
+}: ButtonProps) => {
   const baseButtonClasses =
     'inline-block rounded-md font-medium text-center py-3 px-6 ';
 
@@ -32,7 +30,7 @@ export const Button = forwardRef(({
     signature: " bg-custom-signature-green text-custom-white hover:opacity-80 active:opacity-90",
     light: " border border-custom-black bg-custom-white text-custom-black hover:bg-gray-100/50 active:bg-gray-100",
     dark: " border border-custom-black bg-custom-black text-custom-white hover:opacity-80 active:opacity-90",
-    inline: "border-b border-custom-grey text-custom-black leading-none pb-1 hover:opacity-80 active:opacity-90",
+    inline: "border-b border-custom-grey text-custom-black leading-none pb-1 hover:opacity-80 active:opacity-90 rounded-none",
   };
 
   const widths = {
@@ -63,9 +61,7 @@ export const Button = forwardRef(({
       className={styles}
       role="button"
       {...props}
-      ref={ref}
     />
   )
-},
-);
+};
 

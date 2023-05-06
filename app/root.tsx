@@ -16,28 +16,28 @@ import {
   useLoaderData,
   useMatches,
 } from '@remix-run/react';
-import {ShopifySalesChannel, Seo, useShopifyCookies, getClientBrowserParameters, sendShopifyAnalytics, AnalyticsEventName, ShopifyPageView, ShopifyPageViewPayload} from '@shopify/hydrogen';
+import { ShopifySalesChannel, Seo, useShopifyCookies, getClientBrowserParameters, sendShopifyAnalytics, AnalyticsEventName, ShopifyPageView, ShopifyPageViewPayload } from '@shopify/hydrogen';
 import Layout from './components/global/Layout';
-import {GenericError} from './components/GenericError';
 import tailwind from './styles/app.css';
 import carouselCss from "react-multi-carousel/lib/styles.css";
 import favicon from '../public/favicon.svg';
-import {seoPayload} from '~/lib/seo.server';
-import {DEFAULT_LOCALE} from './lib/utils';
+import { seoPayload } from '~/lib/seo.server';
+import { DEFAULT_LOCALE } from './lib/utils';
 import invariant from 'tiny-invariant';
-import {Shop, Cart} from '@shopify/hydrogen/storefront-api-types';
-import {useAnalytics} from './hooks/useAnalytics';
+import { Shop, Cart } from '@shopify/hydrogen/storefront-api-types';
+import { useAnalytics } from './hooks/useAnalytics';
 import Container from './components/global/Container';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-use';
+import { useLocation } from '@remix-run/react';
 import { useAnalyticsFromLoaders } from './lib/analytics';
+import { Button } from './components/ui';
 
 export const links: LinksFunction = () => {
   return [
-    {rel: 'stylesheet', href: carouselCss},
-    {rel: 'stylesheet', href: tailwind},
-    {rel: "stylesheet", href: "https://rsms.me/inter/inter.css"},
-    {rel: "preconnect", href: "https://rsms.me/inter/inter.css"},
+    { rel: 'stylesheet', href: carouselCss },
+    { rel: 'stylesheet', href: tailwind },
+    { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
+    { rel: "preconnect", href: "https://rsms.me/inter/inter.css" },
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
@@ -46,7 +46,7 @@ export const links: LinksFunction = () => {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    { rel: 'icon', type: 'image/svg+xml', href: favicon },
   ];
 };
 
@@ -55,14 +55,14 @@ export const meta: MetaFunction = () => ({
   viewport: 'width=device-width,initial-scale=1',
 });
 
-export async function loader({request, context}: LoaderArgs) {
+export async function loader({ request, context }: LoaderArgs) {
   const [customerAccessToken, cartId, shop] = await Promise.all([
     context.session.get('customerAccessToken'),
     context.session.get('cartId'),
     getLayoutData(context),
   ]);
 
-  const seo = seoPayload.root({shop: shop, url: request.url});
+  const seo = seoPayload.root({ shop: shop, url: request.url });
 
 
 
@@ -84,15 +84,16 @@ export default function App() {
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
 
   const [userConset, setUserConsent] = useState(false);
-  useShopifyCookies({hasUserConsent: userConset})
+  useShopifyCookies({ hasUserConsent: userConset })
 
   const location = useLocation();
-  const ana = useAnalyticsFromLoaders();
+  const pageAnalytics = useAnalyticsFromLoaders();
 
- useEffect(() => {
+  useEffect(() => {
+    console.log(pageAnalytics)
     const payload = {
       ...getClientBrowserParameters(),
-      ...ana,
+      ...pageAnalytics,
       userConset,
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
     };
@@ -113,7 +114,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body  className='selection:bg-custom-brighter-green'>
+      <body className='selection:bg-custom-brighter-green'>
         <Layout>
           <Outlet />
         </Layout>
@@ -124,26 +125,77 @@ export default function App() {
   );
 }
 
-function NotFoundError({type}: {type?: string}) {
-  const description = `We couldn’t find the ${type} you’re looking for. Try checking the URL or heading back to the home page.`;
-
+function AcceptCookiesModal() {
   return (
-    <section className="w-full h-[50vh] grid place-items-center">
-      <div>
-        <h1 className="font-semibold tracking-tight text-2xl md:text-3xl lg:text-4  mb-8">
-          Page Not Found
-        </h1>
-        <p className="text-autoscale-small text-custom-black/60 mb-2">{description}</p>
-        <Link
-          to="/"
-          prefetch="intent"
-          className="underline decoration-1  hover:text-custom-signature-green"
-        >
-          Take me to the homepage.
-        </Link>
-      </div>
-    </section>
+    <aside>
+
+    </aside>
+  )
+}
+
+function NotFoundError({ type }: { type?: string }) {
+  return (
+    <div className="text-center">
+      <p className="text-base font-semibold text-custom-signature-green">404</p>
+      <h1 className="mt-4 text-3xl font-bold tracking-tight text-custom-black sm:text-5xl">Page not found</h1>
+      <p className="mt-6 text-base leading-7 text-custom-lightgrey">
+        Whoops! We couldn&apos;t find the page you&apos;re looking for.
+      </p>
+      <Button
+        href="#"
+        variant="signature"
+        className="mt-8"
+        to="/"
+      >
+        Go back home
+      </Button>
+    </div>
   );
+}
+
+function GenericError({ error }: { error?: { message: string, stack?: string } }) {
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }
+  function addLinksToStackTrace(stackTrace: string) {
+    return stackTrace?.replace(
+      /^\s*at\s?.*?[(\s]((\/|\w\:).+)\)\n/gim,
+      (all, m1) =>
+        all.replace(
+          m1,
+          `<a href="vscode://file${m1}" class="hover:underline">${m1}</a>`,
+        ),
+    );
+  }
+  return (
+    <div className="text-center">
+      <p className="text-base font-semibold text-custom-signature-green">ERROR</p>
+      <h1 className="mt-4 text-3xl font-bold tracking-tight text-custom-black sm:text-5xl">Something ain&apos;t right...</h1>
+      <p className="mt-6 text-base leading-7 text-custom-lightgrey" >{error?.message}</p>
+      {error?.stack && (<pre
+        style={{
+          padding: '2rem',
+          background: 'hsla(10, 50%, 50%, 0.1)',
+          color: 'red',
+          overflow: 'auto',
+          maxWidth: '100%',
+        }}
+        dangerouslySetInnerHTML={{
+          __html: addLinksToStackTrace(error.stack),
+        }}
+      />
+      )}
+      <Button
+        href="#"
+        variant="signature"
+        className="mt-8"
+        to="/"
+      >
+        Go back home
+      </Button>
+    </div>
+  )
 }
 
 export function CatchBoundary() {
@@ -159,25 +211,27 @@ export function CatchBoundary() {
         <Meta />
         <Links />
       </head>
-      <body className='overflow-clip'>
-        <Layout>
-          <Container className='scaling-mt-header'>
+      <body className=''>
+        <Layout noFooter>
+          <div className='h-screen grid place-items-center  px-8'>
+
             {isNotFound ? (
               <NotFoundError type={caught.data?.pageType} />
             ) : (
-                <GenericError
-                  error={{message: `${caught.status} ${caught.data}`}}
-                />
-              )}
-          </Container>
+              <GenericError
+                error={{ message: `${caught.status} ${caught.data}` }}
+              />
+            )}
+          </div>
         </Layout>
+        <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
 }
 
-export function ErrorBoundary({error}: {error: Error}) {
+export function ErrorBoundary({ error }: { error: Error }) {
   const [root] = useMatches();
   const locale = root?.data?.selectedLocale ?? DEFAULT_LOCALE;
 
@@ -188,13 +242,16 @@ export function ErrorBoundary({error}: {error: Error}) {
         <Meta />
         <Links />
       </head>
-      <body className='overflow-clip'>
-        <Layout>
-          <Container className='scaling-mt-header'>
-            <GenericError error={error} />
-          </Container>
+      <body className=''>
+        <Layout noFooter>
+          <div className='h-screen grid place-items-center  px-8'>
+              <GenericError
+                error={error}
+              />
+          </div>
         </Layout>
-        <Scripts />
+        <ScrollRestoration />
+        <Scripts/>
       </body>
     </html>
   );
@@ -222,8 +279,8 @@ const LAYOUT_QUERY = `#graphql
   }
 `;
 
-async function getLayoutData({storefront}: AppLoadContext) {
-  const data = await storefront.query<{shop: Shop}>(LAYOUT_QUERY, {
+async function getLayoutData({ storefront }: AppLoadContext) {
+  const data = await storefront.query<{ shop: Shop }>(LAYOUT_QUERY, {
     variables: {
       language: storefront.i18n.language,
     },
@@ -348,10 +405,10 @@ const CART_QUERY = `#graphql
   }
 `;
 
-export async function getCart({storefront}: AppLoadContext, cartId: string) {
+export async function getCart({ storefront }: AppLoadContext, cartId: string) {
   invariant(storefront, 'missing storefront client in cart query');
 
-  const {cart} = await storefront.query<{cart?: Cart}>(CART_QUERY, {
+  const { cart } = await storefront.query<{ cart?: Cart }>(CART_QUERY, {
     variables: {
       cartId,
       country: storefront.i18n.country,

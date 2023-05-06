@@ -4,7 +4,7 @@ import { useActionData, useFetcher, Form, useNavigation, useTransition } from '@
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import { useRef, useState } from 'react';
 import { seoPayload } from '~/lib/seo.server';
-import { Heading, Button } from '~/components/ui';
+import { Heading, Button, Link } from '~/components/ui';
 import { motion, Variants, useInView } from "framer-motion"
 
 export async function action({ request, params, context }: ActionArgs) {
@@ -363,13 +363,12 @@ function FAQ() {
             <summary className="contact-summary">
               Do you accept returns or refunds?
             </summary>
-            <p className="p-2 mb-2">
-              We do not accept returns or exchanges unless the item was damaged
-              upon arrival. In the unfortunate event that an item is blemished
-              during transport, please reach out to us at artbybori@gmail.com
-              with pictures of the product and we will work out the best
-              solution for you!
-            </p>
+            <div className="p-2 mb-2 flex flex-col items-start justify-start gap-y-4">
+              <p>If you not satisfied with your order you have 14 days after delivery to reach out to us at artbybori@gmail.com and we will work together to find a solution, whether it be an item refund and return (minus shipping) or a replacement piece (note: As some of my pieces are one-of-a-kind, your replacement may not be exactly the same as your original, but we will do our best to find a solution that works on both ends. Replacement items may take up to 6 weeks to complete). As noted above, shipping charges will not be refunded and the cost of return is on the customer.</p>
+              <Link to="/policies/return-policy" className="underline ">
+                Learn more here.
+              </Link>
+            </div>
           </motion.details>
         </motion.div>
       </Container>

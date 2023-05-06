@@ -58,7 +58,7 @@ export default function About() {
                 throwing small cups and mugs and then bigger and bigger objects.
                 Low and behold, Art by Bori was born.
               </Text>
-              <Text as="div" size='md' className='flex flex-col space-y-6'>
+              <Text  size='md' className='flex flex-col space-y-6'>
                 <span>
                   I make one of a kind ceramics in small batches that I sell in my
                   online shop or sometimes on local art markets.
@@ -109,14 +109,14 @@ const TextGrid = () => {
     triggerOnce: true
   })
   return (
-    <Container as="section" className="">
+    <Container as="section" className="grid place-items-center">
       <motion.ul
         ref={ref}
-        className='grid gap-y-4 md:gap-y-10 lg:gap-y-12 gap-x-16 lg:grid-cols-3 my-20 md:my-28 lg:my-40'
+        className='flex flex-col lg:flex-row items-start justify-center gap-y-4 md:gap-y-10 lg:gap-y-12 gap-x-16 my-20 md:my-28 lg:my-40'
         variants={list}
         animate={inView ? "visible" : "hidden"}
       >
-        {texts.map((txt, idx) => (
+        {texts.map(txt => (
           <motion.li
             key={txt.id}
             className="grid place-items-center"
@@ -128,9 +128,9 @@ const TextGrid = () => {
               <div className='h-44 w-fit grid place-items-center'>
                 <txt.icon />
               </div>
-              <p  className='mt-4 lg:mt-6 text-autoscale-small sm:w-1/2 lg:w-full'>
+              <Text  className='mt-4 lg:mt-6 sm:w-1/2 lg:w-full flex flex-col items-center justify-center gap-y-4'>
                 {txt.body}
-              </p>
+              </Text>
             </div>
           </motion.li>
         ))}
@@ -334,24 +334,29 @@ const SVG3 = () => (
 
 
 interface Txt {
-  body: string,
+  body: JSX.Element | string,
   icon: () => JSX.Element,
   id: number
 }
 
 const texts: Txt[] = [
   {
-    body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
+    body:"As a passionate artist, I specialize in creating functional and decorative ceramics that are both beautiful and practical. Each piece is carefully handcrafted in my home studio using high-quality materials and techniques, ensuring that every item is unique and made to last.",
     icon: SVG1,
     id: 1
   },
   {
-    body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
+    body: (
+      <>
+        <span>Whether you are looking for a one-of-a-kind mug to enjoy your morning coffee, a beautiful vase to brighten up your home decor, or a personalized gift for a loved one, I offer a variety of products that are perfect for any occasion.</span>
+        <span>I believe that every piece of ceramics has its own story to tell, and I strive to imbue my creations with a sense of warmth and personality. From the natural textures and colors of my glazes to the details of my hand-built pieces, my work is inspired by the beauty of the world around me.</span>
+      </>
+    ),
     icon: SVG2,
     id: 2
   },
   {
-    body: "All of our products are arefully had-crafted by ceramic artist, Bori Borbely. They fire at high temperatures so they are microwave and dishwasher safe. All of our products are arefully had-crafted by ceramic artist, Bori Borbely.",
+    body: "So, take a look around my website and discover the joy of handmade ceramics. If you have any questions or special requests, feel free to contact me at artbybori@gmail.com, and I will be more than happy to assist you. Thank you for visiting my website, and I hope you find something that speaks to you.",
     icon: SVG3,
     id: 3
   },

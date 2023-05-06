@@ -155,7 +155,6 @@ export default function Category() {
   const {collection, collections, appliedFilters} =
     useLoaderData<typeof loader>();
 
-  console.log(collection)
   return (
     <Container as={"section"} className='scaling-mt-header mb-16 '>
       <div className='mb-6'>

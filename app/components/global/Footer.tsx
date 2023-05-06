@@ -54,13 +54,11 @@ export default function Footer() {
 
             <div className="h-fit row-start-1 col-span-2 md:row-start-auto md:col-span-1">
               <Strong text="Art by Bori" />
-              <Text size="md">
-                I make one of a kind ceramics in small batches that I sell in my
-                online shop or sometimes on local art markets.
+              <Text size="md" className="mb-4">
+                Art by Bori is a Hungarian based small business that focuses on handmade, timeless pieces that you will have in your home forever.
               </Text>
               <Text size="md">
-                With the pieces I sell and create, I hope to brighten your
-                spaces and everyday rituals.
+                With the pieces we sell and create, we hope to brighten your spaces and everyday rituals.
               </Text>
             </div>
           </div>

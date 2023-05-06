@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react"
 import {IconBaseProps} from "react-icons"
 import { BiShoppingBag } from "react-icons/bi";
-import { HiCheck, HiFilter, HiMinus, HiPlus, HiSearch, HiX, HiXCircle } from "react-icons/hi";
+import { HiArrowLeft, HiCheck, HiFilter, HiMinus, HiPlus, HiSearch, HiX, HiXCircle } from "react-icons/hi";
 import { HiBars2, HiBars3BottomLeft, HiListBullet, HiOutlineArrowPath } from "react-icons/hi2";
 
 type IconProps = IconBaseProps & {
@@ -92,5 +92,11 @@ export function Filter(props: IconProps) {
 export function Spinner(props: IconProps) {
   return <IconWrapper {...props}>
     <HiOutlineArrowPath className="animate-spin" />
+  </IconWrapper>
+}
+
+export function LeftArrow(props: IconProps) {
+  return <IconWrapper {...props}>
+    <HiArrowLeft />
   </IconWrapper>
 }

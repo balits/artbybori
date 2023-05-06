@@ -6,7 +6,7 @@ import { Suspense, useMemo } from 'react';
 import { Link, Button, Text, MyMoney } from '../ui';
 import { HiArrowPath } from 'react-icons/hi2';
 import { useIsHydrated } from '~/hooks/useIsHydrated';
-import { RemoveItem, DecrementQuantity, IncrementQuantity } from "~/components/cart/CartView"
+import { RemoveItem, DecrementQuantity, IncrementQuantity, QuantitySection } from "~/components/cart/CartView"
 import { Check, ShoppingBag, Spinner, XCirlce } from '../global/Icon';
 
 function Empty({
@@ -123,10 +123,10 @@ function CartLineItem({ cartLine, closeDrawer }: { cartLine: CartLine, closeDraw
   return (
     <div className="w-full  grid grid-cols-3 grid-rows-1 gap-x-4 pr-2">
       <Link to={`/products/${product.handle}`} prefetch="intent" onClick={closeDrawer} className="col-span-1">
-        <div className='relative bg-custom-placeholder-grey'>
+        <div className='aspect-square w-full h-full relative bg-custom-placeholder-grey'>
           {variant.image && (
             <Image
-              className="overflow-hidden card-image object-cover object-center absolute w-full h-full aspect-square bg-custom-placeholder-grey"
+              className="card-image object-cover object-center aspect-square w-full fadeIn bg-custom-placeholder-green"
               data={variant.image}
               alt={product.title}
               loading="lazy"
@@ -179,21 +179,10 @@ function CartLineItem({ cartLine, closeDrawer }: { cartLine: CartLine, closeDraw
             <label htmlFor={`quantity-${id}`} className="sr-only">
               Quantity, {qty}
             </label>
-            <div className="flex items-center justify-center">
-              <DecrementQuantity
-                id={id}
-                quantity={prevQuantity}
-                disabled={qty <= 1}
-              />
-              <Text className="p-2 w-full h-full grid  place-items-center">
-                {qty}
-              </Text>
-              <IncrementQuantity
-                id={id}
-                quantity={nextQuantity}
-                disabled={false}
-              />
-            </div>
+            <QuantitySection
+              id={id}
+              quantity={qty}
+            />
 
             <RemoveItem itemID={id} />
 

@@ -29,7 +29,7 @@ export default function CartView({ cart }: { cart: Cart | null }) {
               (l) =>
                 l.id && (
                   <li key={l.id}>
-                    <CartLineItem cartLine={l}/>
+                    <CartLineItem cartLine={l} />
                   </li>
                 ),
             )}
@@ -55,8 +55,6 @@ function CartLineItem({ cartLine, comparePrice = false }: CartLineItemProps) {
   const { id, quantity: qty, merchandise: variant } = cartLine;
   const product = variant.product;
 
-  const prevQuantity = Number(Math.max(0, qty - 1).toFixed(0));
-  const nextQuantity = Number((qty + 1).toFixed(0));
 
   const realOptions = variant.selectedOptions.filter((o) => o.name !== "Title" && o.name !== "title")
 
@@ -91,7 +89,7 @@ function CartLineItem({ cartLine, comparePrice = false }: CartLineItemProps) {
                 </li>
               ))}
             </ul>
-            <MyMoney data={cartLine.cost.totalAmount} size="sm"/>
+            <MyMoney data={cartLine.cost.totalAmount} size="sm" />
 
             {variant.availableForSale ? (
               <div className='mt-12 flex items-center gap-x-3'>
@@ -111,23 +109,14 @@ function CartLineItem({ cartLine, comparePrice = false }: CartLineItemProps) {
               Quantity, {qty}
             </label>
 
-            <div className="flex items-center justify-center">
-              <DecrementQuantity
-                id={id}
-                quantity={prevQuantity}
-                disabled={qty <= 1}
-              />
-              <Text className="p-2 w-full h-full grid  place-items-center">
-                {qty}
-              </Text>
-              <IncrementQuantity
-                id={id}
-                quantity={nextQuantity}
-                disabled={false}
-              />
-            </div>
+            <QuantitySection
+              id={id}
+              quantity={qty}
+            />
 
-            <div className='ml-4'> <RemoveItem itemID={id} /> </div>
+            <div className='ml-4'>
+              <RemoveItem itemID={id} />
+            </div>
           </div>
         </div>
       </div>
@@ -194,13 +183,45 @@ function CartSummary({ cart, className }: CartSummaryProps) {
   );
 }
 
-type QuantityProps = {
+
+type QuantitySectionProps = {
+  id: string,
+  quantity: number,
+}
+
+export function QuantitySection({
+  id,
+  quantity
+}: QuantitySectionProps) {
+  const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
+  const nextQuantity = Number((quantity + 1).toFixed(0));
+
+  return (
+    <div className="flex items-center justify-center">
+      <DecrementQuantity
+        id={id}
+        quantity={prevQuantity}
+        disabled={quantity <= 1}
+      />
+      <Text className="p-2 w-full h-full grid  place-items-center">
+        {quantity}
+      </Text>
+      <IncrementQuantity
+        id={id}
+        quantity={nextQuantity}
+        disabled={false}
+      />
+    </div>
+  )
+}
+
+type QuantityActionProps = {
   id: string;
   quantity: number;
   disabled: boolean;
 };
 
-export function DecrementQuantity({ id, quantity, disabled }: QuantityProps) {
+export function DecrementQuantity({ id, quantity, disabled }: QuantityActionProps) {
   const fetcher = useFetcher();
 
   return (
@@ -228,7 +249,7 @@ export function DecrementQuantity({ id, quantity, disabled }: QuantityProps) {
   );
 }
 
-export function IncrementQuantity({ id, quantity, disabled }: QuantityProps) {
+export function IncrementQuantity({ id, quantity, disabled }: QuantityActionProps) {
   const fetcher = useFetcher();
   return (
     <fetcher.Form

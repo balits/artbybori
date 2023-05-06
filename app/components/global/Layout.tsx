@@ -2,7 +2,13 @@ import Header from '~/components/global/Header';
 import Footer from '~/components/global/Footer';
 import {MotionConfig} from "framer-motion"
 
-export default function Layout({children}: {children: React.ReactNode}) {
+export default function Layout({
+  children,
+  noFooter = false
+}: {
+  children: React.ReactNode,
+  noFooter?: boolean
+}) {
   return (
     <MotionConfig reducedMotion='user'>
       <div
@@ -18,7 +24,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
         <main role="main" id="mainContent" className="flex-grow ">
           {children}
         </main>
-        <Footer />
+        {!noFooter && <Footer />}
       </div>
     </MotionConfig>
   );

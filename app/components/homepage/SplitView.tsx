@@ -5,7 +5,7 @@ import { Link } from '../ui/Link';
 
 export default function SplitView() {
   return (
-    <section className=" py-8 md:py-16 lg:py-20 pt-20 w-full flex flex-col justify-center items-center">
+    <section className=" pb-8 md:pb-16 lg:pb-20 pb-20 w-full flex flex-col justify-center items-center">
       <div className="overflow-hidden relative  w-full grid grid-cols-2 h-[65vh] lg:h-screen">
         <Link
           to="/shop"
@@ -60,16 +60,10 @@ function TextBlock({
         Handmade with love.
       </Text>
       <Text color={color}>
-        All of our products are arefully had-crafted by ceramic
-        artist, Bori Borbely. They fire at high temperatures so they
-        are microwave and dishwasher safe. All of our products are
-        arefully had-crafted by ceramic artist,{' '}
+        As a passionate artist, I specialize in creating functional and decorative ceramics that are both beautiful and practical. Each piece is carefully handcrafted in my home studio using high-quality materials and techniques, ensuring that every item is unique and made to last.
       </Text>
       <Text color={color}>
-        All of our products are arefully had-crafted by ceramic
-        artist, Bori Borbely. They fire at high temperatures so they
-        are microwave and dishwasher safe. All of our products are
-        arefully had-crafted by ceramic artist,{' '}
+        I believe that every piece of ceramics has its own story to tell, and I strive to imbue my creations with a sense of warmth and personality. From the natural textures and colors of my glazes to the details of my hand-built pieces, my work is inspired by the beauty of the world around me.
       </Text>
       <Link
         prefetch="intent"

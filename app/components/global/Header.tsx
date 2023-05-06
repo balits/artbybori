@@ -74,7 +74,7 @@ export default function Header() {
         </Container>
       </header>
       <NavDrawer
-        heading={<Logo />}
+        heading={<Logo onClick={closeNav} />}
         open={isNavOpen}
         onClose={closeNav}
         openFrom="left"

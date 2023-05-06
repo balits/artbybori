@@ -142,7 +142,7 @@ export default function Homepage() {
       <Banner image={homepage.hero.image} />
 
       <div className='bg-custom-white'>
-      <Container className="pt-20">
+      <Container className="py-20">
         <MyHeading>
           Featured products.
         </MyHeading>

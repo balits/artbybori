@@ -84,7 +84,7 @@ export function ProductGallery({
           mediaProps.loading = ATTR_LOADING_EAGER;
         }
 
-        const style = 'w-full h-[50vh] aspect-square snap-center card-image-rounded-none bg-gray-100 '
+        const style = 'w-full h-[50vh] aspect-square snap-center card-image-rounded-none bg-placeholder-green '
 
         return (
           <div
@@ -96,7 +96,7 @@ export function ProductGallery({
             {(med as MediaImage).image && (
               <MediaFile
                 tabIndex={0}
-                className={`h-full w-full aspect-square fadeIn object-cover `}
+                className={`card-image-rounded-none h-full w-full aspect-square fadeIn object-cover `}
                 data={data}
                 // @ts-ignore
                 options={{
@@ -166,7 +166,7 @@ export function ProductGallery({
           }
 
           const style = clsx(
-            'w-full  card-image bg-gray-100 fadeIn animate-pulse',
+            'w-full  card-image bg-placeholder-green fadeIn',
             isFullWidth ? 'aspect-square col-span-2' : 'col-span-1',
             isFirst || isFourth ? '' : 'aspect-[4/5]',
           );
@@ -180,14 +180,15 @@ export function ProductGallery({
               {/* TODO: Replace with MediaFile when it's available */}
               {(med as MediaImage).image && (
                 <ImageComp
-                  className={`w-full h-full aspect-square fadeIn object-cover `}
+                  className={`w-full h-full aspect-square fadeIn object-cover bg-placeholder-green`}
                   data={data.image as ImageType}
-                  // @ts-ignore
-                  options={{
-                    loading:"eager",
+                  widths={[400]}
+                  loading="eager"
+                  loaderOptions={{
                     crop: 'center',
                     scale: 2,
-                    sizes: '(min-width: 64em) 60vw, (min-width: 48em) 50vw, 90vw'
+                    width:400,
+                    height: 400
                   }}
                   {...mediaProps}
                 />)}

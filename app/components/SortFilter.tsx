@@ -107,7 +107,7 @@ export default function SortMenuDropdown() {
   ];
   const [params] = useSearchParams();
   const location = useLocation();
-  const activeItem = items.find((item) => item.key === params.get('sort'));
+  const activeItem = items.find((item) => item.key === params.get('sort')) ?? items[0];
 
   return (
     <Menu as="div" className="relative inline-block text-left ">

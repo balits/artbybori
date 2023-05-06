@@ -1,14 +1,16 @@
-import {json, type MetaFunction, type LoaderArgs} from '@shopify/remix-oxygen';
-import {useLoaderData} from '@remix-run/react';
-import {Section, Button} from '~/components';
+import { json, type LoaderArgs } from '@shopify/remix-oxygen';
+import { useLoaderData } from '@remix-run/react';
+import { Heading, Text, Link } from '~/components/ui';
 import invariant from 'tiny-invariant';
-import {ShopPolicy} from '@shopify/hydrogen/storefront-api-types';
-import {routeHeaders, CACHE_LONG} from '~/data/cache';
-import {seoPayload} from '~/lib/seo.server';
+import { ShopPolicy } from '@shopify/hydrogen/storefront-api-types';
+import { routeHeaders, CACHE_LONG } from '~/data/cache';
+import { seoPayload } from '~/lib/seo.server';
+import Container from '~/components/global/Container';
+import { LeftArrow } from '~/components/global/Icon';
 
 export const headers = routeHeaders;
 
-export async function loader({request, params, context}: LoaderArgs) {
+export async function loader({ request, params, context }: LoaderArgs) {
   invariant(params.policyHandle, 'Missing policy handle');
   const handle = params.policyHandle;
 
@@ -33,13 +35,13 @@ export async function loader({request, params, context}: LoaderArgs) {
   const policy = data.shop?.[policyName];
 
   if (!policy) {
-    throw new Response(null, {status: 404});
+    throw new Response(null, { status: 404 });
   }
 
-  const seo = seoPayload.policy({policy, url: request.url});
+  const seo = seoPayload.policy({ policy, url: request.url });
 
   return json(
-    {policy, seo},
+    { policy, seo },
     {
       headers: {
         'Cache-Control': CACHE_LONG,
@@ -49,22 +51,28 @@ export async function loader({request, params, context}: LoaderArgs) {
 }
 
 export default function Policies() {
-  const {policy} = useLoaderData<typeof loader>();
+  const { policy } = useLoaderData<typeof loader>();
 
   return (
     <>
-      <Section
-        padding="all"
-        display="flex"
-        className="flex-col items-baseline w-full gap-8 md:flex-row"
-      >
-        <div className="flex-grow w-full md:w-7/12">
+      <Container className='scaling-mt-header min-h-minus-header '>
+
+          <Heading as="h1" spacing>
+            {policy.title}
+          </Heading>
+          <Link to="/policies">
+            <Text size="sm" className='inline-flex gap-x-2 items-center justify-center '>
+              <LeftArrow />{' '}back to policies
+            </Text>
+          </Link>
+
+        <div className="flex-grow w-full my-12">
           <div
-            dangerouslySetInnerHTML={{__html: policy.body}}
-            className="prose dark:prose-invert"
+            dangerouslySetInnerHTML={{ __html: policy.body }}
+            className="prose prose-sm lg:prose-base hover:prose-a:text-custom-signature-green"
           />
         </div>
-      </Section>
+      </Container>
     </>
   );
 }
