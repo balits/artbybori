@@ -110,9 +110,7 @@ export default function CartDrawer({
                             <X aria-label="Close panel" className="w-5 h-5" />
                           </button>
                         </header>
-                        <div className='h-minus-header z-[51] relative pb-20 bg-fuchsia-800'>
                             <CartSidebarView cart={cart} closeDrawer={onClose} />
-                        </div>
                       </Dialog.Panel>
                     </Transition.Child>
                   </div>
@@ -136,8 +134,8 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <div className='z-[52]'>
-      <section className="h-full  bg-blue-500">
+    <div className='z-[52] h-minus-header relative'>
+      <section className="h-fit  bg-blue-500">
         <ul className="h-full overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green">
           {lines.map(
             (l) =>
