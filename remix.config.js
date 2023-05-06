@@ -2,7 +2,7 @@
 module.exports = {
   appDirectory: 'app',
   ignoredRouteFiles: ['**/.*'],
-  watchPaths: ['./public'],
+  watchPaths: [`./${process.env.HYDROGEN_ASSET_BASE_URL}public`],
   server:
     process.env.NODE_ENV === 'development' ? './server-dev.ts' : './server.ts',
   serverPlatform: 'neutral',
