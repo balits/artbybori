@@ -87,7 +87,18 @@ function CartSidebarView({
         </ul>
       </section>
 
-      <div className='bg-red-500 w-full h-32'>kutyí</div>
+      <div className='bg-red-500 w-full h-full z-[52] '>
+        <Button
+          onClick={closeDrawer}
+          variant="signature"
+          to="/cart"
+          width="full"
+        >
+          View cart
+        </Button>
+
+
+      </div>
 
       {/* <div className="bottom-0 z-[52] bg-custom-white  w-full flex flex-col gap-4 items-center justify-center ">
         {cart.checkoutUrl && (
