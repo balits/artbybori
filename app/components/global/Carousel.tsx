@@ -29,22 +29,34 @@ export function CollectionCarousel({
     <CarouselWrapper size={size}>
       {collections.filter(c => c.image).map((coll) => {
         return (
-          <Link key={coll.id} to={`/categories/${coll.handle}`} prefetch="intent" className="relative group">
-            <SmartImage
-              image={coll.image!}
-              alt={coll.image!.altText ?? coll.title}
-              className="w-full rounded-md "
-              loading='eager'
-            />
-            {textOnTop ? (
-              <div className="absolute left-0 top-0 w-full h-full flex items-center justify-center">
-                <Heading font='font-sans' as="h3" bold size='sm' color="white" className="z-[10] uppercase  text-center">
-                  {coll.title}
-                </Heading>
+          <Link key={coll.id} to={`/categories/${coll.handle}`} prefetch="intent" className="relative group  rounded-md">
+            <div className='bg-custom-placeholder-green rounded-md group relative basic-animation shadow-sm aspect-[4/5]'>
+              <div className='aspect-[4/5] w-full object-cover fadeIn card-image'>
+                <Image
+                  data={coll.image!}
+                  alt={coll.image!.altText ?? coll.title}
+                  className="w-full rounded-md "
+                  loading='eager'
+                  widths={[400]}
+                  loaderOptions={{
+                    crop:'center',
+                    scale:2,
+                    width:400,
+                    height:600
+                  }}
+                />
               </div>
-            ) : (
-              <h3 className='mt-2 lg:mt-3 xl:mt-4 font-medium text-sm md:text-md xl:text-lg '>{coll.title}</h3>
-            )}
+
+              {textOnTop ? (
+                <div className="absolute left-0 top-0 w-full h-full bg-black/10 grid place-items-center opacity-0 hover:opacity-100 basic-animation">
+                  <Heading font='font-sans' as="h3" bold size='sm' color="white" className="z-[10] uppercase  text-center">
+                    {coll.title}
+                  </Heading>
+                </div>
+              ) : (
+                <h3 className='mt-2 lg:mt-3 xl:mt-4 font-medium text-sm md:text-md xl:text-lg '>{coll.title}</h3>
+              )}
+            </div>
           </Link>
         )
       })}

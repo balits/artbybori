@@ -22,6 +22,7 @@ export async function action({ request, params, context }: ActionArgs) {
   const status = {
     error: !response.ok,
   }
+  console.log(response)
 
   return json({
     formObject, status
@@ -112,8 +113,6 @@ export default function ContactPage() {
 function ContactForm() {
   const data = useActionData<typeof action>();
 
-  console.log(data)
-
   const [fullName, setFullName] = useState((data?.formObject.fullName as string) ?? '');
   const [email, setEmail] = useState((data?.formObject.email as string) ?? '');
   const [message, setMessage] = useState((data?.formObject.message as string) ?? '');
@@ -153,7 +152,12 @@ function ContactForm() {
   }
 
 
-  return (
+  return data && data.status.error === false ? (
+    <div className='w-full h-full '>
+      <Text size='xl' bold className='mb-3'>Thank you!</Text>
+      <Text>You message is being submitted right at this moment.</Text>
+    </div>
+  ) : (
     <Form
       method="post"
       preventScrollReset
@@ -382,28 +386,12 @@ function ShopLocations() {
     <Container as="section" className='py-16 md:py-20 lg:py-24 flex flex-col items-center justify-center'>
       <div className='mb-12 md:mb-16 lg:mb-20 flex flex-col items-center justify-center w-full'>
         <Heading as="h2" bold size='md' font='font-sans'>Buy in Person</Heading>
-        <Text color='grey' className='w-full text-center'>
+        <Text size='md' bold color='lightgrey' className='w-full text-center'>
           Find our products at a variety of retailers, including local cafes and stores.
         </Text>
       </div>
 
       <ul className='flex flex-col items-start justify-center gap-4 md:gap-8 lg:gap-16 place-items-center w-fit'>
-        <LocationCard
-          name='Kis Villa'
-          socialHandle="kisvilla_delikat"
-          website='http://kisvilla.hu/fooldal'
-          location='Biatorbágy - Szabadság út 74'
-          description='edd ki a luykatmat sadas dasd nrkajd lBDJ EJHEKLHÉD SDJSAK DEDBHEBIUId s .'
-          imgUrl='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/06AF968D-5E8E-420A-8E1F-441C51B8826E.jpg?v=1683387826'
-        />
-        <LocationCard
-          name='Kis Villa'
-          socialHandle="kisvilla_delikat"
-          website='http://kisvilla.hu/fooldal'
-          location='Biatorbágy - Szabadság út 74'
-          description='edd ki a luykatmat sadas dasd nrkajd lBDJ EJHEKLHÉD SDJSAK DEDBHEBIUId s .'
-          imgUrl='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/06AF968D-5E8E-420A-8E1F-441C51B8826E.jpg?v=1683387826'
-        />
         <LocationCard
           name='Kis Villa'
           socialHandle="kisvilla_delikat"
