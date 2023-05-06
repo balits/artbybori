@@ -54,9 +54,9 @@ export default function CartDrawer({
   const [root] = useMatches();
 
   return (
-      <Suspense fallback={<Fallback />}>
-        <Await resolve={root.data?.cart}>
-          {(cart) =>(
+    <Suspense fallback={<Fallback />}>
+      <Await resolve={root.data?.cart}>
+        {(cart) => (
 
 
           <Transition appear show={open} as={Fragment}>
@@ -88,8 +88,8 @@ export default function CartDrawer({
                       leaveFrom="translate-x-0"
                       leaveTo="translate-x-full"
                     >
-                      <Dialog.Panel className="overflow-hidden  h-screen w-screen md:w-[55vw] lg:w-[30vw] text-left align-middle transition-all transform shadow-md bg-custom-white p-4 pt-0 ">
-                        <header className="bg-custom-white w-full header-height flex  items-center justify-between sticky top-0 justify-between z-[52]" >
+                      <Dialog.Panel className="flex flex-col items-center justify-between overflow-hidden  h-screen w-screen md:w-[55vw] lg:w-[30vw] text-left align-middle transition-all transform shadow-md bg-custom-white p-4 pt-0 ">
+                        <header className="shrink bg-custom-white w-full header-height flex  items-center justify-between sticky top-0 justify-between z-[52]" >
                           <Dialog.Title>
                             <Heading
                               as="span"
@@ -110,7 +110,27 @@ export default function CartDrawer({
                             <X aria-label="Close panel" className="w-5 h-5" />
                           </button>
                         </header>
-                            <CartSidebarView cart={cart} closeDrawer={onClose} />
+
+                        <CartSidebarView cart={cart} closeDrawer={onClose} />
+
+                        <footer className='shrink bg-red-200 bg-red-200 space-y-4 w-full'>
+                          {cart.checkoutUrl && (
+                            <Button
+                              to={cart.checkoutUrl}
+                              width="full"
+                            >
+                              Check out
+                            </Button>
+                          )}
+                          <Button
+                            onClick={onClose}
+                            variant="signature"
+                            to="/cart"
+                            width="full"
+                          >
+                            View cart
+                          </Button>
+                        </footer>
                       </Dialog.Panel>
                     </Transition.Child>
                   </div>
@@ -118,9 +138,9 @@ export default function CartDrawer({
               </aside>
             </Dialog>
           </Transition>
-          )}
-        </Await>
-      </Suspense>
+        )}
+      </Await>
+    </Suspense>
   );
 }
 
@@ -134,7 +154,7 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <div className='z-[52] h-minus-header relative'>
+    <div className='z-[52]  relative'>
       <section className="h-fit  bg-blue-500">
         <ul className="h-full overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green">
           {lines.map(
@@ -148,37 +168,9 @@ function CartSidebarView({
         </ul>
       </section>
 
-      <div className='absolute bottom-0 h-16 w-full bg-white  z-[53] '>
-        <Button
-          onClick={closeDrawer}
-          variant="signature"
-          to="/cart"
-          width="full"
-        >
-          View cart
-        </Button>
 
-
+      <div className="w-full space-y-4">
       </div>
-
-      {/* <div className="bottom-0 z-[52] bg-custom-white  w-full flex flex-col gap-4 items-center justify-center ">
-        {cart.checkoutUrl && (
-          <Button
-            to={cart.checkoutUrl}
-            width="full"
-          >
-            Check out
-          </Button>
-        )}
-        <Button
-          onClick={closeDrawer}
-          variant="signature"
-          to="/cart"
-          width="full"
-        >
-          View cart
-        </Button>
-      </div> */}
 
     </div>
   ) : (
