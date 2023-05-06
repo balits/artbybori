@@ -256,7 +256,7 @@ function collection({
   url: Request['url'];
 }) {
   return {
-    title: collection?.seo?.title,
+    title: collection?.seo?.title ?? "Collection",
     description: truncate(
       collection?.seo?.description ??
         collection?.description ??

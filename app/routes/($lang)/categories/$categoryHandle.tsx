@@ -13,7 +13,7 @@ import ProductGrid  from '~/components/shop/ProductGrid';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
-import Container, { NoWrapContainer } from '~/components/global/Container';
+import Container from '~/components/global/Container';
 import { Heading } from '~/components/ui';
 
 export const headers = routeHeaders;

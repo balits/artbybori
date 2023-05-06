@@ -278,7 +278,7 @@ export function ProductDescription() {
           <Text as="h3" size="xl" bold>
             {product.title}
           </Text>
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-center gap-2">
             {selectedVariant.price && (
               <MyMoney
                 size='lg'

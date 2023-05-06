@@ -35,9 +35,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <>
       <div className="bg-custom-placeholder-green rounded-md group relative aspect-[4/5] cursor-pointer basic-animation delay-0 shadow-sm  ">
-        <div className='aspect-[4/5] relative flex items-center justify-center overflow-clip rounded-md'>
+        <div className='aspect-[4/5] relative flex items-center justify-center overflow-hidden rounded-md'>
           <Image
-            className='aspect-[4/5] w-full object-cover fadeIn card-scale-hover'
+            className='aspect-[4/5] w-full object-cover fadeIn card-scale-hover rounded-md'
             widths={[400]}
             loaderOptions={{
               crop:'center',
