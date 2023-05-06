@@ -73,8 +73,8 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <div className='relative h-full grid grid-rows-8 grid-cols-1'>
-      <section className="h-full relative row-span-7 ">
+    <div className='relative h-full '>
+      <section className="h-full relative pb-16">
         <ul className="h-full overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green">
           {lines.map(
             (l) =>
@@ -87,7 +87,7 @@ function CartSidebarView({
         </ul>
       </section>
 
-      <div className='bg-red-500 w-full h-full z-[52] '>
+      <div className='absolute bottom-0 h-16 w-full bg-white  z-[52] '>
         <Button
           onClick={closeDrawer}
           variant="signature"
