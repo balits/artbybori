@@ -2,12 +2,13 @@ import { Drawer, DrawerProps } from '~/components/Drawer';
 import { Await, useMatches } from '@remix-run/react';
 import { Cart, CartLine } from '@shopify/hydrogen/storefront-api-types';
 import { flattenConnection, Image } from '@shopify/hydrogen';
-import { Suspense, useMemo } from 'react';
-import { Link, Button, Text, MyMoney } from '../ui';
+import { Fragment, Suspense, useMemo } from 'react';
+import { Link, Button, Text, MyMoney, Heading } from '../ui';
 import { HiArrowPath } from 'react-icons/hi2';
 import { useIsHydrated } from '~/hooks/useIsHydrated';
 import { RemoveItem, DecrementQuantity, IncrementQuantity, QuantitySection } from "~/components/cart/CartView"
-import { Check, ShoppingBag, Spinner, XCirlce } from '../global/Icon';
+import { Check, ShoppingBag, Spinner, X, XCirlce } from '../global/Icon';
+import { Dialog, Transition } from '@headlessui/react';
 
 function Empty({
   closeDrawer
@@ -53,13 +54,75 @@ export default function CartDrawer({
   const [root] = useMatches();
 
   return (
-    <Drawer heading={heading} open={open} onClose={onClose} openFrom={openFrom}>
       <Suspense fallback={<Fallback />}>
         <Await resolve={root.data?.cart}>
-          {(cart) => <CartSidebarView cart={cart} closeDrawer={onClose} />}
+          {(cart) =>(
+
+
+          <Transition appear show={open} as={Fragment}>
+            <Dialog as="div" className="relative z-50" onClose={onClose}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 left-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <aside aria-roledescription="sidebar" className="fixed inset-0">
+                <div className="absolute inset-0 overflow-hidden ">
+                  <div
+                    className={`fixed h-screen flex  ${openFrom === 'right' ? 'right-0' : ''
+                      }`}
+                  >
+                    <Transition.Child
+                      as={Fragment}
+                      enter="transform transition ease-in-out duration-300"
+                      enterFrom={'translate-x-full'}
+                      enterTo="translate-x-0"
+                      leave="transform transition ease-in-out duration-300"
+                      leaveFrom="translate-x-0"
+                      leaveTo="translate-x-full"
+                    >
+                      <Dialog.Panel className="overflow-hidden  h-screen w-screen md:w-[55vw] lg:w-[30vw] text-left align-middle transition-all transform shadow-md bg-custom-white p-4 pt-0 ">
+                        <header className="bg-custom-white w-full header-height flex  items-center justify-between sticky top-0 justify-between z-[52]" >
+                          <Dialog.Title>
+                            <Heading
+                              as="span"
+                              size='sm'
+                              font='font-sans'
+                              bold
+                              id="cart-contents"
+                            >
+                              {heading}
+                            </Heading>
+                          </Dialog.Title>
+                          <button
+                            type="button"
+                            className="p-4 transition"
+                            onClick={onClose}
+                            data-test="close-cart"
+                          >
+                            <X aria-label="Close panel" className="w-5 h-5" />
+                          </button>
+                        </header>
+                        <div className='h-minus-header z-[51] relative pb-20 bg-fuchsia-800'>
+                            <CartSidebarView cart={cart} closeDrawer={onClose} />
+                        </div>
+                      </Dialog.Panel>
+                    </Transition.Child>
+                  </div>
+                </div>
+              </aside>
+            </Dialog>
+          </Transition>
+          )}
         </Await>
       </Suspense>
-    </Drawer>
   );
 }
 
@@ -73,8 +136,8 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <>
-      <section className="h-full relative pb-20 bg-blue-500">
+    <div className='z-[52]'>
+      <section className="h-full  bg-blue-500">
         <ul className="h-full overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green">
           {lines.map(
             (l) =>
@@ -87,7 +150,7 @@ function CartSidebarView({
         </ul>
       </section>
 
-      <div className='absolute bottom-0 h-16 w-full bg-white  z-[52] '>
+      <div className='absolute bottom-0 h-16 w-full bg-white  z-[53] '>
         <Button
           onClick={closeDrawer}
           variant="signature"
@@ -119,7 +182,7 @@ function CartSidebarView({
         </Button>
       </div> */}
 
-    </>
+    </div>
   ) : (
     <section className='w-full h-full px-4 flex items-center justify-center'>
       <Empty closeDrawer={closeDrawer} />
