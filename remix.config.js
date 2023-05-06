@@ -12,5 +12,5 @@ module.exports = {
   assetsBuildDirectory: 'dist/client/build',
   serverBuildPath: 'dist/worker/index.js',
   serverDependenciesToBundle: 'all',
-  serverBuildTarget: 'vercel',
+  serverBuildTarget: 'oxygen',
 };

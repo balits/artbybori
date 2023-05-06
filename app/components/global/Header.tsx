@@ -9,7 +9,6 @@ import { useCartFetchers } from '~/hooks/useCartFetchers';
 import NavDrawer from '~/components/drawer/NavDrawer';
 import { Link } from '../ui/Link';
 import { Bars, SearchIcon, ShoppingBag } from './Icon';
-import { CartCount } from "~/components/drawer/CartDrawer"
 import { useIsHydrated } from '~/hooks/useIsHydrated';
 
 export default function Header() {
@@ -176,11 +175,10 @@ function Badge({
       {BadgeCounter}
     </div>
   ) : (
-    <Link
-      to="/cart"
+    <div
       className="relative flex items-center justify-center w-8 h-8 focus:ring-custom-lightgrey/5"
     >
       {BadgeCounter}
-    </Link>
+    </div>
   );
 }
