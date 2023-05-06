@@ -83,7 +83,7 @@ export function Drawer({
                         <X aria-label="Close panel" className="w-5 h-5" />
                       </button>
                   </header>
-                  <div className='h-minus-header z-[51]'>
+                  <div className='h-minus-header z-[51] relative'>
                     {children}
                   </div>
                 </Dialog.Panel>
