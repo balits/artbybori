@@ -1,3 +1,4 @@
+import { Image } from '@shopify/hydrogen';
 import {
   Image as ImageType,
   MoneyV2,
@@ -33,8 +34,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <>
-      <div className="bg-custom-placeholder-green rounded-md group relative aspect-square cursor-pointer basic-animation shadow-sm  hover:opacity-90">
-        <SmartImage image={img} alt={img.altText ?? title} className="w-full rounded-md" loading='eager'/>
+      <div className="bg-custom-placeholder-green rounded-md group relative aspect-[4/5] cursor-pointer basic-animation delay-0 shadow-sm  ">
+        <div className='aspect-[4/5] relative flex items-center justify-center overflow-clip rounded-md'>
+          <Image
+            className='aspect-[4/5] w-full object-cover fadeIn card-scale-hover'
+            widths={[400]}
+            loaderOptions={{
+              crop:'center',
+              scale:2,
+              width:400,
+              height: 600,
+            }}
+            data={img}
+            alt={img.altText ?? title}
+            loading="eager"
+          />
+        </div>
         {extraLabel && (
           <div className="absolute top-0 right-0 p-3 lg:p-4">
             <span className={`${extraLabel === "sold out" ? "text-red-300 " : "text-custom-white" } w-fit text-xs md:text-sm lg:text-md capitalize`}>

@@ -37,7 +37,8 @@ export default function ProductGrid({ products }: ProductGridProps) {
           return (
             <li
               key={product.id}
-          >
+              className="block relative min-w-full min-h-full rounded-md cursor-pointer"
+            >
               <Link prefetch="intent" to={`/products/${product.handle}`}>
                 <ProductCard
                   title={product.title}
