@@ -6,6 +6,7 @@ import { json } from '@shopify/remix-oxygen';
 import { Heading, Text } from '~/components/ui';
 import { delay, motion, Variants } from 'framer-motion'
 import { useInView } from 'react-intersection-observer';
+import { AnalyticsPageType } from '@shopify/hydrogen';
 
 export const link: LinksFunction = () => [
   {
@@ -29,7 +30,10 @@ export async function loader() {
   })
 
   return json({
-    seo
+    seo,
+    analytics: {
+      pageType: AnalyticsPageType.page
+    }
   })
 }
 

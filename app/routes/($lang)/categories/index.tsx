@@ -44,7 +44,7 @@ export const loader = async ({ request, context: { storefront } }: LoaderArgs) =
     {
       collectionCollections,
       collections: collectionCollections.nodes.filter(e => e.handle !== "hero" && e.handle !== "featured-products" && e.products?.nodes?.length !== 0),
-      seo
+      seo,
     },
     {
       headers: {
@@ -56,7 +56,6 @@ export const loader = async ({ request, context: { storefront } }: LoaderArgs) =
 
 export default function Collections() {
   const { collectionCollections, collections } = useLoaderData<typeof loader>();
-  console.log(collectionCollections, collections)
 
   return (
       <Container as={"section"} className='scaling-mt-header'>
@@ -77,7 +76,7 @@ export default function Collections() {
                 <div className="flex items-center justify-center mt-6">
                   <Button
                     to={prevPageUrl}
-                    variant="white"
+                    variant="light"
                     width="full"
                     prefetch="intent"
                     disabled={!isLoading}

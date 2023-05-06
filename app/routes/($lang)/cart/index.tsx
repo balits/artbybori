@@ -23,6 +23,7 @@ import CartView, {
 } from '~/components/cart/CartView';
 import { Container, NoWrapContainer} from '~/components/global/Container';
 import { seoPayload } from '~/lib/seo.server';
+import { AnalyticsPageType } from '@shopify/hydrogen';
 
 export async function action({request, context}: ActionArgs) {
   const {session, storefront} = context;
@@ -186,7 +187,10 @@ export async function loader() {
   })
 
   return json({
-    seo
+    seo,
+    analytics:{
+      pageType: AnalyticsPageType.cart
+    }
   })
 }
 

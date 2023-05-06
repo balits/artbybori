@@ -1,17 +1,17 @@
-import { Container } from '~/components/global/Container';
+import { Container, NoWrapContainer } from '~/components/global/Container';
 import { json, type ActionArgs } from '@shopify/remix-oxygen';
 import { useActionData, useFetcher, Form, useNavigation, useTransition } from '@remix-run/react';
 import InstagramGallery from '~/components/homepage/InstagramGallery';
 import { useRef, useState } from 'react';
 import { seoPayload } from '~/lib/seo.server';
-import { Heading, Button, Link } from '~/components/ui';
+import { Heading, Button, Link, Text } from '~/components/ui';
 import { motion, Variants, useInView } from "framer-motion"
 
 export async function action({ request, params, context }: ActionArgs) {
   const body = await request.formData();
   const formObject = Object.fromEntries(body);
 
-  const response = await fetch("https://formspree.io/f/mlekaald", {
+  const response = await fetch("https://formspree.io/f/xpzebkgj", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -39,27 +39,26 @@ export async function loader() {
     seo
   })
 }
-  const lastVariant: Variants = {
-    hidden: {
-      y: 40,
-      opacity: 0,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "tween",
-        duration: .8,
-        delay: 1.4
-      }
+const lastVariant: Variants = {
+  hidden: {
+    y: 40,
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: .2,
+      delay: 1.4
     }
   }
+}
 
 export default function ContactPage() {
   return (
     <>
       <div className="h-minus-header max-h-fit w-full grid place-items-center scaling-mt-header">
-        <Container className="grid grid-cols-1 grid-flow-row gap-20 ">
+        <Container as="section" className="grid grid-cols-1 grid-flow-row gap-20 ">
           <div className=" grid grid-cols-1 gap-y-12 md:gap-y-0 md:grid-cols-2 lg:gap-12">
             <motion.div
               initial={{
@@ -72,11 +71,11 @@ export default function ContactPage() {
               }}
               transition={{
                 delay: .5,
-                stiffness:300,
-                damping:20
+                stiffness: 300,
+                damping: 20
               }}
             >
-              <Heading as="h1" size='lg' font='font-sans' className="font-bold">
+              <Heading as="h2" size='lg' font='font-sans' className="font-bold">
                 <span className='lg:hidden'>Get in touch.</span>
                 <span className='hidden lg:inline-block'>Get&nbsp;in&nbsp;touch.</span>
               </Heading>
@@ -102,6 +101,8 @@ export default function ContactPage() {
       </div>
 
       <FAQ />
+
+      <ShopLocations />
 
       <InstagramGallery />
     </>
@@ -365,7 +366,7 @@ function FAQ() {
             </summary>
             <div className="p-2 mb-2 flex flex-col items-start justify-start gap-y-4">
               <p>If you not satisfied with your order you have 14 days after delivery to reach out to us at artbybori@gmail.com and we will work together to find a solution, whether it be an item refund and return (minus shipping) or a replacement piece (note: As some of my pieces are one-of-a-kind, your replacement may not be exactly the same as your original, but we will do our best to find a solution that works on both ends. Replacement items may take up to 6 weeks to complete). As noted above, shipping charges will not be refunded and the cost of return is on the customer.</p>
-              <Link to="/policies/return-policy" className="underline ">
+              <Link to="/policies/refund-policy" className="underline ">
                 Learn more here.
               </Link>
             </div>
@@ -376,3 +377,90 @@ function FAQ() {
   );
 }
 
+function ShopLocations() {
+  return (
+    <Container as="section" className='py-16 md:py-20 lg:py-24 flex flex-col items-center justify-center'>
+      <div className='mb-12 md:mb-16 lg:mb-20 flex flex-col items-center justify-center w-full'>
+        <Heading as="h2" bold size='md' font='font-sans'>Buy in Person</Heading>
+        <Text color='grey' className='w-full text-center'>
+          Find our products at a variety of retailers, including local cafes and stores.
+        </Text>
+      </div>
+
+      <ul className='flex flex-col items-start justify-center gap-4 md:gap-8 lg:gap-16 place-items-center w-fit'>
+        <LocationCard
+          name='Kis Villa'
+          socialHandle="kisvilla_delikat"
+          website='http://kisvilla.hu/fooldal'
+          location='Biatorbágy - Szabadság út 74'
+          description='edd ki a luykatmat sadas dasd nrkajd lBDJ EJHEKLHÉD SDJSAK DEDBHEBIUId s .'
+          imgUrl='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/06AF968D-5E8E-420A-8E1F-441C51B8826E.jpg?v=1683387826'
+        />
+        <LocationCard
+          name='Kis Villa'
+          socialHandle="kisvilla_delikat"
+          website='http://kisvilla.hu/fooldal'
+          location='Biatorbágy - Szabadság út 74'
+          description='edd ki a luykatmat sadas dasd nrkajd lBDJ EJHEKLHÉD SDJSAK DEDBHEBIUId s .'
+          imgUrl='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/06AF968D-5E8E-420A-8E1F-441C51B8826E.jpg?v=1683387826'
+        />
+        <LocationCard
+          name='Kis Villa'
+          socialHandle="kisvilla_delikat"
+          website='http://kisvilla.hu/fooldal'
+          location='Biatorbágy - Szabadság út 74'
+          description='edd ki a luykatmat sadas dasd nrkajd lBDJ EJHEKLHÉD SDJSAK DEDBHEBIUId s .'
+          imgUrl='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/06AF968D-5E8E-420A-8E1F-441C51B8826E.jpg?v=1683387826'
+        />
+      </ul>
+    </Container>
+  )
+}
+
+function LocationCard({
+  name,
+  description,
+  socialHandle,
+  website,
+  location,
+  imgUrl
+}: {
+  name: string,
+  socialHandle: string
+  website?: string
+  description: string,
+  location: string,
+  imgUrl: string
+}) {
+  return (
+    <li className='rounded-md bg-placeholder-green relative group w-full w-[300px] md:w-[440px] lg:w-[500px]'>
+      <div className='relative  max-w-full aspect-square'>
+        <img
+          src={imgUrl}
+          className='aspect-square absolute inset-0 w-full h-full object-cover rounded-md shadow-sm'
+        />
+      </div>
+      <div className='mt-4 flex flex-col items-start justify-start w-full px-2'>
+
+        <div className='inline-flex gap-x-6 items-center justify-center'>
+          {website ? (
+            <a href={website} target="_blank" rel='noopener' className='cursor-pointer'>
+              <Text as="h4" size="xl" className='hover:underline' bold>{name}</Text>
+            </a>
+          ) : (
+            <Text as="h4" size="xl" bold>{name}</Text>
+
+          )}
+          <a href={`https://www.instagram.com/${socialHandle}`} target="_blank" rel='noopener' >
+            <Text as="span" className="lowercase hover:text-custom-grey before:content-['@']" color='lightgrey' bold >
+              {socialHandle}
+            </Text>
+          </a>
+        </div>
+
+        <Text size='sm' color='lightgrey' className='mt-1' >{location}</Text>
+        <Text color='grey' className='mt-3'>{description}</Text>
+      </div>
+    </li>
+  )
+}

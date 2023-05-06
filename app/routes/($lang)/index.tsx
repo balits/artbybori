@@ -22,7 +22,7 @@ import {
   Skeleton as CarouselSkeleton,
 } from '~/components/global/Carousel';
 import invariant from 'tiny-invariant';
-import { flattenConnection } from '@shopify/hydrogen';
+import { AnalyticsPageType, flattenConnection } from '@shopify/hydrogen';
 import { Container, NoWrapContainer } from '~/components/global/Container';
 import { MyHeading } from '~/components/ui';
 import { filterInvalidCollections } from '~/lib/utils';
@@ -125,6 +125,9 @@ description
       hero,
       collectionsPromise,
       seo,
+      analytics: {
+        pageType: AnalyticsPageType.home
+      }
     },
     {
       headers: {

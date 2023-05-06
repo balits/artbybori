@@ -26,11 +26,10 @@ import { DEFAULT_LOCALE } from './lib/utils';
 import invariant from 'tiny-invariant';
 import { Shop, Cart } from '@shopify/hydrogen/storefront-api-types';
 import { useAnalytics } from './hooks/useAnalytics';
-import Container from './components/global/Container';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useLocation } from '@remix-run/react';
-import { useAnalyticsFromLoaders } from './lib/analytics';
-import { Button } from './components/ui';
+import { useAnalyticsFromActions, useAnalyticsFromLoaders } from './lib/analytics';
+import { Button, Text } from './components/ui';
 
 export const links: LinksFunction = () => {
   return [
@@ -68,6 +67,7 @@ export async function loader({ request, context }: LoaderArgs) {
 
 
   return defer({
+    shopId: shop.id,
     isLoggedIn: Boolean(customerAccessToken),
     selectedLocale: context.storefront.i18n,
     cart: cartId ? getCart(context, cartId) : undefined,
@@ -83,19 +83,39 @@ export default function App() {
   const data = useLoaderData<typeof loader>();
   const locale = data.selectedLocale ?? DEFAULT_LOCALE;
 
-  const [userConset, setUserConsent] = useState(false);
-  useShopifyCookies({ hasUserConsent: userConset })
+  const [userConsent, setUserConsent] = useState<boolean | null>(null);
 
   const location = useLocation();
-  const pageAnalytics = useAnalyticsFromLoaders();
+  /* const pageAnalytics = useAnalyticsFromLoaders();
+  const actionAnalytics = useAnalyticsFromActions();
 
-  useEffect(() => {
-    console.log(pageAnalytics)
-    const payload = {
+  useShopifyCookies({ hasUserConsent: userConsent ?? false })
+  useAnalytics(userConsent ?? false, locale);
+
+
+  if (actionAnalytics && actionAnalytics.event === 'AddToCart') {
+    	const payload: ShopifyPageViewPayload = {
       ...getClientBrowserParameters(),
       ...pageAnalytics,
-      userConset,
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
+      //@ts-ignore
+      cartId: actionAnalytics.cartId,
+    };
+
+    sendShopifyAnalytics({
+      eventName: AnalyticsEventName.ADD_TO_CART,
+      payload,
+    });
+  }
+
+  useEffect(() => {
+    const payload: ShopifyPageViewPayload = {
+      ...getClientBrowserParameters(),
+      ...pageAnalytics,
+      hasUserConsent: userConsent ?? false,
+      shopifySalesChannel: ShopifySalesChannel.hydrogen,
+      currency: 'HUF',
+      shopId: data.shopId
     };
 
     sendShopifyAnalytics({
@@ -103,8 +123,7 @@ export default function App() {
       payload
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
-  useAnalytics(userConset, locale);
+  }, [location]); */
 
   return (
     <html lang={locale.language}>
@@ -125,10 +144,31 @@ export default function App() {
   );
 }
 
-function AcceptCookiesModal() {
+function AcceptCookiesModal({ setUserConsent }: { setUserConsent: Dispatch<SetStateAction<boolean | null>> }) {
   return (
-    <aside>
+    <aside
+      className='z-[48] z-[48] absolute bottom-0 w-full flex flex-col md:flex-row gap-y-8 p-4 lg:p-8 items-center justify-around bg-custom-signature-green text-custom-white'
+    >
+      <div className='flex flex-col items-start justify-start gap-2'>
+        <Text as={"h3"} size="md" font='font-sans' bold>
+          Cookies
+        </Text>
+        <Text size='sm' color="white">
+          As a webshop, we use cookies to better your user experience, and to help us understand how our customers use or site.
+        </Text>
+        <Text size='sm' color="white">
+          Feel free to accept or decline.
+        </Text>
+      </div>
 
+      <div className='flex items-center justify-center gap-x-12 '>
+        <button onClick={() => setUserConsent(true)} className='text-sm md:text-md h-fit w-fit px-6 py-2 bg-custom-white text-black rounded-md'>
+          Accept
+        </button>
+        <button onClick={() => setUserConsent(false)} className="text-sm md:text-md border-none h-fit w-fit px-6 py-2 bg-custom-black text-white rounded-md">
+          Decline
+        </button>
+      </div>
     </aside>
   )
 }
@@ -245,13 +285,13 @@ export function ErrorBoundary({ error }: { error: Error }) {
       <body className=''>
         <Layout noFooter>
           <div className='h-screen grid place-items-center  px-8'>
-              <GenericError
-                error={error}
-              />
+            <GenericError
+              error={error}
+            />
           </div>
         </Layout>
         <ScrollRestoration />
-        <Scripts/>
+        <Scripts />
       </body>
     </html>
   );
