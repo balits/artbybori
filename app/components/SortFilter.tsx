@@ -48,6 +48,7 @@ export function SortFilter({
           className={
             'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5'
           }
+          aria-role="Open Filter as a sidebar from the left."
         >
           <Bars />
         </button>

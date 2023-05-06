@@ -83,7 +83,7 @@ function Details({
 
   return (
     <div className="grid gap-y-1 grid-cols-1 mt-2 lg:mt-4">
-      <Text as="h3" color={color}>{title}</Text>
+      <Text as="h2" color={color}>{title}</Text>
       {money && (
         <MyMoney
           data={money}

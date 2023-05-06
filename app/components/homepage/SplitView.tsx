@@ -14,6 +14,7 @@ export default function SplitView() {
           <img
             src='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_1825.jpg?v=1679740047'
             className='absolute inset-0 w-full h-full object-cover object-center fadeIn'
+            alt='Dark Gray Planter'
           />
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover object-bottom transition-colors ease-in-out group-hover:bg-black/10" />
           <div className="absolute inset-0 w-full h-full grid place-items-center font-medium text-custom-white z-[2] ">
@@ -29,6 +30,7 @@ export default function SplitView() {
           <img
             src='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/IMG_6950.jpg?v=1681895145'
             className='absolute inset-0 w-full h-full object-cover object-center fadeIn'
+            alt='A Slab of black Clay'
           />
 
           <div className="bg-transparent z-[2] absolute inset-0 w-full h-full object-cover" />

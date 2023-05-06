@@ -1,18 +1,18 @@
-import {json, type LoaderArgs} from '@shopify/remix-oxygen';
-import {useLoaderData} from '@remix-run/react';
+import { json, type LoaderArgs } from '@shopify/remix-oxygen';
+import { useLoaderData } from '@remix-run/react';
 import type {
   Collection as CollectionType,
   CollectionConnection,
   Filter,
 } from '@shopify/hydrogen/storefront-api-types';
-import {flattenConnection, AnalyticsPageType} from '@shopify/hydrogen';
+import { flattenConnection, AnalyticsPageType } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
-import {  SortFilter} from '~/components';
-import ProductGrid  from '~/components/shop/ProductGrid';
+import { SortFilter } from '~/components';
+import ProductGrid from '~/components/shop/ProductGrid';
 
-import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
-import {CACHE_SHORT, routeHeaders} from '~/data/cache';
-import {seoPayload} from '~/lib/seo.server';
+import { PRODUCT_CARD_FRAGMENT } from '~/data/fragments';
+import { CACHE_SHORT, routeHeaders } from '~/data/cache';
+import { seoPayload } from '~/lib/seo.server';
 import Container from '~/components/global/Container';
 import { Heading } from '~/components/ui';
 
@@ -21,10 +21,10 @@ export const headers = routeHeaders;
 const PAGINATION_SIZE = 48;
 
 type VariantFilterParam = Record<string, string | boolean>;
-type PriceFiltersQueryParam = Record<'price', {max?: number; min?: number}>;
+type PriceFiltersQueryParam = Record<'price', { max?: number; min?: number }>;
 type VariantOptionFiltersQueryParam = Record<
   'variantOption',
-  {name: string; value: string}
+  { name: string; value: string }
 >;
 
 export type AppliedFilter = {
@@ -46,17 +46,17 @@ export type SortParam =
   | 'newest'
   | 'featured';
 
-export async function loader({params, request, context}: LoaderArgs) {
-  const {categoryHandle} = params;
+export async function loader({ params, request, context }: LoaderArgs) {
+  const { categoryHandle } = params;
 
   invariant(categoryHandle, 'Missing collectionHandle param');
 
   const searchParams = new URL(request.url).searchParams;
-  const knownFilters = [ 'productType'];
+  const knownFilters = ['productType'];
   const available = 'available';
   const variantOption = 'variantOption';
 
-  const {sortKey, reverse} = getSortValuesFromParam(
+  const { sortKey, reverse } = getSortValuesFromParam(
     searchParams.get('sort') as SortParam,
   );
 
@@ -66,7 +66,7 @@ export async function loader({params, request, context}: LoaderArgs) {
 
   for (const [key, value] of searchParams.entries()) {
     if (available === key) {
-      filters.push({available: value === 'true'});
+      filters.push({ available: value === 'true' });
       appliedFilters.push({
         label: value === 'true' ? 'In stock' : 'Out of stock',
         urlParam: {
@@ -75,12 +75,12 @@ export async function loader({params, request, context}: LoaderArgs) {
         },
       });
     } else if (knownFilters.includes(key)) {
-      filters.push({[key]: value});
-      appliedFilters.push({label: value, urlParam: {key, value}});
+      filters.push({ [key]: value });
+      appliedFilters.push({ label: value, urlParam: { key, value } });
     } else if (key.includes(variantOption)) {
       const [name, val] = value.split(':');
-      filters.push({variantOption: {name, value: val}});
-      appliedFilters.push({label: val, urlParam: {key, value}});
+      filters.push({ variantOption: { name, value: val } });
+      appliedFilters.push({ label: val, urlParam: { key, value } });
     }
   }
 
@@ -88,19 +88,19 @@ export async function loader({params, request, context}: LoaderArgs) {
   // the filters array. See price filters limitations:
   // https://shopify.dev/custom-storefronts/products-collections/filter-products#limitations
   if (searchParams.has('minPrice') || searchParams.has('maxPrice')) {
-    const price: {min?: number; max?: number} = {};
+    const price: { min?: number; max?: number } = {};
     if (searchParams.has('minPrice')) {
       price.min = Number(searchParams.get('minPrice')) || 0;
       appliedFilters.push({
         label: `Min: $${price.min}`,
-        urlParam: {key: 'minPrice', value: searchParams.get('minPrice')!},
+        urlParam: { key: 'minPrice', value: searchParams.get('minPrice')! },
       });
     }
     if (searchParams.has('maxPrice')) {
       price.max = Number(searchParams.get('maxPrice')) || 0;
       appliedFilters.push({
         label: `Max: $${price.max}`,
-        urlParam: {key: 'maxPrice', value: searchParams.get('maxPrice')!},
+        urlParam: { key: 'maxPrice', value: searchParams.get('maxPrice')! },
       });
     }
     filters.push({
@@ -108,7 +108,7 @@ export async function loader({params, request, context}: LoaderArgs) {
     });
   }
 
-  const {collection, collections} = await context.storefront.query<{
+  const { collection, collections } = await context.storefront.query<{
     collection: CollectionType;
     collections: CollectionConnection;
   }>(COLLECTION_QUERY, {
@@ -125,11 +125,11 @@ export async function loader({params, request, context}: LoaderArgs) {
   });
 
   if (!collection) {
-    throw new Response(null, {status: 404});
+    throw new Response(null, { status: 404 });
   }
 
   const collectionNodes = flattenConnection(collections);
-  const seo = seoPayload.collection({collection, url: request.url});
+  const seo = seoPayload.collection({ collection, url: request.url });
 
   return json(
     {
@@ -152,7 +152,7 @@ export async function loader({params, request, context}: LoaderArgs) {
 }
 
 export default function Category() {
-  const {collection, collections, appliedFilters} =
+  const { collection, collections, appliedFilters } =
     useLoaderData<typeof loader>();
 
   return (
@@ -162,7 +162,7 @@ export default function Category() {
         {collection?.descriptionHtml ? (
           <div
             className="prose w-full text-custom-grey"
-            dangerouslySetInnerHTML={{__html: collection.descriptionHtml}}
+            dangerouslySetInnerHTML={{ __html: collection.descriptionHtml }}
           />
         ) : (
           <div
@@ -172,15 +172,15 @@ export default function Category() {
           </div>
         )}
       </div>
-      <ul>
-        <SortFilter
-          filters={collection.products.filters as Filter[]}
-          appliedFilters={appliedFilters}
-          collections={collections as CollectionType[]}
-        >
+      <SortFilter
+        filters={collection.products.filters as Filter[]}
+        appliedFilters={appliedFilters}
+        collections={collections as CollectionType[]}
+      >
+        <ul>
           <ProductGrid products={flattenConnection(collection.products)} />
-        </SortFilter>
-      </ul>
+        </ul>
+      </SortFilter>
     </Container>
   );
 }
