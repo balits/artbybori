@@ -3,10 +3,11 @@ import {useFetcher, useMatches} from '@remix-run/react';
 import {CartAction} from '~/lib/type';
 import clsx from 'clsx';
 import {Button, ButtonProps} from "~/components/ui"
+import { useCartFetchers } from '~/hooks/useCartFetchers';
+import { Spinner } from './global/Icon';
 
 export function AddToCartButton({
   variant = "light",
-  children,
   lines,
   className = '',
   width = 'full',
@@ -15,7 +16,6 @@ export function AddToCartButton({
   ...props
 }: {
   variant?: ButtonProps['variant']
-  children: React.ReactNode;
   lines: CartLineInput[];
   className?: string;
   width?: 'auto' | 'full';
@@ -27,6 +27,8 @@ export function AddToCartButton({
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
   const fetcherIsNotIdle = fetcher.state !== 'idle';
+
+  const addToCartFetchers = useCartFetchers('ADD_TO_CART');
 
   return (
     <fetcher.Form action="/cart" method="post">
@@ -41,13 +43,14 @@ export function AddToCartButton({
         className={clsx(
           className,
           disabled || fetcherIsNotIdle
-            ? 'cursor-not-allowed opacity-60'
+            ? 'cursor-not-allowed'
             : 'cursor-pointer',
         )}
         disabled={disabled ?? fetcherIsNotIdle}
         {...props}
       >
-        {children}
+        {disabled || fetcherIsNotIdle ? <span className='inline-flex text-white items-center gap-x-3'><Spinner className='text-white'/>{' '}Adding</span> : "Add to Cart"}
+
       </Button>
     </fetcher.Form>
   );

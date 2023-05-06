@@ -19,9 +19,8 @@ import {isLocalPath} from '~/lib/utils';
 import {CartAction, type CartActions} from '~/lib/type';
 
 import CartView, {
-  Fallback as CartViewSkeleton, Fallback,
+  Fallback,
 } from '~/components/cart/CartView';
-import { Container, NoWrapContainer} from '~/components/global/Container';
 import { seoPayload } from '~/lib/seo.server';
 import { AnalyticsPageType } from '@shopify/hydrogen';
 

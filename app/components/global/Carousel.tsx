@@ -29,7 +29,7 @@ export function CollectionCarousel({
     <CarouselWrapper size={size}>
       {collections.filter(c => c.image).map((coll) => {
         return (
-          <Link key={coll.id} to={`/categories/${coll.handle}`} prefetch="intent" className="relative group  rounded-md">
+          <Link key={coll.id} to={`/categories/${coll.handle}?sort=featured`} prefetch="intent" className="relative group  rounded-md">
             <div className='bg-custom-placeholder-green rounded-md group relative basic-animation shadow-sm aspect-[4/5]'>
               <div className='aspect-[4/5] w-full object-cover fadeIn card-image'>
                 <Image

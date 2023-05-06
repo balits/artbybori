@@ -8,7 +8,7 @@ export default function SplitView() {
     <section className=" pb-8 md:pb-16 lg:pb-20 pb-20 w-full flex flex-col justify-center items-center">
       <div className="overflow-hidden relative  w-full grid grid-cols-2 h-[65vh] lg:h-screen">
         <Link
-          to="/categories/shop-all-products"
+          to="/categories/shop-all-products?sort=featured"
           className="relative h-full bg-custom-placeholder-green cursor-pointer group"
         >
           <img

@@ -18,7 +18,8 @@ export default function Header() {
     closeDrawer: closeNav,
   } = useDrawer();
 
-  const addToCartFetchers = useCartFetchers('ADD_TO_CART');
+
+
 
   const scrollDirection = useScroll();
 
@@ -49,13 +50,14 @@ export default function Header() {
             <Link to="/search?q=" aria-label='Go to search page' className="lg:hidden p-2 md:p-3 lg:p-4 ">
               <SearchIcon />
             </Link>
-            <Link
-              to="/cart"
-              prefetch='intent'
-              className="p-2 md:p-3 lg:p-4 pr-0"
-            >
-              <CartCount />
-            </Link>
+
+              <Link
+                to="/cart"
+                prefetch='intent'
+                className="p-2 md:p-3 lg:p-4 pr-0"
+              >
+                <CartCount />
+              </Link>
           </div>
         </Container>
       </header>
@@ -67,9 +69,11 @@ export default function Header() {
         openFrom="left"
       />
 
+
     </>
   );
 }
+
 
 function SearchBar({ className }: { className: string }) {
   const params = useParams();
@@ -131,10 +135,10 @@ export function CartCount() {
   const [root] = useMatches();
 
   return (
-    <Suspense fallback={<Badge count={0} />}>
+    <Suspense fallback={<CartBadge count={0} />}>
       <Await resolve={root.data?.cart}>
         {(cart) => (
-          <Badge
+          <CartBadge
             count={cart?.totalQuantity || 0}
           />
         )}
@@ -147,7 +151,7 @@ export function CartCount() {
 
 
 
-function Badge({
+function CartBadge({
   count,
 }: {
   count: number;

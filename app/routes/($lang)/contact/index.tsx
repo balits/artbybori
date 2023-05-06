@@ -5,7 +5,7 @@ import InstagramGallery from '~/components/homepage/InstagramGallery';
 import { useRef, useState } from 'react';
 import { seoPayload } from '~/lib/seo.server';
 import { Heading, Button, Link, Text } from '~/components/ui';
-import { motion, Variants, useInView } from "framer-motion"
+import { motion, Variants, useInView, Variant } from "framer-motion"
 
 export async function action({ request, params, context }: ActionArgs) {
   const body = await request.formData();
@@ -382,6 +382,27 @@ function FAQ() {
 }
 
 function ShopLocations() {
+  const ref = useRef<HTMLUListElement>(null)
+
+  const inView = useInView(ref, {
+    once: true,
+    amount: .3,
+  })
+
+  const v: Variants = {
+    hidden: {
+      opacity:0,
+      y: 50,
+    },
+    visible: {
+      opacity:1,
+      y:0,
+      transition:{
+        duration:.5
+      }
+    },
+  }
+
   return (
     <Container as="section" className='py-16 md:py-20 lg:py-24'>
         <Heading as={"h2"} >Where can you shop in person?</Heading>
@@ -390,7 +411,12 @@ function ShopLocations() {
         </Text>
 
 
-      <ul className='w-full mt-8 md:mt-12 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 lg:gap-16 place-items-center'>
+      <motion.ul
+        ref={ref}
+        className='w-full mt-8 md:mt-12 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 lg:gap-16 place-items-center'
+        variants={v}
+        animate={inView ? "visible" : "hidden"}
+      >
         <LocationCard
           name='Kis Villa'
           socialHandle="kisvilla_delikat"
@@ -399,7 +425,7 @@ function ShopLocations() {
           description='Find a wide selection of beautiful artworks from local artist, including some Art by Bori ceramics. Stop by for a coffee or a delicious breakfast and shop handmade goods!'
           imgUrl='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/06AF968D-5E8E-420A-8E1F-441C51B8826E.jpg?v=1683387826'
         />
-      </ul>
+      </motion.ul>
     </Container>
   )
 }

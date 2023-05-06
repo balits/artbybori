@@ -267,10 +267,6 @@ export function ProductDescription() {
   }, []);
 
 
-  const [quantity, setQuantity] = useState(1);
-
-
-
   return (
     <div className="grid gap-8">
       <div className="grid gap-8">
@@ -310,7 +306,7 @@ export function ProductDescription() {
                   lines={[
                     {
                       merchandiseId: selectedVariant.id,
-                      quantity
+                      quantity:1
                     },
                   ]}
                   data-test="add-to-cart"
@@ -318,9 +314,7 @@ export function ProductDescription() {
                     products: [productAnalytics],
                     totalValue: parseFloat(productAnalytics.price),
                   }}
-                >
-                  Add&nbsp;to&nbsp;Cart
-                </AddToCartButton>
+                />
               </>
             )}
           </div>

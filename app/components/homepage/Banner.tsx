@@ -45,17 +45,12 @@ export default function Banner({image}: {image: ImageType}) {
               y: headingY
             }}
             initial={{
-              y:20,
               opacity:0,
+              y:40
             }}
             animate={{
-              y:0,
               opacity:1,
-            }}
-            transition={{
-                delay: .3,
-                stiffness:300,
-                damping:20
+              y:0
             }}
           >
 
