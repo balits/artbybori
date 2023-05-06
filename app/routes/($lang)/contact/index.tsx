@@ -383,21 +383,20 @@ function FAQ() {
 
 function ShopLocations() {
   return (
-    <Container as="section" className='py-16 md:py-20 lg:py-24 flex flex-col items-center justify-center'>
-      <div className='mb-12 md:mb-16 lg:mb-20 flex flex-col items-center justify-center w-full'>
-        <Heading as="h2" bold size='md' font='font-sans'>Buy in Person</Heading>
-        <Text size='md' bold color='lightgrey' className='w-full text-center'>
+    <Container as="section" className='py-16 md:py-20 lg:py-24'>
+        <Heading as={"h2"} >Where can you shop in person?</Heading>
+        <Text size='md'  color='grey'>
           Find our products at a variety of retailers, including local cafes and stores.
         </Text>
-      </div>
 
-      <ul className='flex flex-col items-start justify-center gap-4 md:gap-8 lg:gap-16 place-items-center w-fit'>
+
+      <ul className='w-full mt-8 md:mt-12 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 lg:gap-16 place-items-center'>
         <LocationCard
           name='Kis Villa'
           socialHandle="kisvilla_delikat"
           website='http://kisvilla.hu/fooldal'
-          location='Biatorbágy - Szabadság út 74'
-          description='edd ki a luykatmat sadas dasd nrkajd lBDJ EJHEKLHÉD SDJSAK DEDBHEBIUId s .'
+          location='Biatorbágy, Szabadság út 74'
+          description='Find a wide selection of beautiful artworks from local artist, including some Art by Bori ceramics. Stop by for a coffee or a delicious breakfast and shop handmade goods!'
           imgUrl='https://cdn.shopify.com/s/files/1/0694/7661/4408/files/06AF968D-5E8E-420A-8E1F-441C51B8826E.jpg?v=1683387826'
         />
       </ul>
@@ -421,7 +420,7 @@ function LocationCard({
   imgUrl: string
 }) {
   return (
-    <li className='rounded-md bg-placeholder-green relative group w-full w-[300px] md:w-[440px] lg:w-[500px]'>
+    <li className='rounded-md bg-placeholder-green relative group w-full'>
       <div className='relative  max-w-full aspect-square'>
         <img
           src={imgUrl}
