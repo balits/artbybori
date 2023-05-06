@@ -73,12 +73,14 @@ export default function Header() {
           </div>
         </Container>
       </header>
+
       <NavDrawer
         heading={<Logo onClick={closeNav} />}
         open={isNavOpen}
         onClose={closeNav}
         openFrom="left"
       />
+
       <CartDrawer
         heading="Cart"
         open={isCartOpen}

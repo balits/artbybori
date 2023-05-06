@@ -9,6 +9,7 @@ import { useIsHydrated } from '~/hooks/useIsHydrated';
 import { RemoveItem, DecrementQuantity, IncrementQuantity, QuantitySection } from "~/components/cart/CartView"
 import { Check, ShoppingBag, Spinner, X, XCirlce } from '../global/Icon';
 import { Dialog, Transition } from '@headlessui/react';
+import { AnimatePresence } from 'framer-motion';
 
 function Empty({
   closeDrawer
@@ -57,85 +58,24 @@ export default function CartDrawer({
     <Suspense fallback={<Fallback />}>
       <Await resolve={root.data?.cart}>
         {(cart) => (
-          <Transition appear show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-50 h-screen max-h-screen overflow-hidden" onClose={onClose}>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 left-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
-              </Transition.Child>
+          <AnimatePresence>
+            {open && (
+              <aside className='flex flex-col items-start justify-between z-50 h-screen w-screen md:w-[55vw] lg:w-[30vw]  overflow-hidden bg-red-200'>
+                <header>
 
-              <aside aria-roledescription="sidebar" className="fixed inset-0">
-                <div className="absolute inset-0 overflow-hidden ">
-                  <div
-                    className={`fixed h-screen flex  ${openFrom === 'right' ? 'right-0' : ''
-                      }`}
-                  >
-                    <Transition.Child
-                      as={Fragment}
-                      enter="transform transition ease-in-out duration-300"
-                      enterFrom={'translate-x-full'}
-                      enterTo="translate-x-0"
-                      leave="transform transition ease-in-out duration-300"
-                      leaveFrom="translate-x-0"
-                      leaveTo="translate-x-full"
-                    >
-                      <Dialog.Panel className="flex flex-col items-center justify-between overflow-hidden  h-screen w-screen md:w-[55vw] lg:w-[30vw] text-left align-middle transition-all transform shadow-md bg-custom-white p-4 pt-0 ">
-                        <header className="shrink bg-custom-white w-full header-height flex  items-center justify-between sticky top-0 justify-between z-[52]" >
-                          <Dialog.Title>
-                            <Heading
-                              as="span"
-                              size='sm'
-                              font='font-sans'
-                              bold
-                              id="cart-contents"
-                            >
-                              {heading}
-                            </Heading>
-                          </Dialog.Title>
-                          <button
-                            type="button"
-                            className="p-4 transition"
-                            onClick={onClose}
-                            data-test="close-cart"
-                          >
-                            <X aria-label="Close panel" className="w-5 h-5" />
-                          </button>
-                        </header>
+                </header>
+                <footer className='w-full space-y-8'>
+                  <Button>
+                    checkout
+                  </Button>
+                  <Button>
+                    add to cart
+                  </Button>
 
-                        <CartSidebarView cart={cart} closeDrawer={onClose} />
-
-                        <footer className='shrink bg-red-200 bg-red-200 space-y-4 w-full'>
-                          {cart.checkoutUrl && (
-                            <Button
-                              to={cart.checkoutUrl}
-                              width="full"
-                            >
-                              Check out
-                            </Button>
-                          )}
-                          <Button
-                            onClick={onClose}
-                            variant="signature"
-                            to="/cart"
-                            width="full"
-                          >
-                            View cart
-                          </Button>
-                        </footer>
-                      </Dialog.Panel>
-                    </Transition.Child>
-                  </div>
-                </div>
+                </footer>
               </aside>
-            </Dialog>
-          </Transition>
+            )}
+          </AnimatePresence>
         )}
       </Await>
     </Suspense>
