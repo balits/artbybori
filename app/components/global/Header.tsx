@@ -1,24 +1,18 @@
-import { Form, useParams } from '@remix-run/react';
-import { useEffect, useState } from 'react';
+import { Await, Form, useMatches, useParams } from '@remix-run/react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { Container } from '~/components/global/Container';
 import Logo from '~/components/global/Logo';
 import Nav from '~/components/global/Nav';
 import clsx from 'clsx';
 import { useDrawer } from '../Drawer';
 import { useCartFetchers } from '~/hooks/useCartFetchers';
-import CartDrawer from '~/components/drawer/CartDrawer';
 import NavDrawer from '~/components/drawer/NavDrawer';
 import { Link } from '../ui/Link';
-import { Bars, SearchIcon } from './Icon';
+import { Bars, SearchIcon, ShoppingBag } from './Icon';
 import { CartCount } from "~/components/drawer/CartDrawer"
+import { useIsHydrated } from '~/hooks/useIsHydrated';
 
 export default function Header() {
-  const {
-    isOpen: isCartOpen,
-    openDrawer: openCart,
-    closeDrawer: closeCart,
-  } = useDrawer();
-
   const {
     isOpen: isNavOpen,
     openDrawer: openNav,
@@ -26,13 +20,6 @@ export default function Header() {
   } = useDrawer();
 
   const addToCartFetchers = useCartFetchers('ADD_TO_CART');
-
-  // toggle cart drawer when adding to cart
-  useEffect(() => {
-    if (isCartOpen || !addToCartFetchers.length) return;
-    openCart();
-  }, [addToCartFetchers, isCartOpen, openCart]);
-
 
   const scrollDirection = useScroll();
 
@@ -63,13 +50,13 @@ export default function Header() {
             <Link to="/search?q=" aria-label='Go to search page' className="lg:hidden p-2 md:p-3 lg:p-4 ">
               <SearchIcon />
             </Link>
-            <button
-              onClick={openCart}
+            <Link
+              to="/cart"
+              prefetch='intent'
               className="p-2 md:p-3 lg:p-4 pr-0"
-              aria-label="Open cart panel from the right side."
             >
               <CartCount />
-            </button>
+            </Link>
           </div>
         </Container>
       </header>
@@ -81,12 +68,6 @@ export default function Header() {
         openFrom="left"
       />
 
-      <CartDrawer
-        heading="Cart"
-        open={isCartOpen}
-        onClose={closeCart}
-        openFrom="right"
-      />
     </>
   );
 }
@@ -144,4 +125,62 @@ function useScroll() {
   }, [scrollDirection]);
 
   return scrollDirection;
+}
+
+
+export function CartCount() {
+  const [root] = useMatches();
+
+  return (
+    <Suspense fallback={<Badge count={0} />}>
+      <Await resolve={root.data?.cart}>
+        {(cart) => (
+          <Badge
+            count={cart?.totalQuantity || 0}
+          />
+        )}
+      </Await>
+    </Suspense>
+  );
+}
+
+
+
+
+
+function Badge({
+  count,
+}: {
+  count: number;
+}) {
+  const isHydrated = useIsHydrated();
+
+  const BadgeCounter = useMemo(
+    () => (
+      <div className='relative'>
+        <ShoppingBag />
+        <div
+          className=' absolute -bottom-3 -right-3 text-custom-white bg-black w-5 h-5 rounded-full flex items-center justify-center'
+        >
+          <span className='text-xs'>{count || 0}</span>
+        </div>
+      </div>
+    ),
+    [count],
+  );
+
+  return isHydrated ? (
+    <div
+      className="relative flex items-center justify-center w-8 h-8 focus:ring-custom-lightgrey/5"
+    >
+      {BadgeCounter}
+    </div>
+  ) : (
+    <Link
+      to="/cart"
+      className="relative flex items-center justify-center w-8 h-8 focus:ring-custom-lightgrey/5"
+    >
+      {BadgeCounter}
+    </Link>
+  );
 }
