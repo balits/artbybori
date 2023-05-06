@@ -57,10 +57,8 @@ export default function CartDrawer({
     <Suspense fallback={<Fallback />}>
       <Await resolve={root.data?.cart}>
         {(cart) => (
-
-
           <Transition appear show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-50" onClose={onClose}>
+            <Dialog as="div" className="relative z-50 h-screen max-h-screen overflow-hidden" onClose={onClose}>
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -154,7 +152,7 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <div className='z-[52]  relative'>
+    <div className='z-[52]  relative '>
       <section className="h-fit  bg-blue-500">
         <ul className="h-full overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green">
           {lines.map(
