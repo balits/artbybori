@@ -26,7 +26,7 @@ export function CollectionCarousel({
   if (!haveCollections) return null;
 
   return (
-    <Wrapper size={size}>
+    <CarouselWrapper size={size}>
       {collections.filter(c => c.image).map((coll) => {
         return (
           <Link key={coll.id} to={`/categories/${coll.handle}`} prefetch="intent" className={clsx("relative group overflow-hidden", !textOnTop && "basic-animation hover:opacity-90")}>
@@ -37,7 +37,7 @@ export function CollectionCarousel({
               loading='eager'
             />
             {textOnTop ? (
-              <div className="z-[5] basic-animation opacity-0 group-hover:opacity-100 absolute bottom-0 w-full h-full flex items-center justify-center">
+              <div className="absolute inset-0 w-full h-full flex items-center justify-center">
                 <Heading font='font-sans' as="h3" bold size='sm' color="white" className="z-[10] uppercase  text-center">
                   {coll.title}
                 </Heading>
@@ -48,7 +48,7 @@ export function CollectionCarousel({
           </Link>
         )
       })}
-    </Wrapper>
+    </CarouselWrapper>
   )
 }
 
@@ -72,7 +72,7 @@ export function ProductCarousel({
 }: ProductCarouselProps) {
   if (!products || products.length == 0) return null;
   return (
-    <Wrapper size={size}>
+    <CarouselWrapper size={size}>
       {products.map((prod) => {
         const variant = prod.variants.nodes[0];
         if (!variant.image) return null;
@@ -88,11 +88,11 @@ export function ProductCarousel({
           </Link>
         )
       })}
-    </Wrapper>
+    </CarouselWrapper>
   )
 }
 
-const Wrapper = ({
+const CarouselWrapper = ({
   children,
   size
 }: {
