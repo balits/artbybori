@@ -11,7 +11,7 @@ import Container from '../global/Container';
 export function Fallback() {
   return (
     <Container className='scaling-mt-header'>
-      <Heading spacing>Your cart.</Heading>
+      <Heading spacing>Your cart is empty.</Heading>
     </Container>
   );
 }
@@ -19,7 +19,8 @@ export function Fallback() {
 export default function CartView({ cart }: { cart: Cart | null }) {
   const isEmpty = cart?.lines.edges.length === 0
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
-  return !isEmpty ? (
+
+  return !isEmpty && cart ? (
     <Container className='scaling-mt-header mb-20 overflow-auto'>
       <Heading spacing>Your cart.</Heading>
       <div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-5 lg:gap-x-6 lg:grid-rows-1'>
@@ -40,11 +41,7 @@ export default function CartView({ cart }: { cart: Cart | null }) {
         </div>
       </div>
     </Container>
-  ) : (
-    <Container className='scaling-mt-header'>
-      <Heading spacing>Your cart is empty.</Heading>
-    </Container>
-  );
+  ) : <Fallback />;
 }
 
 type CartLineItemProps = {
