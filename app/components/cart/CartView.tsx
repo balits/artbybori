@@ -20,7 +20,7 @@ export default function CartView({ cart }: { cart: Cart | null }) {
   const isEmpty = cart?.lines.edges.length === 0
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
   return !isEmpty ? (
-    <Container className='scaling-mt-header overflow-auto'>
+    <Container className='scaling-mt-header mb-20 overflow-auto'>
       <Heading spacing>Your cart.</Heading>
       <div className='grid grid-cols-1 grid-rows-2 lg:grid-cols-5 lg:gap-x-6 lg:grid-rows-1'>
         <section aria-labelledby="cart-contents" className='lg:col-span-3 flex flex-col items-start justify-start'>

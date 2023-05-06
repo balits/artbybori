@@ -23,11 +23,6 @@ type ProductCardProps = {
   compareAtPrice?: MoneyV2
 };
 
-/**
-* A Card that renders a ProductVariant with props in `ProductCardProps`.
-* IMPORTANT: Please make sure to query the required fields for the product variant of your choise.
-* @params {props} `ProductCardProps`
-* */
 const ProductCard: React.FC<ProductCardProps> = ({
   title,
   money,
@@ -48,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
         {textOnTop && (
-          <div className="p-2 md:p-3 lg:p-4  transition-colors delay-75 ease-in-out group-hover:text-white absolute bottom-0 w-full">
+          <div className="p-3 md:p-6  basic-animation group-hover:text-white absolute bottom-0 w-full">
             <Details title={title} money={money} color="white" compareAtPrice={compareAtPrice}/>
           </div>
         )}

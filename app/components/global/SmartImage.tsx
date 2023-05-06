@@ -12,6 +12,7 @@ type SmartImageProps = {
   defaultHeight?: number;
   defaultWidth?: number;
   className?: string;
+  imgClassName?: string;
 };
 
 export default function SmartImage({
@@ -23,6 +24,7 @@ export default function SmartImage({
   defaultHeight,
   defaultWidth,
   className,
+  imgClassName,
 }: SmartImageProps) {
   const WIDTHS = defaultWidth ? [defaultWidth] : widths ? widths : [350];
   const SIZES = defaultWidth
@@ -40,7 +42,7 @@ export default function SmartImage({
       )}
     >
       <Image
-        className="aspect-[4/5] w-full h-full object-cover fadeIn"
+        className={clsx("aspect-[4/5] w-full h-full object-cover card-image fadeIn", imgClassName)}
         data={image}
         alt={alt}
         widths={WIDTHS}

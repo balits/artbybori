@@ -1,11 +1,12 @@
 import { Collection, Product } from '@shopify/hydrogen/storefront-api-types';
-import { Link, Heading} from '../ui';
+import { Link, Heading } from '../ui';
 import SmartImage from '~/components/global/SmartImage';
 import { SerializeFrom } from '@shopify/remix-oxygen';
 import ProductCard from '~/components/shop/ProductCard';
 import Carousel, { DotProps } from "react-multi-carousel";
 import { RxDotFilled } from 'react-icons/rx';
 import clsx from 'clsx';
+import { Image } from '@shopify/hydrogen';
 
 type DefaultCarouselProps = {
   textOnTop: boolean;
@@ -28,25 +29,23 @@ export function CollectionCarousel({
     <Wrapper size={size}>
       {collections.filter(c => c.image).map((coll) => {
         return (
-            <Link  key={coll.id} to={`/categories/${coll.handle}`} prefetch="intent" className={clsx("relative group", !textOnTop && "basic-animation hover:opacity-90")}>
-              <SmartImage
-                image={coll.image!}
-                widths={[280, 350,450,550, 650]}
-                sizes="(max-width: 768px) 80vw, 60vw"
-                alt={coll.image?.altText ?? coll.title}
-                className="w-full rounded-md"
-                loading='eager'
-              />
-              {textOnTop ?  (
-                <div className="absolute z-[5] inset-0 w-full h-full grid place-items-center basic-animation bg-black/10">
-                  <Heading font='font-sans' as="h3" bold size='sm' color="white" className="z-[10] uppercase basic-animation ">
-                    {coll.title}
-                  </Heading>
-                </div>
-              ): (
-                <h3 className='mt-2 lg:mt-3 xl:mt-4 font-medium text-sm md:text-md xl:text-lg '>{coll.title}</h3>
-              )}
-            </Link>
+          <Link key={coll.id} to={`/categories/${coll.handle}`} prefetch="intent" className={clsx("relative group overflow-hidden", !textOnTop && "basic-animation hover:opacity-90")}>
+            <SmartImage
+              image={coll.image!}
+              alt={coll.image!.altText ?? coll.title}
+              className="w-full rounded-md "
+              loading='eager'
+            />
+            {textOnTop ? (
+              <div className="z-[5] basic-animation opacity-0 group-hover:opacity-100 absolute bottom-0 w-full h-full flex items-center justify-center">
+                <Heading font='font-sans' as="h3" bold size='sm' color="white" className="z-[10] uppercase  text-center">
+                  {coll.title}
+                </Heading>
+              </div>
+            ) : (
+              <h3 className='mt-2 lg:mt-3 xl:mt-4 font-medium text-sm md:text-md xl:text-lg '>{coll.title}</h3>
+            )}
+          </Link>
         )
       })}
     </Wrapper>
@@ -76,10 +75,10 @@ export function ProductCarousel({
     <Wrapper size={size}>
       {products.map((prod) => {
         const variant = prod.variants.nodes[0];
-        if(!variant.image) return null;
+        if (!variant.image) return null;
 
         return (
-          <Link key={prod.id } to={`/products/${prod.handle}`} prefetch="intent">
+          <Link key={prod.id} to={`/products/${prod.handle}`} prefetch="intent">
             <ProductCard
               title={prod.title}
               money={variant.price}
@@ -96,7 +95,7 @@ export function ProductCarousel({
 const Wrapper = ({
   children,
   size
-}:{
+}: {
   children: React.ReactNode,
   size: "small" | "normal"
 }) => {
@@ -157,20 +156,20 @@ export const MyDots = ({
   if (!carouselState || !onClick) return <></>
 
   return carouselState?.slidesToShow < carouselState?.totalItems ? (
-  <button
-    onClick={() => onClick()}
-  >
-    {
-      <RxDotFilled className={`hover:opacity-80 w-6 h-6 lg:w-8 lg:h-8 ${active ? "text-black/60" : "text-custom-placeholder-green"}`}/>
-    }
-  </button>) : <></>
+    <button
+      onClick={() => onClick()}
+    >
+      {
+        <RxDotFilled className={`hover:opacity-80 w-6 h-6 lg:w-8 lg:h-8 ${active ? "text-black/60" : "text-custom-placeholder-green"}`} />
+      }
+    </button>) : <></>
 }
 
 
 export function Skeleton() {
   return (
     <ul className='grid w-full snap-mandatory snap-x scroll-px-6 grid-rows-1 grid-flow-col justify-start gap-6 md:gap-10 lg:gap-12 overflow-x-scroll hiddenScroll'>
-      {[1,2,3,4,5].map((x) => (
+      {[1, 2, 3, 4, 5].map((x) => (
         <li key={x} className="snap-start relative group cursor-pointer w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg " />
       ))}
     </ul>

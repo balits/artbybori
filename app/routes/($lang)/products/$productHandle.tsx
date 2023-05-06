@@ -289,7 +289,7 @@ export function ProductDescription() {
         />
 
         {selectedVariant && (
-          <div className="grid grid-cols-1  items-stretch gap-4 my-8">
+          <div className="grid grid-cols-1  items-stretch gap-4 mb-8">
             {isOutOfStock ? (
               <Button isDisabled>
                 Sold&nbsp;out
@@ -314,7 +314,6 @@ export function ProductDescription() {
                   >
                     Add&nbsp;to&nbsp;Cart
                   </AddToCartButton>
-                  <ShopPayButton storeDomain={storeDomain} variantIds={[selectedVariant.id]} className="w-full"/>
                 </>
               )}
           </div>

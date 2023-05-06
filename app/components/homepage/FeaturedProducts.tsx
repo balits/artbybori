@@ -3,7 +3,6 @@ import type { Product, Image as ImageType } from '@shopify/hydrogen/storefront-a
 import { SerializeFrom } from '@shopify/remix-oxygen';
 import clsx from 'clsx';
 import { Image, Money } from '@shopify/hydrogen';
-import { useState } from 'react';
 
 interface Props {
   data: SerializeFrom<Product>[];
@@ -16,7 +15,6 @@ const FeaturedProducts: React.FC<Props> = ({ data: featuredProductList }) => {
     <ul className="grid w-full h-fit overflow-hidden grid-cols-2 grid-rows-4 gap-2 md:grid-cols-4 md:grid-rows-2 md:gap-3 ">
       {products.map((prod: Product, i: number) => {
         const image1 = prod.images.nodes[0];
-        const image2 = prod.images.nodes[1];
         return (
           <li
             key={prod.id}
@@ -27,8 +25,7 @@ const FeaturedProducts: React.FC<Props> = ({ data: featuredProductList }) => {
           >
             <Link to={`/products/${prod.handle}`} prefetch="intent">
               <Card
-                image1={image1}
-                image2={image2}
+                image={image1}
                 product={prod}
                 index={i}
               />
@@ -42,29 +39,21 @@ const FeaturedProducts: React.FC<Props> = ({ data: featuredProductList }) => {
 export default FeaturedProducts;
 
 const Card = ({
-  image1,
-  image2,
+  image,
   product,
   index,
 }: {
-  image1: ImageType,
-  image2: ImageType,
+  image: ImageType,
   product: Product,
   index: number
 }) => {
-  const [hover, setHover] = useState(false)
-
-
   return (
     <>
       <div
         className="aspect-square relative flex items-center justify-center overflow-clip rounded-sm"
-        onMouseOver={() => setHover(true)}
-        onMouseOut={() => setHover(false)}
       >
-        {(
           <Image
-            className="aspect-square w-full object-cover fadeIn"
+            className="aspect-square w-full object-cover fadeIn card-scale-hover"
             widths={[400]}
             loaderOptions={{
               crop: 'center',
@@ -72,11 +61,10 @@ const Card = ({
               width: 400,
               height: 400,
             }}
-            data={hover ? image2 : image1}
-            alt={image1.altText ?? product.title}
+            data={image}
+            alt={image.altText ?? product.title}
             loading="lazy"
           />
-        )}
       </div>
       <div
         className={clsx([

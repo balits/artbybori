@@ -86,7 +86,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t-2 border-gray-100/20 py-4 my-10 text-custom-white/60 w-full flex items-start justify-between">
+        <div className="border-t-2 border-gray-100/20 py-4 my-10 text-custom-white/60 w-full flex items-center justify-end">
           <PaymentOptionsList />
         </div>
       </Container>

@@ -61,7 +61,7 @@ export function Drawer({
                 leaveFrom="translate-x-0"
                 leaveTo={offScreen[openFrom]}
               >
-                <Dialog.Panel className="overflow-auto  h-screen w-screen md:w-[55vw] lg:w-[30vw] text-left align-middle transition-all transform shadow-md bg-custom-white px-4 ">
+                <Dialog.Panel className="overflow-hidden  h-screen w-screen md:w-[55vw] lg:w-[30vw] text-left align-middle transition-all transform shadow-md bg-custom-white px-4 ">
                   <header className="bg-custom-white w-full header-height flex  items-center justify-between sticky top-0 justify-between z-[52]" >
                     <Dialog.Title>
                       <Heading

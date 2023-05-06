@@ -73,8 +73,8 @@ function CartSidebarView({
   const lines = cart?.lines ? flattenConnection(cart.lines) : [];
 
   return lines.length > 0 ? (
-    <div className='h-full grid grid-rows-8 grid-cols-1 '>
-      <section className="h-full relative row-span-7">
+    <div className='pb-4 h-full grid grid-rows-8 grid-cols-1'>
+      <section className="h-full relative row-span-7 ">
         <ul className="h-full overflow-auto w-full flex flex-col items-start divide-y divide-custom-placeholder-green">
           {lines.map(
             (l) =>
@@ -87,12 +87,20 @@ function CartSidebarView({
         </ul>
       </section>
 
-      <div className="w-full flex items-center justify-center ">
+      <div className="z-[52] bg-custom-white  w-full flex flex-col gap-4 items-center justify-center ">
+        {cart.checkoutUrl && (
+          <Button
+            to={cart.checkoutUrl}
+            width="full"
+          >
+            Check out
+          </Button>
+        )}
         <Button
           onClick={closeDrawer}
           variant="signature"
           to="/cart"
-          className="w-full"
+          width="full"
         >
           View cart
         </Button>
@@ -113,7 +121,7 @@ function CartLineItem({ cartLine, closeDrawer }: { cartLine: CartLine, closeDraw
   const nextQuantity = Number((qty + 1).toFixed(0));
 
   return (
-    <div className="w-full  grid grid-cols-3 grid-rows-1 gap-x-4">
+    <div className="w-full  grid grid-cols-3 grid-rows-1 gap-x-4 pr-2">
       <Link to={`/products/${product.handle}`} prefetch="intent" onClick={closeDrawer} className="col-span-1">
         <div className='relative bg-custom-placeholder-grey'>
           {variant.image && (
