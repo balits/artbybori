@@ -48,7 +48,7 @@ export function CollectionCarousel({
               </div>
 
               {textOnTop ? (
-                <div className="absolute left-0 top-0 w-full h-full bg-black/10 grid place-items-center opacity-0 hover:opacity-100 basic-animation">
+                <div className="absolute left-0 top-0 w-full h-full bg-black/10 grid place-items-center lg:opacity-0 lg:hover:opacity-100 basic-animation">
                   <Heading font='font-sans' as="h3" bold size='sm' color="white" className="z-[10] uppercase  text-center">
                     {coll.title}
                   </Heading>

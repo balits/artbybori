@@ -89,7 +89,7 @@ export default function Search() {
             <HiSearch className='h-4 w-4 md:w-5 md:h-5  cursor-pointer focus:ring-custom-black' />
           </button>
           <input
-            className='p-2 w-full'
+            className='p-2 w-full bg-custom-white'
             defaultValue={searchTerm}
             placeholder="Search…"
             type="search"
@@ -101,7 +101,7 @@ export default function Search() {
         {!searchTerm || noResults ? (
           <>
             {noResults && (
-              <div >
+              <div className='mb-6 md:mb-8 lg:mb-12 xl:mb-16'>
                 <h2 className="opacity-50">
                   No results, try something else.
                 </h2>
