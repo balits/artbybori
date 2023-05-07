@@ -346,3 +346,8 @@
     padding-top: var(--header-lg);
   }
 }
+
+
+input {
+  background-color: var(--custom-white);
+}

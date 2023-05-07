@@ -183,7 +183,7 @@ export default function ProductPage() {
         <Heading size='md'>
           You might also like.
         </Heading>
-        <Suspense fallback={<CarouselSkeleton />}>
+        <Suspense fallback={<CarouselSkeleton size='normal' />}>
           <Await
             errorElement="There was a problem loading recomended products"
             resolve={recommended}

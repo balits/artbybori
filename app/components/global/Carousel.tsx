@@ -39,10 +39,10 @@ export function CollectionCarousel({
                   loading='eager'
                   widths={[400]}
                   loaderOptions={{
-                    crop:'center',
-                    scale:2,
-                    width:400,
-                    height:600
+                    crop: 'center',
+                    scale: 2,
+                    width: 400,
+                    height: 600
                   }}
                 />
               </div>
@@ -178,13 +178,14 @@ export const MyDots = ({
 }
 
 
-export function Skeleton() {
+export function Skeleton({ size }: {size: DefaultCarouselProps['size']}) {
   return (
-    <ul className='grid w-full snap-mandatory snap-x scroll-px-6 grid-rows-1 grid-flow-col justify-start gap-6 md:gap-10 lg:gap-12 overflow-x-scroll hiddenScroll'>
-      {[1, 2, 3, 4, 5].map((x) => (
-        <li key={x} className="snap-start relative group cursor-pointer w-carousel-item-sm md:w-carousel-item-md lg:w-carousel-item-lg " />
-      ))}
-    </ul>
+    <CarouselWrapper size={size}>
+        {[1, 2, 3, 4, 5].map((x) => (
+          <li key={x} className=" aspect-[4/5] relative group  rounded-md w-full max-w-[400px] bg-custom-placeholder-green rounded-md group relative basic-animation shadow-sm aspect-[4/5]">
+          </li>
+        ))}
+    </CarouselWrapper>
   );
 }
 

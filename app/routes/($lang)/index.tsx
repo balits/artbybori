@@ -24,7 +24,7 @@ import {
 import invariant from 'tiny-invariant';
 import { AnalyticsPageType, flattenConnection } from '@shopify/hydrogen';
 import { Container, NoWrapContainer } from '~/components/global/Container';
-import { MyHeading } from '~/components/ui';
+import { Heading, MyHeading } from '~/components/ui';
 import { filterInvalidCollections } from '~/lib/utils';
 
 export const headers = routeHeaders;
@@ -34,7 +34,7 @@ export async function loader({ params, context }: LoaderArgs) {
 
   if (
     params.lang &&
-      params.lang.toLowerCase() !== `${language}-${country}`.toLowerCase()
+    params.lang.toLowerCase() !== `${language}-${country}`.toLowerCase()
   ) {
     // If the lang URL param is defined, yet we still are on `EN-US`
     // the the lang param must be invalid, send to the 404 page
@@ -145,50 +145,50 @@ export default function Homepage() {
       <Banner image={homepage.hero.image} />
 
       <div className='bg-custom-white'>
-      <Container className="py-20">
-        <MyHeading>
-          Featured products.
-        </MyHeading>
-        {collectionsPromise && (
-          <Suspense fallback={<FeaturedSkeleton />}>
-            <Await resolve={collectionsPromise}>
-              {(data) => {
-                const featuredProducts = data.collections.nodes.find(
-                  (collection) => collection.handle === 'featured-products',
-                );
-                return featuredProducts ? (
-                  <FeaturedProducts data={featuredProducts.products.nodes} />
-                ) : (
+        <Container className="py-20">
+          <Heading>
+            Featured products.
+          </Heading>
+          {collectionsPromise && (
+            <Suspense fallback={<FeaturedSkeleton />}>
+              <Await resolve={collectionsPromise}>
+                {(data) => {
+                  const featuredProducts = data.collections.nodes.find(
+                    (collection) => collection.handle === 'featured-products',
+                  );
+                  return featuredProducts ? (
+                    <FeaturedProducts data={featuredProducts.products.nodes} />
+                  ) : (
                     <FeaturedSkeleton />
                   );
-              }}
-            </Await>
-          </Suspense>
-        )}
-      </Container>
+                }}
+              </Await>
+            </Suspense>
+          )}
+        </Container>
 
-      <SplitView />
+        <SplitView />
 
-      <NoWrapContainer as={"section"} className="h-fit py-8 md:py-12 lg:py-20">
-        <div className="">
-          <MyHeading>
-            Shop by categories.
-          </MyHeading>
-          <Suspense fallback={<CarouselSkeleton />}>
-            <Await resolve={collectionsPromise}>
-              {({ collections }) => {
-                if (!collections) return <CarouselSkeleton />;
-                const items = filterInvalidCollections(flattenConnection(collections));
-                return (
-                  <CollectionCarousel size="normal" collections={items} textOnTop={true} />
-                );
-              }}
-            </Await>
-          </Suspense>
-        </div>
-      </NoWrapContainer>
+        <NoWrapContainer as={"section"} className="h-fit py-8 md:py-12 lg:py-20">
+          <div className="">
+            <Heading>
+              Shop by categories.
+            </Heading>
+            <Suspense fallback={<CarouselSkeleton />}>
+              <Await resolve={collectionsPromise}>
+                {({ collections }) => {
+                  if (!collections) return <CarouselSkeleton />;
+                  const items = filterInvalidCollections(flattenConnection(collections));
+                  return (
+                    <CollectionCarousel size="normal" collections={items} textOnTop={true} />
+                  );
+                }}
+              </Await>
+            </Suspense>
+          </div>
+        </NoWrapContainer>
 
-      <InstagramGallery />
+        <InstagramGallery />
 
       </div>
     </>
